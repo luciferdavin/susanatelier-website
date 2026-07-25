@@ -1,0 +1,21 @@
+{
+  "name": "Susan Atelier",
+  "short_name": "Susan Atelier",
+  "description": "Contemporary Indian occasion wear made by named hands. 17-piece launch collection.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5EAE1",
+  "theme_color": "#3B2412",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logos/Susan_Atelier_Favicon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "lifestyle", "fashion"],
+  "lang": "en-IN",
+  "dir": "ltr"
+}
