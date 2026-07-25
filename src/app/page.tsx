@@ -38,7 +38,6 @@ export default function HomePage() {
               priority
               style={{ width: 'auto', height: 'auto' }}
             />
-            <p className="hero-by">by Riya</p>
             <h1 id="hero-title">
               Made by named hands.<br />
               Worn for years — made by hand in India.
@@ -120,13 +119,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="statement" aria-labelledby="statement-title">
+      <section className="statement" aria-labelledby="statement-title" style={{ marginTop: 'var(--space-12)' }}>
         <div className="wrap">
-          <div
-            className="statement-logo"
-            role="img"
-            aria-label="Susan Atelier SA monogram"
-          />
+          <div className="statement-logo">
+            <Image
+              src="/logos/trans/Susan_Atelier_Favicon_512-trans.png"
+              alt="Susan Atelier SA monogram"
+              width={84}
+              height={84}
+              priority
+            />
+          </div>
           <p className="statement-tag" id="statement-title">
             Made by named hands. <span className="em">Worn for years — made by hand in India.</span>
           </p>

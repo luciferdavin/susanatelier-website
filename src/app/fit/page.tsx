@@ -26,14 +26,14 @@ export default function FitPage() {
 
       <section className="fit-hero" aria-labelledby="fit-title">
         <p className="eyebrow">Size & Fit</p>
-        <h1 id="fit-title">One chart. Real bodies. Free exchanges.</h1>
+        <h1 id="fit-title">One chart. Real bodies.</h1>
         <p className="lede">
           We shoot every piece on real bodies — front, back, and in motion — so
           you see the drape. Our promise: XXS–4XL available across the line.
         </p>
       </section>
 
-      <table className="sizechart" aria-describedby="sizechart-desc">
+      <table className="sizechart" aria-describedby="sizechart-desc" style={{ marginTop: 'var(--space-4)' }}>
         <caption id="sizechart-desc" className="visually-hidden">
           Size chart with bust, waist, and hip measurements in centimeters
         </caption>

@@ -28,7 +28,7 @@ export default function AboutPage() {
         <div className="about-text">
           <p className="eyebrow">About the maker</p>
           <h1 id="about-title">Riya</h1>
-          <p className="lede">
+          <p className="lede" style={{ marginTop: 'var(--space-5)' }}>
             Susan Atelier began with a simple refusal: that "pretty" and "honest"
             can&apos;t sit in the same garment. I wanted clothes made by named
             hands, from cloth I could name, at a price I could defend.
@@ -39,14 +39,13 @@ export default function AboutPage() {
             own garden. The silhouettes are current, never costume. The promise
             is that each piece is meant to be worn for years, not one occasion.
           </p>
-          <p className="signature">by Riya</p>
         </div>
         <div>
           <Image
             src="/logos/Susan_Atelier_Logo_FullBlock.png"
             alt="Susan Atelier full brand block"
-            width={500}
-            height={400}
+            width={600}
+            height={420}
             className="about-logo"
             loading="lazy"
           />

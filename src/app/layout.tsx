@@ -120,13 +120,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cormorant+Garamond:wght@400;500;600&family=Alex+Brush&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/logos/Susan_Atelier_Favicon_512.png" />
+        <link rel="icon" href="/logos/trans/Susan_Atelier_Favicon_512-trans.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
         <Header />
         <main id="main-content" role="main">
           {children}

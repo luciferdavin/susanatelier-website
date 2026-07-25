@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 /**
  * Header component with navigation and mobile menu
@@ -12,6 +13,9 @@ import Image from "next/image";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+
+  const isJoinPage = pathname === "/join";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,11 +69,13 @@ export default function Header() {
           </Link>
         </div>
 
-        <div className="nav-cta">
-          <Link href="/join" className="btn btn--outline">
-            Join Waitlist
-          </Link>
-        </div>
+        {!isJoinPage && (
+          <div className="nav-cta">
+            <Link href="/join" className="btn btn--outline">
+              Join Waitlist
+            </Link>
+          </div>
+        )}
       </nav>
     </header>
   );
