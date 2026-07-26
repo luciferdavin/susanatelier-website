@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { PRODUCTS, CATEGORIES, formatPrice } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 /**
  * Collection grid - client component for interactive category filtering.
@@ -31,12 +32,14 @@ export default function CollectionGrid() {
         style={{ paddingTop: "var(--space-6)" }}
         aria-labelledby="collection-title"
       >
-        <p className="eyebrow">The Collection</p>
-        <h1 id="collection-title">Seventeen pieces, already made</h1>
-        <p className="lede">
-          One-of-a-kind and finished. Tap any piece for its fabric, the maker,
-          and an honest price breakdown.
-        </p>
+        <Reveal>
+          <p className="eyebrow">The Collection</p>
+          <h1 id="collection-title">Seventeen pieces, already made</h1>
+          <p className="lede">
+            One-of-a-kind and finished. Tap any piece for its fabric, the maker,
+            and an honest price breakdown.
+          </p>
+        </Reveal>
 
         <div className="filterbar" role="group" aria-label="Filter by category">
           {CATEGORIES.map((cat) => (
@@ -52,16 +55,19 @@ export default function CollectionGrid() {
           ))}
         </div>
 
-        <div
+        <StaggerGroup
+          key={activeCategory}
           className="grid"
           id="product-grid"
           role="list"
           aria-label={`${filteredProducts.length} products`}
         >
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <StaggerItem key={product.id}>
+              <ProductCard product={product} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
 
         {filteredProducts.length === 0 && (
           <div className="no-results">

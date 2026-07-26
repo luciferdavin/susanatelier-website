@@ -5,6 +5,7 @@ import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/schemas
 import { PRODUCTS } from "@/lib/products";
 import { HeroEmailForm } from "@/components/HeroEmailForm";
 import JsonLd from "@/components/JsonLd";
+import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 /**
  * Home page - Hero, features, brand statement, CTA
@@ -53,7 +54,7 @@ export default function HomePage() {
               Genuine MRP, no fake discounts
             </p>
           </div>
-          <div className="hero-art">
+          <Reveal direction="left" className="hero-art">
             <Image
               src="/images/hero-model.png"
               alt="Susan Atelier piece worn by a real woman"
@@ -63,64 +64,72 @@ export default function HomePage() {
               className="hero-image"
               style={{ width: 'auto', height: 'auto' }}
             />
-          </div>
+          </Reveal>
         </div>
 
-        <div className="pillar-strip wrap" role="list" aria-label="Brand pillars">
-          <div className="pillar" role="listitem"><span>✿</span> Handmade</div>
-          <div className="pillar" role="listitem"><span>◈</span> Botanical</div>
-          <div className="pillar" role="listitem"><span>✕</span> Artisan</div>
-          <div className="pillar" role="listitem"><span>❀</span> Natural cloth</div>
-          <div className="pillar" role="listitem"><span>∞</span> Made to last</div>
-        </div>
+        <StaggerGroup className="pillar-strip wrap" role="list" aria-label="Brand pillars">
+          <StaggerItem className="pillar" role="listitem"><span>✿</span> Handmade</StaggerItem>
+          <StaggerItem className="pillar" role="listitem"><span>◈</span> Botanical</StaggerItem>
+          <StaggerItem className="pillar" role="listitem"><span>✕</span> Artisan</StaggerItem>
+          <StaggerItem className="pillar" role="listitem"><span>❀</span> Natural cloth</StaggerItem>
+          <StaggerItem className="pillar" role="listitem"><span>∞</span> Made to last</StaggerItem>
+        </StaggerGroup>
       </section>
 
       <section className="cta-bar" aria-labelledby="cta-title">
-        <div className="wrap cta-row">
+        <Reveal className="wrap cta-row">
           <Link href="/join" className="btn btn--gold btn--lg">
             Join the Waitlist
           </Link>
           <Link href="/collection" className="btn btn--outline btn--lg">
             Browse the Collection
           </Link>
-        </div>
+        </Reveal>
       </section>
 
       <section className="wrap" style={{ paddingTop: "var(--space-6)" }} aria-labelledby="why-title">
-        <p className="eyebrow">Why Susan Atelier</p>
-        <h2 id="why-title">Made by named hands, not machines</h2>
-        <p className="lede">
-          Every piece carries the name of the artisan who embroidered it. We
-          show you who, what, and what they earned — because "artisan-made"
-          means nothing if it stays a slogan.
-        </p>
-        <div className="feature-grid">
-          <article className="feature-card">
-            <h3>The Maker</h3>
-            <p>
-              A short film of the embroiderer at work — name on screen, fair-pay
-              noted. Proof, not a promise.
-            </p>
-          </article>
-          <article className="feature-card">
-            <h3>The Cloth</h3>
-            <p>
-              Linen, cotton, and silk — breathable, natural, chosen to last. We
-              name the fibre on every label.
-            </p>
-          </article>
-          <article className="feature-card">
-            <h3>The Math</h3>
-            <p>
-              A transparency card per piece: fabric + embroidery + stitching =
-              cost, then MRP. Always honest.
-            </p>
-          </article>
-        </div>
+        <Reveal>
+          <p className="eyebrow">Why Susan Atelier</p>
+          <h2 id="why-title">Made by named hands, not machines</h2>
+          <p className="lede">
+            Every piece carries the name of the artisan who embroidered it. We
+            show you who, what, and what they earned — because "artisan-made"
+            means nothing if it stays a slogan.
+          </p>
+        </Reveal>
+        <StaggerGroup className="feature-grid">
+          <StaggerItem>
+            <article className="feature-card">
+              <h3>The Maker</h3>
+              <p>
+                A short film of the embroiderer at work — name on screen, fair-pay
+                noted. Proof, not a promise.
+              </p>
+            </article>
+          </StaggerItem>
+          <StaggerItem>
+            <article className="feature-card">
+              <h3>The Cloth</h3>
+              <p>
+                Linen, cotton, and silk — breathable, natural, chosen to last. We
+                name the fibre on every label.
+              </p>
+            </article>
+          </StaggerItem>
+          <StaggerItem>
+            <article className="feature-card">
+              <h3>The Math</h3>
+              <p>
+                A transparency card per piece: fabric + embroidery + stitching =
+                cost, then MRP. Always honest.
+              </p>
+            </article>
+          </StaggerItem>
+        </StaggerGroup>
       </section>
 
       <section className="statement" aria-labelledby="statement-title" style={{ marginTop: 'var(--space-12)' }}>
-        <div className="wrap">
+        <Reveal className="wrap">
           <div className="statement-logo">
             <Image
               src="/logos/trans/Susan_Atelier_Favicon_512-trans.png"
@@ -133,7 +142,7 @@ export default function HomePage() {
           <p className="statement-tag" id="statement-title">
             Made by named hands. <span className="em">Worn for years — made by hand in India.</span>
           </p>
-        </div>
+        </Reveal>
       </section>
     </>
   );

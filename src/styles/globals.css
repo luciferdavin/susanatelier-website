@@ -801,6 +801,7 @@ a {
 }
 
 .product-card__media {
+  position: relative;
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background: linear-gradient(135deg, var(--gold-tint), var(--accent-soft));
