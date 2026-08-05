@@ -45,6 +45,7 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
             alt={product.name}
             fill
             sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
+            className="image--contain"
             loading="lazy"
           />
           {product.hero && (
@@ -94,7 +95,7 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
           alt={product.name}
           fill
           sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
-          className="product-card__image"
+          className="product-card__image image--contain"
           loading="lazy"
         />
       </div>

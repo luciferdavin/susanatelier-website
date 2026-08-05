@@ -2180,3 +2180,41 @@ body.menu-open #mobileMenu {
   color: var(--text-primary);
 }
 
+/* --- visual adjustments --- */
+.image--contain {
+  object-fit: contain !important;
+}
+.image--cover {
+  object-fit: cover !important;
+}
+
+/* --- modal gallery layout --- */
+.modal-gallery {
+  display: flex;
+  flex-direction: column;
+  background: var(--ivory-deep);
+  border-right: 1px solid var(--line);
+}
+.modal-gallery .modal-media {
+  flex: 1;
+  min-height: 420px;
+  position: relative;
+}
+.modal-gallery .pd-thumbnails {
+  padding: 16px 24px;
+  border-top: 1px solid var(--line);
+  background: var(--ivory-deep);
+  margin-top: 0;
+}
+
+@media (max-width: 900px) {
+  .modal-gallery {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .modal-gallery .modal-media {
+    min-height: 320px;
+  }
+}
+
+

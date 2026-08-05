@@ -57,7 +57,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                 fill
                 priority
                 sizes="(max-width: 900px) 100vw, 50vw"
-                className="pd-image"
+                className={`pd-image ${activeImg === "ghost" ? "image--contain" : "image--cover"}`}
               />
             </div>
             <div className="pd-thumbnails">

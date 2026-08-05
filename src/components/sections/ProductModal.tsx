@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Product } from "@/lib/products";
@@ -20,8 +20,11 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const prevFocus = useRef<HTMLElement | null>(null);
 
+  const [activeImg, setActiveImg] = useState<"ghost" | "real">("ghost");
+
   useEffect(() => {
     if (!product) return;
+    setActiveImg("ghost"); // reset image view when product changes
     prevFocus.current = document.activeElement as HTMLElement;
     closeRef.current?.focus();
     document.body.style.overflow = "hidden";
@@ -55,6 +58,10 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     `Hi Susan Atelier — I'd like to reserve "${product.name}" (${formatPrice(product.price)}).`
   )}`;
 
+  const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
+  const realSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.png`;
+  const currentSrc = activeImg === "ghost" ? ghostSrc : realSrc;
+
   return (
     <div
       className="modal open"
@@ -75,13 +82,38 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         >
           ✕
         </button>
-        <div className="modal-media">
-          <Image
-            src={`/images/ghost-${String(product.id).padStart(2, "0")}.png`}
-            alt={product.name}
-            fill
-            sizes="(max-width: 1000px) 100vw, 50vw"
-          />
+        <div className="modal-gallery">
+          <div className="modal-media">
+            <Image
+              src={currentSrc}
+              alt={product.name}
+              fill
+              sizes="(max-width: 1000px) 100vw, 50vw"
+              className={activeImg === "ghost" ? "image--contain" : "image--cover"}
+            />
+          </div>
+          <div className="pd-thumbnails">
+            <button
+              className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
+              onClick={() => setActiveImg("ghost")}
+              aria-label="View Studio drape"
+            >
+              <div className="pd-thumbnail__frame">
+                <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
+              </div>
+              <span>Studio</span>
+            </button>
+            <button
+              className={`pd-thumbnail ${activeImg === "real" ? "active" : ""}`}
+              onClick={() => setActiveImg("real")}
+              aria-label="View Model drape"
+            >
+              <div className="pd-thumbnail__frame">
+                <Image src={realSrc} alt="Model drape" fill sizes="44px" />
+              </div>
+              <span>Model</span>
+            </button>
+          </div>
         </div>
         <div className="modal-body">
           <p className="eyebrow">
