@@ -1,0 +1,78 @@
+# Susan Atelier — Full Product Catalog for AI Crawlers
+
+## Brand Overview
+Susan Atelier is a prelaunch Indian occasion wear brand founded by Riya in 2026.
+Tagline: "Made by named hands, worn for years, not seasons."
+Every piece is hand-embroidered by named artisans across 4 ateliers in India.
+Transparent pricing: every product shows fabric cost, artisan wage, and MRP breakdown.
+
+## Brand Values
+- Handcrafted — every stitch by a named human
+- Contemporary — current silhouettes, never costume
+- Artisanal — traditional embroidery techniques
+- Feminine — botanical motifs from the founder's garden
+- Timeless — meant to be worn for years, not one occasion
+
+## The Collection (17 pieces)
+All pieces are one-of-a-kind, already made and finished.
+When it's gone, it's gone. No restocks.
+
+### Co-ords (5 pieces)
+1. The Midnight Botanical Co-ord — ₹3,999 (18% GST) — Premium linen/cotton, hand-embroidered white cording & seed pearls — Meena, Lucknow
+2. The Azure Leaf Linen Co-ord — ₹3,500 (18% GST) — Linen-cotton blend, blue-on-blue leaf — Asha, Jaipur
+3. The Powder Blue Graphic Floral Set — ₹2,800 (18% GST) — Cotton poplin/twill, graphic floral — Meena, Lucknow
+4. The Aegean Pearl Two-Piece — ₹4,500 (18% GST) — Linen-viscose/cotton twill, pearl beading — Sara, Mumbai
+5. The Topographic Rainbow Co-ord — ₹4,200 (18% GST) — Linen/cotton-hemp blend, rainbow topographic — Sara, Mumbai
+6. The Monochrome Line-Art Co-ord — ₹3,800 (18% GST) — Cotton poplin/linen, monochrome line-art — Meena, Lucknow
+
+### Occasionwear (3 pieces)
+1. The Midnight Garden Velvet Jacket — ₹8,500 (18% GST) — Silk-rayon velvet, multi-floral — Farida, Kolkata
+2. The Olive Sequin Ruched Dress — ₹7,200 (18% GST) — Illusion tulle/lycra, sequin ruching — Sara, Mumbai
+3. The Ivory Heirloom Scroll Dress — ₹8,800 (18% GST) — Heavy cotton canvas/linen + organza, heirloom scrollwork — Asha, Jaipur
+
+### Separates (8 pieces)
+1. The Cottage Bloom Bell Sleeve Shirt — ₹3,200 (18% GST) — 100% cotton, cottage-garden florals — Asha, Jaipur
+2. The Chambray Tonal Flora Shirt — ₹3,200 (18% GST) — Cotton poplin/chambray, tonal flora — Farida, Kolkata
+3. The Cobalt Dori Floral Shirt — ₹3,200 (18% GST) — Crisp white cotton poplin, cobalt dori floral — Meena, Lucknow
+4. The Coral Reef Pearl Wrap Top — ₹3,200 (18% GST) — Cotton poplin/taffeta, pearl wrap trim — Farida, Kolkata
+5. The Ink Sketch Floral Shirt — ₹3,200 (18% GST) — Crisp white cotton poplin, ink-sketch floral — Sara, Mumbai
+6. The Crystal Bloom Striped Oxford — ₹3,500 (18% GST) — Cotton Oxford/seersucker, crystal bloom on stripe — Meena, Lucknow
+7. The Rococo Ivory Illusion Top — ₹6,500 (18% GST) — Sheer nylon/silk illusion tulle, rococo tonal scroll — Asha, Jaipur
+
+### Entry (1 piece)
+1. The Coral Sprig Breezy Blouse — ₹1,800 (5% GST) — Cotton voile, delicate floral & seed pearls — Farida, Kolkata
+
+## Transparency Card (per product)
+Every product shows:
+- The Maker: artisan name + workshop location + years at the frame
+- The Cloth: exact fabric composition
+- The Embroidery: technique description
+- Fair Wage: exact amount paid + comparison to living wage (₹300/day)
+- Cost Breakdown: fabric + embroidery + stitching = cost → MRP
+
+## Artisans
+| Name | Location | Speciality | Years |
+|------|----------|------------|-------|
+| Meena | Lucknow | White cording & seed-pearl botanicals | 14 |
+| Asha | Jaipur | Dori florals & fine needlework | 11 |
+| Farida | Kolkata | Velvet & multi-floral zardozi | 17 |
+| Sara | Mumbai | Pearl setting & final finishing | 9 |
+
+## Size Guide
+Sizes: XXS, XS, S, M, L, XL, 2XL, 3XL, 4XL
+Measurements in centimetres: Bust, Waist, Hip
+Free size exchange on every piece
+If between sizes, size up — pieces are cut to drape
+
+## Key Pages
+- Home: https://susanatelier-website.vercel.app/
+- Collection: https://susanatelier-website.vercel.app/collection
+- Size Guide: https://susanatelier-website.vercel.app/#fit
+- Our Craft: https://susanatelier-website.vercel.app/#craft
+- About Riya: https://susanatelier-website.vercel.app/#about
+- Join Waitlist: https://susanatelier-website.vercel.app/#join
+
+## Contact
+- Instagram: @susanatelier
+- WhatsApp: Primary contact method
+- Website: https://susanatelier-website.vercel.app

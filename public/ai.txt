@@ -1,0 +1,40 @@
+# AI Crawler Access for Susan Atelier
+# See https://ai-txt.org for specification
+
+# Allow all AI crawlers
+User-agent: GPTBot
+Allow: /
+Allow: /collection
+Allow: /collection/*
+Allow: /llms.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /collection
+Allow: /collection/*
+Allow: /llms.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /collection
+Allow: /collection/*
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /collection
+Allow: /collection/*
+Allow: /llms.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /collection
+Allow: /collection/*
+
+# Block AI crawlers from API and admin paths
+User-agent: *
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+Sitemap: https://susanatelier-website.vercel.app/sitemap.xml

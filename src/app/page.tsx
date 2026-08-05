@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/schemas";
+import { generateOrganizationSchema, generateWebSiteSchema, generateFAQSchema, generateHowToSchema } from "@/lib/schemas";
 import JsonLd from "@/components/JsonLd";
 import { Reveal } from "@/components/motion/Reveal";
 import Hero from "@/components/sections/Hero";
@@ -22,11 +22,15 @@ export const metadata: Metadata = {
 export default function HomePage() {
   const organizationSchema = generateOrganizationSchema();
   const webSiteSchema = generateWebSiteSchema();
+  const faqSchema = generateFAQSchema();
+  const howToSchema = generateHowToSchema();
 
   return (
     <>
       <JsonLd schema={organizationSchema} />
       <JsonLd schema={webSiteSchema} />
+      <JsonLd schema={faqSchema} />
+      <JsonLd schema={howToSchema} />
       <a className="skip" href="#collection">
         Skip to collection
       </a>
