@@ -17,7 +17,7 @@ export default function ProductDetail({ product }: { product: Product }) {
     const message = `Hi Susan Atelier! I'd like to pre-order: ${product.name} (₹${product.price.toLocaleString(
       "en-IN"
     )}). My email: [your email]`;
-    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "91XXXXXXXXXX";
+    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME";
     window.open(
       `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
       "_blank"

@@ -35,7 +35,7 @@
   --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
-  --radius-sm: 4px;
+  --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-full: 9999px;
@@ -171,7 +171,7 @@ a {
   font-size: 1.05rem;
   min-height: 50px;
   padding: 0 var(--space-6);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   border: 1.5px solid transparent;
   cursor: pointer;
   transition: transform 200ms var(--ease-soft),
@@ -505,7 +505,7 @@ a {
 .capture input,
 .modal-input {
   border: 1px solid var(--gold-tint);
-  background: #fff;
+  background: var(--ivory);
   font-family: var(--font-body);
   font-size: 1.05rem;
   color: var(--text-primary);
@@ -750,11 +750,11 @@ a {
 }
 
 .fbtn {
-  background: #fff;
+  background: var(--ivory);
   border: 1px solid var(--gold-tint);
   color: var(--text-secondary);
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
@@ -1118,7 +1118,7 @@ a {
 }
 
 .survey-card {
-  background: #fff;
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-8);

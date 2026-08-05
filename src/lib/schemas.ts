@@ -59,14 +59,14 @@ export function generateOrganizationSchema(): OrganizationSchema {
     name: "Susan Atelier",
     url: buildUrl("/"),
     logo: buildUrl("/logos/trans/Susan_Atelier_Logo_WordmarkLockup-trans.png"),
-    foundingDate: "2026",
+    foundingDate: new Date().getFullYear().toString(),
     founder: {
       "@type": "Person",
       name: "Riya",
     },
     sameAs: [
       "https://instagram.com/susanatelier",
-      "https://wa.me/91XXXXXXXXXX",
+      `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME"}`,
     ],
     address: {
       "@type": "PostalAddress",

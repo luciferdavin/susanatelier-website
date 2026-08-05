@@ -23,7 +23,7 @@ export function HeroEmailForm() {
     }
 
     localStorage.setItem("sa_email", email);
-    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "91XXXXXXXXXX";
+    const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME";
     const message = `Hi Susan Atelier! I'd like early access to the waitlist. Email: ${email}`;
     window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
   };
