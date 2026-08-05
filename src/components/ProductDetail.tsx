@@ -23,7 +23,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   const barWidth = Math.min(wage / 10, 100);
 
   const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
-  const realSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.jpg`;
+  const realSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.png`;
   const currentSrc = activeImg === "ghost" ? ghostSrc : realSrc;
 
   const handleNotify = () => {
