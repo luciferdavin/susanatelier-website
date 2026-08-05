@@ -22,7 +22,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   const wagePct = Math.round(((wage - LIVING_WAGE) / LIVING_WAGE) * 100);
   const barWidth = Math.min(wage / 10, 100);
 
-  const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
+  const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.webp`;
   const realSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.png`;
   const currentSrc = activeImg === "ghost" ? ghostSrc : realSrc;
 

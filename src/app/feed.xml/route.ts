@@ -21,7 +21,7 @@ export function GET(): Response {
 
   const items = PRODUCTS.map((p) => {
     const productUrl = `${siteUrl}/collection/${p.id}`;
-    const imageUrl = `${siteUrl}/images/ghost-${String(p.id).padStart(2, "0")}.png`;
+    const imageUrl = `${siteUrl}/images/ghost-${String(p.id).padStart(2, "0")}.webp`;
     return `
     <item>
       <title>${escapeXml(p.name)}</title>

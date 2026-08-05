@@ -42,7 +42,7 @@ export function generateMetadata({
       description: `${product.fab}. Made by ${product.maker}. ${product.mrp} incl. GST.`,
       images: [
         {
-          url: buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.png`),
+          url: buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.webp`),
           width: 1200,
           height: 630,
           alt: product.name,
@@ -53,7 +53,7 @@ export function generateMetadata({
       card: "summary_large_image",
       title: product.name,
       description: `${product.fab}. Made by ${product.maker}.`,
-      images: [buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.png`)],
+      images: [buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.webp`)],
     },
   };
 }

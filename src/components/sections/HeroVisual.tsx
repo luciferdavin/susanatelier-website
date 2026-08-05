@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { SprigIcon } from "@/components/icons/BrandIcons";
 
-const IMG = "/images/hero-model.png";
+const IMG = "/images/hero-model.webp";
 const ALT = "The Midnight Botanical Co-ord — hand-embroidered linen co-ord worn by a model";
 
 function FigCaption() {

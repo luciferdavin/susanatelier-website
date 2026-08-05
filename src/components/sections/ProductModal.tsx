@@ -58,7 +58,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     `Hi Susan Atelier — I'd like to reserve "${product.name}" (${formatPrice(product.price)}).`
   )}`;
 
-  const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
+  const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.webp`;
   const realSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.png`;
   const currentSrc = activeImg === "ghost" ? ghostSrc : realSrc;
 

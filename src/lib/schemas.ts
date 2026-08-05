@@ -136,7 +136,7 @@ export function generateProductSchema(product: Product): ProductSchema {
       "@type": "Brand",
       name: "Susan Atelier",
     },
-    image: buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.png`),
+    image: buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.webp`),
     category: product.cat,
     offers: {
       "@type": "Offer",

@@ -22,7 +22,7 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
     product.cat === "coord"
       ? "Co-ord"
       : product.cat.charAt(0).toUpperCase() + product.cat.slice(1);
-  const imgSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
+  const imgSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.webp`;
 
   if (onSelect) {
     return (
