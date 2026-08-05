@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Product, formatPrice } from "@/lib/products";
+import { motion, useReducedMotion } from "framer-motion";
+import { Product, formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
 
 /**
  * Product detail view (client) — interactive pre-order via WhatsApp.
@@ -10,8 +12,19 @@ import { Product, formatPrice } from "@/lib/products";
  * page metadata, and renders the Product + Breadcrumb structured data.
  */
 export default function ProductDetail({ product }: { product: Product }) {
+  const [activeImg, setActiveImg] = useState<"ghost" | "real">("ghost");
+  const reduced = useReducedMotion();
+  
   const gstLabel = product.gst === 5 ? "5% GST" : "18% GST";
   const gstClass = product.gst === 5 ? "gst--5" : "gst--18";
+  
+  const wage = parseWage(product.wage);
+  const wagePct = Math.round(((wage - LIVING_WAGE) / LIVING_WAGE) * 100);
+  const barWidth = Math.min(wage / 10, 100);
+
+  const ghostSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
+  const realSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.jpg`;
+  const currentSrc = activeImg === "ghost" ? ghostSrc : realSrc;
 
   const handleNotify = () => {
     const message = `Hi Susan Atelier! I'd like to pre-order: ${product.name} (₹${product.price.toLocaleString(
@@ -36,15 +49,39 @@ export default function ProductDetail({ product }: { product: Product }) {
 
       <section className="product-detail" aria-labelledby="product-title">
         <div className="pd">
-          <div className="pd-media">
-            <Image
-              src={`/images/ghost-${String(product.id).padStart(2, "0")}.png`}
-              alt={product.name}
-              fill
-              priority
-              sizes="(max-width: 900px) 100vw, 50vw"
-              className="pd-image"
-            />
+          <div className="pd-gallery">
+            <div className="pd-media">
+              <Image
+                src={currentSrc}
+                alt={product.name}
+                fill
+                priority
+                sizes="(max-width: 900px) 100vw, 50vw"
+                className="pd-image"
+              />
+            </div>
+            <div className="pd-thumbnails">
+              <button
+                className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
+                onClick={() => setActiveImg("ghost")}
+                aria-label="View Studio drape"
+              >
+                <div className="pd-thumbnail__frame">
+                  <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
+                </div>
+                <span>Studio</span>
+              </button>
+              <button
+                className={`pd-thumbnail ${activeImg === "real" ? "active" : ""}`}
+                onClick={() => setActiveImg("real")}
+                aria-label="View Model drape"
+              >
+                <div className="pd-thumbnail__frame">
+                  <Image src={realSrc} alt="Model drape" fill sizes="44px" />
+                </div>
+                <span>Model</span>
+              </button>
+            </div>
           </div>
 
           <div>
@@ -99,9 +136,37 @@ export default function ProductDetail({ product }: { product: Product }) {
               </div>
               <div className="trow">
                 <span>Maker wage</span>
-                <span>{product.wage}</span>
+                <span>
+                  {formatPrice(wage)} · {wagePct >= 0 ? "+" : ""}
+                  {wagePct}% vs living wage
+                </span>
               </div>
-              <div className="trow">
+
+              <div className="wage-wrap" style={{ marginBottom: "18px" }}>
+                <div className="wage-track">
+                  {reduced ? (
+                    <span
+                      className="wage-bar"
+                      style={{ width: `${barWidth}%` }}
+                    />
+                  ) : (
+                    <motion.span
+                      className="wage-bar"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${barWidth}%` }}
+                      transition={{ duration: 1.1, delay: 0.2, ease: "easeOut" }}
+                    />
+                  )}
+                  <span className="wage-mark" style={{ left: "30%" }} />
+                </div>
+                <div className="wage-lbls">
+                  <span>₹0</span>
+                  <span>living wage ₹{LIVING_WAGE}</span>
+                  <span>₹1,000</span>
+                </div>
+              </div>
+
+              <div className="trow" style={{ borderTop: "1px dashed var(--line)", paddingTop: "9px" }}>
                 <span>MRP (incl. GST)</span>
                 <span>{product.mrp}</span>
               </div>

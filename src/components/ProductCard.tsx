@@ -55,7 +55,9 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
               Entry · 5% GST
             </span>
           )}
-          <span className="p-tag">{catLabel}</span>
+          <span className={`p-tag ${(product.hero || product.entry) ? "p-tag--offset" : ""}`}>
+            {catLabel}
+          </span>
           <span className="p-quick">View piece +</span>
         </div>
         <div className="p-info">
