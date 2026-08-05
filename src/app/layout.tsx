@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import Ticker from "@/components/sections/Ticker";
 import Preloader from "@/components/sections/Preloader";
 import CustomCursor from "@/components/sections/CustomCursor";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { getSiteUrl, OG_IMAGE, siteConfig } from "@/lib/site";
 
 const playfair = Playfair_Display({
@@ -109,6 +110,7 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" title="Susan Atelier Collection" href="/feed.xml" />
       </head>
       <body>
+        <GoogleAnalytics />
         <Preloader />
         <CustomCursor />
         <Ticker />
