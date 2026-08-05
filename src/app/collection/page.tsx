@@ -12,7 +12,7 @@ import JsonLd from "@/components/JsonLd";
 export const metadata: Metadata = createMetadata({
   title: "The Collection — 17 pieces, already made",
   description:
-    "Browse the full Susan Atelier launch collection: 17 one-of-a-kind pieces across co-ords, occasionwear, separates, and entry styles. Tap any piece for fabric, maker, and an honest price.",
+    "17 handmade Indian occasion wear pieces — co-ords, separates, and more. Each shows fabric, maker, and honest price breakdown.",
   path: "/collection",
   keywords: [
     "Indian occasion wear collection",

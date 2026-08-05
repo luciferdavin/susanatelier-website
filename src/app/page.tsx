@@ -13,7 +13,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import JoinSection from "@/components/sections/JoinSection";
 
 export const metadata: Metadata = {
-  title: "Made by named hands, worn for years",
+  title: "Contemporary Indian Occasion Wear — 17-Piece Collection",
   description:
     "Susan Atelier — contemporary Indian occasion wear made by named hands. 17-piece launch collection featuring co-ords, occasionwear, and separates. Join the waitlist for early access.",
   alternates: { canonical: "/" },

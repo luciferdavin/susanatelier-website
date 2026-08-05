@@ -59,7 +59,7 @@ export function generateOrganizationSchema(): OrganizationSchema {
     name: "Susan Atelier",
     url: buildUrl("/"),
     logo: buildUrl("/logos/trans/Susan_Atelier_Logo_WordmarkLockup-trans.png"),
-    foundingDate: new Date().getFullYear().toString(),
+    foundingDate: "2026",
     founder: {
       "@type": "Person",
       name: "Riya",
@@ -83,16 +83,11 @@ export interface WebSiteSchema extends JsonLdBase {
   "@type": "WebSite";
   name: string;
   url: string;
-  potentialAction: {
-    "@type": "SearchAction";
-    target: { "@type": "EntryPoint"; urlTemplate: string };
-    "query-input": string;
-  };
 }
 
 /**
- * WebSite schema with an internal search action. Kept honest: the search
- * endpoint is the real collection filter (`/collection?search=`).
+ * WebSite schema. SearchAction removed — collection filtering is client-only
+ * and non-functional for crawlers. Keep honest: no broken promises.
  */
 export function generateWebSiteSchema(): WebSiteSchema {
   return {
@@ -100,14 +95,6 @@ export function generateWebSiteSchema(): WebSiteSchema {
     "@type": "WebSite",
     name: "Susan Atelier",
     url: buildUrl("/"),
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: buildUrl("/collection?search={search_term_string}"),
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 

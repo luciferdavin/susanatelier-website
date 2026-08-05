@@ -33,7 +33,7 @@ export function generateMetadata({
   }
   return {
     title: product.name,
-    description: `${product.name} — ${product.fab}. Made by ${product.maker}. ${product.mrp} incl. GST.`,
+    description: `${product.name} — ${product.fab}. Handmade by ${product.maker}. ${product.mrp} incl. GST.`.slice(0, 155),
     alternates: { canonical: buildUrl(`/collection/${product.id}`) },
     openGraph: {
       type: "website",
@@ -42,7 +42,7 @@ export function generateMetadata({
       description: `${product.fab}. Made by ${product.maker}. ${product.mrp} incl. GST.`,
       images: [
         {
-          url: `/images/ghost-${String(product.id).padStart(2, "0")}.png`,
+          url: buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.png`),
           width: 1200,
           height: 630,
           alt: product.name,
@@ -53,7 +53,7 @@ export function generateMetadata({
       card: "summary_large_image",
       title: product.name,
       description: `${product.fab}. Made by ${product.maker}.`,
-      images: [`/images/ghost-${String(product.id).padStart(2, "0")}.png`],
+      images: [buildUrl(`/images/ghost-${String(product.id).padStart(2, "0")}.png`)],
     },
   };
 }
