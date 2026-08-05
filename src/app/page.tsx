@@ -1,16 +1,16 @@
-import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/schemas";
-import { PRODUCTS } from "@/lib/products";
-import { HeroEmailForm } from "@/components/HeroEmailForm";
 import JsonLd from "@/components/JsonLd";
-import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
-
-/**
- * Home page - Hero, features, brand statement, CTA
- * Static content page with structured data
- */
+import { Reveal } from "@/components/motion/Reveal";
+import Hero from "@/components/sections/Hero";
+import ValuesBand from "@/components/sections/ValuesBand";
+import Marquee from "@/components/sections/Marquee";
+import WhySection from "@/components/sections/WhySection";
+import CollectionShowcase from "@/components/sections/CollectionShowcase";
+import CraftSection from "@/components/sections/CraftSection";
+import FitSection from "@/components/sections/FitSection";
+import AboutSection from "@/components/sections/AboutSection";
+import JoinSection from "@/components/sections/JoinSection";
 
 export const metadata: Metadata = {
   title: "Made by named hands, worn for years",
@@ -27,123 +27,49 @@ export default function HomePage() {
     <>
       <JsonLd schema={organizationSchema} />
       <JsonLd schema={webSiteSchema} />
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="wrap hero-grid">
-          <div className="hero-copy">
-            <Image
-              src="/logos/trans/Susan_Atelier_Logo_WordmarkLockup-trans.png"
-              alt=""
-              width={300}
-              height={80}
-              className="hero-wordmark"
-              priority
-              style={{ width: 'auto', height: 'auto' }}
-            />
-            <h1 id="hero-title">
-              Made by named hands.<br />
-              Worn for years — made by hand in India.
-            </h1>
-            <p className="lede">
-              Contemporary Indian occasion wear, made by named hands — for the
-              woman who&apos;d rather wear one real thing than ten forgettable
-              ones.
-            </p>
-            <HeroEmailForm />
-            <p className="trust">
-              First 50 receive a numbered hangtag (1/50) · Free size exchange ·
-              Genuine MRP, no fake discounts
-            </p>
+      <a className="skip" href="#collection">
+        Skip to collection
+      </a>
+
+      <Hero />
+      <ValuesBand />
+      <Marquee />
+      <WhySection />
+
+      <section
+        id="collection"
+        className="collection"
+        aria-labelledby="collection-title"
+      >
+        <div className="container col-head">
+          <div>
+            <Reveal>
+              <p className="eyebrow">( 02 ) — The Launch Collection</p>
+            </Reveal>
+            <Reveal>
+              <h2 className="sec-title" id="collection-title">
+                Seventeen pieces,
+                <br />
+                <em>already made.</em>
+              </h2>
+            </Reveal>
           </div>
-          <Reveal direction="left" className="hero-art">
-            <Image
-              src="/images/hero-model.png"
-              alt="Susan Atelier piece worn by a real woman"
-              width={500}
-              height={600}
-              priority
-              className="hero-image"
-              style={{ width: 'auto', height: 'auto' }}
-            />
+          <Reveal>
+            <p className="col-sub">
+              One-of-a-kind and finished. Tap any piece for its fabric, the
+              maker, and an honest price breakdown.
+            </p>
           </Reveal>
         </div>
-
-        <StaggerGroup className="pillar-strip wrap" role="list" aria-label="Brand pillars">
-          <StaggerItem className="pillar" role="listitem"><span>✿</span> Handmade</StaggerItem>
-          <StaggerItem className="pillar" role="listitem"><span>◈</span> Botanical</StaggerItem>
-          <StaggerItem className="pillar" role="listitem"><span>✕</span> Artisan</StaggerItem>
-          <StaggerItem className="pillar" role="listitem"><span>❀</span> Natural cloth</StaggerItem>
-          <StaggerItem className="pillar" role="listitem"><span>∞</span> Made to last</StaggerItem>
-        </StaggerGroup>
+        <div className="container">
+          <CollectionShowcase />
+        </div>
       </section>
 
-      <section className="cta-bar" aria-labelledby="cta-title">
-        <Reveal className="wrap cta-row">
-          <Link href="/join" className="btn btn--gold btn--lg">
-            Join the Waitlist
-          </Link>
-          <Link href="/collection" className="btn btn--outline btn--lg">
-            Browse the Collection
-          </Link>
-        </Reveal>
-      </section>
-
-      <section className="wrap" style={{ paddingTop: "var(--space-6)" }} aria-labelledby="why-title">
-        <Reveal>
-          <p className="eyebrow">Why Susan Atelier</p>
-          <h2 id="why-title">Made by named hands, not machines</h2>
-          <p className="lede">
-            Every piece carries the name of the artisan who embroidered it. We
-            show you who, what, and what they earned — because "artisan-made"
-            means nothing if it stays a slogan.
-          </p>
-        </Reveal>
-        <StaggerGroup className="feature-grid">
-          <StaggerItem>
-            <article className="feature-card">
-              <h3>The Maker</h3>
-              <p>
-                A short film of the embroiderer at work — name on screen, fair-pay
-                noted. Proof, not a promise.
-              </p>
-            </article>
-          </StaggerItem>
-          <StaggerItem>
-            <article className="feature-card">
-              <h3>The Cloth</h3>
-              <p>
-                Linen, cotton, and silk — breathable, natural, chosen to last. We
-                name the fibre on every label.
-              </p>
-            </article>
-          </StaggerItem>
-          <StaggerItem>
-            <article className="feature-card">
-              <h3>The Math</h3>
-              <p>
-                A transparency card per piece: fabric + embroidery + stitching =
-                cost, then MRP. Always honest.
-              </p>
-            </article>
-          </StaggerItem>
-        </StaggerGroup>
-      </section>
-
-      <section className="statement" aria-labelledby="statement-title" style={{ marginTop: 'var(--space-12)' }}>
-        <Reveal className="wrap">
-          <div className="statement-logo">
-            <Image
-              src="/logos/trans/Susan_Atelier_Favicon_512-trans.png"
-              alt="Susan Atelier SA monogram"
-              width={84}
-              height={84}
-              priority
-            />
-          </div>
-          <p className="statement-tag" id="statement-title">
-            Made by named hands. <span className="em">Worn for years — made by hand in India.</span>
-          </p>
-        </Reveal>
-      </section>
+      <CraftSection />
+      <FitSection />
+      <AboutSection />
+      <JoinSection />
     </>
   );
 }

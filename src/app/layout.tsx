@@ -3,6 +3,9 @@ import { Playfair_Display, Cormorant_Garamond, Alex_Brush } from "next/font/goog
 import "../styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Ticker from "@/components/sections/Ticker";
+import Preloader from "@/components/sections/Preloader";
+import CustomCursor from "@/components/sections/CustomCursor";
 import { getSiteUrl, OG_IMAGE, siteConfig } from "@/lib/site";
 
 const playfair = Playfair_Display({
@@ -45,11 +48,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Susan Atelier" }],
   creator: "Susan Atelier",
   publisher: "Susan Atelier",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+  formatDetection: { email: false, address: false, telephone: false },
   metadataBase: new URL(getSiteUrl()),
   openGraph: {
     type: "website",
@@ -107,9 +106,11 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${alexBrush.variable}`}>
       <head>
         <link rel="icon" href="/logos/trans/Susan_Atelier_Favicon_512-trans.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
+        <Preloader />
+        <CustomCursor />
+        <Ticker />
         <Header />
         <main id="main-content" role="main">
           {children}

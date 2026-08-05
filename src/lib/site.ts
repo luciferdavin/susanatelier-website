@@ -35,14 +35,7 @@ export const OG_IMAGE = {
 } as const;
 
 /** Static route paths that should appear in the sitemap and nav. */
-export const STATIC_ROUTES = [
-  "",
-  "/collection",
-  "/craft",
-  "/fit",
-  "/about",
-  "/join",
-] as const;
+export const STATIC_ROUTES = ["", "/collection"] as const;
 
 type SiteConfig = {
   name: string;

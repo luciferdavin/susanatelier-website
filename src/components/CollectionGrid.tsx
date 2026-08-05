@@ -42,17 +42,23 @@ export default function CollectionGrid() {
         </Reveal>
 
         <div className="filterbar" role="group" aria-label="Filter by category">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              className={`fbtn ${activeCategory === cat.id ? "active" : ""}`}
-              onClick={() => setActiveCategory(cat.id)}
-              aria-pressed={activeCategory === cat.id}
-              aria-controls="product-grid"
-            >
-              {cat.label}
-            </button>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const count =
+              cat.id === "all"
+                ? PRODUCTS.length
+                : PRODUCTS.filter((p) => p.cat === cat.id).length;
+            return (
+              <button
+                key={cat.id}
+                className={`fbtn ${activeCategory === cat.id ? "active" : ""}`}
+                onClick={() => setActiveCategory(cat.id)}
+                aria-pressed={activeCategory === cat.id}
+                aria-controls="product-grid"
+              >
+                {cat.label} <sup>{count}</sup>
+              </button>
+            );
+          })}
         </div>
 
         <StaggerGroup

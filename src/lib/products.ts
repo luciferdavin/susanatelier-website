@@ -266,3 +266,12 @@ export function getProductsByCategory(cat: string): Product[] {
   if (cat === "all") return PRODUCTS;
   return PRODUCTS.filter((p) => p.cat === cat);
 }
+
+/** Extract numeric wage from the wage string for modal wage bar. */
+export const LIVING_WAGE = 300;
+
+export function parseWage(wage: string): number {
+  const match = wage.match(/₹([\d,]+)/);
+  if (!match) return 0;
+  return parseInt(match[1].replace(/,/g, ""), 10);
+}

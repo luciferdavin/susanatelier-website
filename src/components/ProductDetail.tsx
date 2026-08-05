@@ -75,10 +75,10 @@ export default function ProductDetail({ product }: { product: Product }) {
             </div>
 
             <div className="pd-actions">
-              <button className="btn btn--primary" onClick={handleNotify}>
+              <button className="btn btn--solid" onClick={handleNotify}>
                 Pre-order via WhatsApp
               </button>
-              <Link href="/fit" className="btn btn--outline">
+              <Link href="/#fit" className="btn btn--outline">
                 Check Size & Fit
               </Link>
             </div>

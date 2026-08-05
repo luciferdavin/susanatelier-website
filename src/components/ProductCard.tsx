@@ -2,20 +2,75 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Product, formatPrice } from "@/lib/products";
+import type { Product } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
 
 interface ProductCardProps {
   product: Product;
+  /** When provided, clicking the card calls onSelect instead of linking. */
+  onSelect?: (product: Product) => void;
 }
 
 /**
- * ProductCard component - displays product in collection grid
- * Used by Collection page
+ * Product card — dual-mode: link to /collection/[id] (default) or
+ * modal-trigger via onSelect. Used by both home showcase and /collection grid.
  */
-
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, onSelect }: ProductCardProps) {
   const gstClass = product.gst === 5 ? "gst--5" : "gst--18";
   const gstLabel = product.gst === 5 ? "5% GST" : "18% GST";
+  const catLabel =
+    product.cat === "coord"
+      ? "Co-ord"
+      : product.cat.charAt(0).toUpperCase() + product.cat.slice(1);
+  const imgSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.png`;
+
+  if (onSelect) {
+    return (
+      <article
+        className="p-card"
+        role="button"
+        tabIndex={0}
+        aria-label={`${product.name} — ${formatPrice(product.price)}`}
+        onClick={() => onSelect(product)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onSelect(product);
+          }
+        }}
+      >
+        <div className="p-media">
+          <Image
+            src={imgSrc}
+            alt={product.name}
+            fill
+            sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
+            loading="lazy"
+          />
+          {product.hero && (
+            <span className="product-card__badge badge--hero">Our Hero</span>
+          )}
+          {product.entry && (
+            <span className="product-card__badge badge--entry">
+              Entry · 5% GST
+            </span>
+          )}
+          <span className="p-tag">{catLabel}</span>
+          <span className="p-quick">View piece +</span>
+        </div>
+        <div className="p-info">
+          <div className="p-row">
+            <h3>{product.name}</h3>
+            <span className="p-price">{formatPrice(product.price)}</span>
+          </div>
+          <p className="p-fab">{product.fab}</p>
+          <p className="p-maker">
+            <i>✦</i> Embroidered by {product.maker}
+          </p>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <Link
@@ -27,12 +82,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         <span className="product-card__badge badge--hero">Our Hero</span>
       )}
       {product.entry && (
-        <span className="product-card__badge badge--entry">Entry · 5% GST</span>
+        <span className="product-card__badge badge--entry">
+          Entry · 5% GST
+        </span>
       )}
-
       <div className="product-card__media">
         <Image
-          src={`/images/ghost-${String(product.id).padStart(2, "0")}.png`}
+          src={imgSrc}
           alt={product.name}
           fill
           sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
@@ -40,7 +96,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           loading="lazy"
         />
       </div>
-
       <div className="product-card__body">
         <div className="product-card__name">{product.name}</div>
         <div className="product-card__fab">{product.fab}</div>
