@@ -106,6 +106,7 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${alexBrush.variable}`}>
       <head>
         <link rel="icon" href="/logos/trans/Susan_Atelier_Favicon_512-trans.png" />
+        <link rel="alternate" type="application/rss+xml" title="Susan Atelier Collection" href="/feed.xml" />
       </head>
       <body>
         <Preloader />
