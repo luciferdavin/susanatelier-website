@@ -119,3 +119,108 @@ export function DividerIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+interface MonogramProps extends SVGProps<SVGSVGElement> {
+  size?: number;
+  color?: 'black' | 'white' | 'auto';
+  showThread?: boolean;
+}
+
+export function Monogram({ 
+  size = 32, 
+  color = 'auto', 
+  showThread = false,
+  ...props
+}: MonogramProps) {
+  const colorValue = color === 'auto' ? 'currentColor' : 
+    color === 'white' ? '#F5EAE1' : '#3B2412';
+
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      width={size} 
+      height={size} 
+      color={colorValue} 
+      aria-hidden="true"
+      {...props}
+    >
+      {/* S Spine */}
+      <path d="M14,10 C14,12.21 12.21,14 10,14 C7.79,14 6,12.21 6,10 C6,7.79 7.79,6 10,6 C11.1,6 12,6.9 12,8 C12,9.1 11.1,10 10,10 C8.9,10 8,9.1 8,8 C8,6.9 8.9,6 10,6"
+            stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      
+      {/* A Legs */}
+      <path d="M7.5,4 L12,20.3" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      <path d="M20.5,4 L12,20.3" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      
+      {/* A Crossbar */}
+      <path d="M7.5,12.3 L20.5,12.3" stroke="currentColor" strokeWidth="0.5" fill="none"/>
+      
+      {/* Gold Thread */}
+      {showThread && (
+        <line x1="12" y1="10" x2="12" y2="22" stroke="#8A6324" strokeWidth="0.5"/>
+      )}
+    </svg>
+  );
+}
+
+interface SignatureProps extends SVGProps<SVGSVGElement> {
+  color?: 'black' | 'white' | 'red' | 'auto';
+  size?: 'sm' | 'md' | 'lg';
+  showThread?: boolean;
+}
+
+const signatureSizeMap = {
+  sm: { width: 120, height: 36, stroke: 2 },
+  md: { width: 200, height: 60, stroke: 3 },
+  lg: { width: 300, height: 90, stroke: 4 },
+};
+
+export function Signature({ 
+  color = 'auto', 
+  size = 'md', 
+  showThread = false,
+  ...props
+}: SignatureProps) {
+  const { width, height, stroke } = signatureSizeMap[size];
+  const colorValue = color === 'auto' ? 'currentColor' : 
+    color === 'white' ? '#F5EAE1' : 
+    color === 'red' ? '#8A6324' : '#3B2412';
+
+  return (
+    <svg 
+      viewBox="0 0 200 60" 
+      width={width} 
+      height={height} 
+      color={colorValue} 
+      aria-hidden="true"
+      {...props}
+    >
+      {/* R */}
+      <path d="M10,10 L10,50 M10,10 Q30,10 30,25 Q30,40 10,40 M30,40 L45,50"
+            stroke="currentColor" strokeWidth={stroke} fill="none" 
+            strokeLinecap="round" strokeLinejoin="round"/>
+      
+      {/* i */}
+      <path d="M60,10 L60,50" stroke="currentColor" strokeWidth={stroke * 0.75} 
+            fill="none" strokeLinecap="round"/>
+      <circle cx="60" cy="5" r={stroke} fill="currentColor"/>
+      
+      {/* y */}
+      <path d="M80,10 L90,50 Q95,55 90,55 Q85,55 80,50 L80,65"
+            stroke="currentColor" strokeWidth={stroke} fill="none" 
+            strokeLinecap="round" strokeLinejoin="round"/>
+      
+      {/* a */}
+      <path d="M110,40 Q110,25 125,25 Q140,25 140,40 Q140,55 125,55 Q110,55 110,40
+               M125,25 L125,10"
+            stroke="currentColor" strokeWidth={stroke} fill="none" 
+            strokeLinecap="round" strokeLinejoin="round"/>
+      
+      {showThread && (
+        <line x1="150" y1="30" x2="170" y2="30" 
+              stroke="#8A6324" strokeWidth={stroke * 0.33} />
+      )}
+    </svg>
+  );
+}
+

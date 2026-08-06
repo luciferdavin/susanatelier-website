@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Monogram } from "@/components/icons/BrandIcons";
+import { Button } from "@/components/ui/Button";
 
 /**
  * Header — sticky, transparent → frosted on scroll. Full-screen clip-path
- * mobile menu. Brand uses the monogram PNG + word/script text lockup.
+ * mobile menu. Brand uses the monogram SVG + word/script text lockup.
  */
 
 const NAV_LINKS = [
@@ -14,7 +15,7 @@ const NAV_LINKS = [
   { href: "/#craft", label: "Craft", tag: "named hands" },
   { href: "/#fit", label: "Size & Fit", tag: "XXS–4XL" },
   { href: "/#about", label: "About", tag: "Riya" },
-  { href: "/#join", label: "Join the Waitlist", tag: "1/50" },
+  { href: "/apply", label: "Join the Waitlist", tag: "Apply" },
 ];
 
 export default function Header() {
@@ -41,18 +42,11 @@ export default function Header() {
   return (
     <>
       <header
-        className={`site-header ${isScrolled ? "scrolled" : ""}`}
+        className={`site-header ${isScrolled ? "scrolled" : ""} ${isOpen ? "menu-active" : ""}`}
         role="banner"
       >
         <Link className="brand" href="/" aria-label="Susan Atelier by Riya — home">
-          <Image
-            src="/logos/trans/Susan_Atelier_Logo_Monogram-trans.png"
-            alt=""
-            width={46}
-            height={46}
-            className="brand-mono"
-            priority
-          />
+          <Monogram size={46} color="auto" className="brand-mono" />
           <span className="brand-text">
             <span className="brand-word">Susan Atelier</span>
             <span className="brand-script">by Riya</span>
@@ -67,9 +61,9 @@ export default function Header() {
         </nav>
 
         <div className="header-cta">
-          <Link href="/#join" className="btn btn--solid">
+          <Button href="/apply" variant="primary" className="header-cta-btn">
             Join the Waitlist
-          </Link>
+          </Button>
           <button
             className="burger"
             id="burger"
@@ -101,3 +95,4 @@ export default function Header() {
     </>
   );
 }
+

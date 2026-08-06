@@ -1,6 +1,6 @@
-import Link from "next/link";
 import HeroTitle from "@/components/sections/HeroTitle";
 import HeroVisual from "@/components/sections/HeroVisual";
+import { Button } from "@/components/ui/Button";
 
 export default function Hero() {
   return (
@@ -16,9 +16,9 @@ export default function Hero() {
             label carries the name of the artisan who embroidered it.
           </p>
           <div className="hero-cta">
-            <Link href="#join" className="btn btn--solid">
+            <Button href="/apply" variant="primary">
               Join the Waitlist <span>→</span>
-            </Link>
+            </Button>
             <a href="#collection" className="link-underline">
               Browse the Collection
             </a>

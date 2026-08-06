@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "PLACEHOLDER_REPLACE_ME";
 
@@ -20,16 +22,8 @@ export default function WaitlistCard() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const nameInput = document.getElementById("wName") as HTMLInputElement | null;
-    const phoneInput = document.getElementById("wPhone") as HTMLInputElement | null;
-    if (!name.trim()) {
-      nameInput?.focus();
-      return;
-    }
-    if (phone.replace(/\D/g, "").length < 10) {
-      phoneInput?.focus();
-      return;
-    }
+    if (!name.trim()) return;
+    if (phone.replace(/\D/g, "").length < 10) return;
     setPosition(22 + Math.floor(Math.random() * 18)); // 22–39
     setSubmitted(true);
   }
@@ -50,41 +44,42 @@ export default function WaitlistCard() {
           <p className="hs-num">
             You&apos;re Nº {position} / 50 in line, {firstName}.
           </p>
-          <a
-            className="btn btn--ghost"
+          <Button
+            variant="outline"
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener"
+            className="w-full justify-center mt-4"
           >
             Confirm on WhatsApp →
-          </a>
+          </Button>
         </motion.div>
       ) : (
         <>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="wName">Your name</label>
-            <input
+            <Input
               id="wName"
               type="text"
+              label="Your name"
               placeholder="e.g. Ananya"
               required
               autoComplete="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <label htmlFor="wPhone">WhatsApp number</label>
-            <input
+            <Input
               id="wPhone"
               type="tel"
+              label="WhatsApp number"
               placeholder="+91 ·····"
               required
               autoComplete="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
-            <button className="btn btn--solid" type="submit">
+            <Button variant="primary" type="submit" className="w-full justify-center mt-4">
               Join the Waitlist →
-            </button>
+            </Button>
           </form>
           <p className="jc-alt">
             Prefer WhatsApp?{" "}
@@ -97,3 +92,4 @@ export default function WaitlistCard() {
     </div>
   );
 }
+

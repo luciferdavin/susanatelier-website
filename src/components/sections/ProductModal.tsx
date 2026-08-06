@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { Button } from "@/components/ui/Button";
 import type { Product } from "@/lib/products";
 import { formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
 
@@ -10,6 +11,7 @@ interface ProductModalProps {
   product: Product | null;
   onClose: () => void;
 }
+
 
 /**
  * Product detail modal — transparency card + wage bar + WhatsApp reserve.
@@ -177,14 +179,14 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
           </div>
 
           <div className="m-cta">
-            <a
-              className="btn btn--solid"
+            <Button
+              variant="primary"
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
             >
               Reserve on WhatsApp
-            </a>
+            </Button>
             <span className="m-note">
               one of one — when it's gone, it's gone.
             </span>

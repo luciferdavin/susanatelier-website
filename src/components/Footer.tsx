@@ -1,68 +1,111 @@
-import Link from "next/link";
-import Image from "next/image";
-import { DividerIcon } from "@/components/icons/BrandIcons";
+"use client";
 
-/**
- * Footer — dark brand lockup + promise/explore/care columns.
- * Server component; no interactivity.
- */
+import Link from "next/link";
+import { Monogram, DividerIcon, Signature } from "@/components/icons/BrandIcons";
 
 export default function Footer() {
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME";
+
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="container">
-        <div className="lockup on-dark foot-lockup">
-          <Image
-            src="/logos/trans/Susan_Atelier_Logo_Monogram-trans.png"
-            alt="Susan Atelier monogram"
-            width={168}
-            height={168}
-            className="lk-mono"
-          />
-          <div className="lk-word">Susan Atelier</div>
-          <div className="lk-script">by Riya</div>
-          <DividerIcon className="lk-div" />
-          <div className="lk-tag">Timeless. Feminine. Refined.</div>
-        </div>
-
-        <div className="foot-grid">
-          <div>
-            <h5>The promise</h5>
-            <p className="foot-blurb">
-              Made by named hands, worn for years — not seasons. Contemporary
-              Indian occasion wear, hand-embroidered in Lucknow, Jaipur,
-              Kolkata &amp; Mumbai.
+        <div className="foot-inner">
+          {/* Brand Column */}
+          <div className="foot-brand">
+            <div className="foot-lockup">
+              <Monogram size={96} color="white" className="lk-mono" />
+              <div className="lk-word">Susan Atelier</div>
+              <div className="lk-script-container">
+                <span className="lk-by">by</span>
+                <Signature size="sm" color="red" className="lk-sig" />
+              </div>
+              <DividerIcon className="lk-div" />
+              <div className="lk-tag">Timeless. Feminine. Refined.</div>
+            </div>
+            <p className="foot-line">
+              Made by hand in India. Every garment tells you who made it.
             </p>
           </div>
-          <div>
-            <h5>Explore</h5>
-            <Link href="/collection">The Collection</Link>
-            <Link href="/#craft">Our Craft</Link>
-            <Link href="/#fit">Size &amp; Fit</Link>
-            <Link href="/#about">About Riya</Link>
-          </div>
-          <div>
-            <h5>Care</h5>
-            <Link href="/#join">Join the Waitlist</Link>
-            <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || ""}`}
-              target="_blank"
-              rel="noopener"
-            >
-              WhatsApp the Atelier
-            </a>
-            <Link href="/#fit">Free Size Exchange</Link>
-            <Link href="/#why">The Transparency Card</Link>
+
+          {/* Links Nav Columns */}
+          <nav className="foot-nav" aria-label="Footer Navigation">
+            {/* Explore Column */}
+            <details open className="foot-col">
+              <summary className="foot-col-head">Explore</summary>
+              <ul className="foot-col-list">
+                <li>
+                  <Link href="/collection">The Collection</Link>
+                </li>
+                <li>
+                  <Link href="/#craft">Our Craft</Link>
+                </li>
+                <li>
+                  <Link href="/#fit">Size &amp; Fit</Link>
+                </li>
+                <li>
+                  <Link href="/#about">About Riya</Link>
+                </li>
+              </ul>
+            </details>
+
+            {/* Care Column */}
+            <details open className="foot-col">
+              <summary className="foot-col-head">Care</summary>
+              <ul className="foot-col-list">
+                <li>
+                  <Link href="/apply">Join the Waitlist</Link>
+                </li>
+                <li>
+                  <a
+                    href={`https://wa.me/${whatsappNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp the Atelier
+                  </a>
+                </li>
+                <li>
+                  <Link href="/#fit">Free Size Exchange</Link>
+                </li>
+                <li>
+                  <Link href="/#why">The Transparency Card</Link>
+                </li>
+              </ul>
+            </details>
+          </nav>
+
+          {/* Newsletter Column */}
+          <div className="foot-news">
+            <form className="foot-news-form" onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="fn-email" className="foot-news-lbl">
+                Letters from the Atelier
+              </label>
+              <p className="foot-news-desc">Quarterly updates on our craft and collections. No marketing spam.</p>
+              <div className="foot-news-field">
+                <input
+                  id="fn-email"
+                  type="email"
+                  placeholder="your@email.com"
+                  autoComplete="email"
+                  required
+                  className="foot-news-input"
+                />
+                <button type="submit" className="form-btn form-btn-primary foot-news-btn">
+                  Subscribe
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 
+        {/* Legal Bottom Bar */}
         <div className="foot-bottom">
-          <span>
-            © 2026 Susan Atelier by Riya <i>✦</i> Made by named hands in India
-          </span>
-          <span>
-            Genuine MRP <i>—</i> no fake discounts, ever
-          </span>
+          <p className="foot-legal-text">
+            © 2026 Susan Atelier · <Link href="/privacy">privacy</Link> · <Link href="/terms">terms</Link>
+          </p>
+          <p className="foot-transparency-text">
+            Made by hand in India · Artisan wages transparent · Genuine MRP, no fake discounts
+          </p>
         </div>
       </div>
     </footer>

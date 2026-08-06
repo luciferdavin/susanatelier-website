@@ -23,6 +23,13 @@ export const env = {
   /** WhatsApp number for lead capture links. Fallback is a no-op placeholder. */
   WHATSAPP_NUMBER: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME",
 
+  /** Resend API key for transactional emails. Server-side only. */
+  get RESEND_API_KEY(): string | undefined {
+    const key = process.env.RESEND_API_KEY;
+    if (!key) warnMissing("RESEND_API_KEY");
+    return key;
+  },
+
   /** Whether telemetry is disabled for the build toolchain. */
   TELEMETRY_DISABLED: process.env.NEXT_TELEMETRY_DISABLED === "1",
 } as const;
