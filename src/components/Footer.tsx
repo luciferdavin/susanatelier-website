@@ -64,7 +64,10 @@ export default function Footer() {
               <summary className="foot-col-head">Care</summary>
               <ul className="foot-col-list">
                 <li>
-                  <Link href="/apply">Join the Waitlist</Link>
+                  <Link href="/#join">Join the Waitlist</Link>
+                </li>
+                <li>
+                  <Link href="/apply">Become a Custodian</Link>
                 </li>
                 <li>
                   <a

@@ -16,10 +16,13 @@ export default function Hero() {
             label carries the name of the artisan who embroidered it.
           </p>
           <div className="hero-cta">
-            <Button href="/apply" variant="primary">
+            <Button href="/#join" variant="primary">
               Join the Waitlist <span>→</span>
             </Button>
-            <a href="#collection" className="link-underline">
+            <Button href="/apply" variant="outline">
+              Become a Custodian
+            </Button>
+            <a href="#collection" className="link-underline" style={{ marginLeft: "10px" }}>
               Browse the Collection
             </a>
           </div>

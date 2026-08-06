@@ -14,8 +14,8 @@ const NAV_LINKS = [
   { href: "/collection", label: "Collection", tag: "17 pieces" },
   { href: "/#craft", label: "Craft", tag: "named hands" },
   { href: "/#fit", label: "Size & Fit", tag: "XXS–4XL" },
-  { href: "/#about", label: "About", tag: "Riya" },
-  { href: "/apply", label: "Join the Waitlist", tag: "Apply" },
+  { href: "/apply", label: "Become a Custodian", tag: "Apply" },
+  { href: "/#join", label: "Join the Waitlist", tag: "Join" },
 ];
 
 export default function Header() {
@@ -68,11 +68,11 @@ export default function Header() {
           <Link href="/collection">Collection</Link>
           <Link href="/#craft">Craft</Link>
           <Link href="/#fit">Size &amp; Fit</Link>
-          <Link href="/#about">About</Link>
+          <Link href="/apply">Become a Custodian</Link>
         </nav>
 
         <div className="header-cta">
-          <Button href="/apply" variant="primary" className="header-cta-btn">
+          <Button href="/#join" variant="primary" className="header-cta-btn">
             Join the Waitlist
           </Button>
           <button
