@@ -31,13 +31,53 @@
   --line-lt: rgba(245, 234, 225, 0.16);
   --hairline: rgba(232, 211, 184, 0.45);
 
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Cormorant Garamond', Georgia, serif;
-  --font-script: 'Alex Brush', cursive;
-  /* design-file aliases so ported CSS reads verbatim */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:    'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-signature: 'Alex Brush', cursive;
+
+  /* aliases so existing code compiles verbatim */
   --fd: var(--font-display);
   --fb: var(--font-body);
-  --fs: var(--font-script);
+  --fs: var(--font-signature);
+
+  /* Responsive Type Scale (Clamp-Based) */
+  --display-hero: clamp(40px, 8vw, 64px);   /* Hero H1 */
+  --display-1:    clamp(28px, 6vw, 40px);   /* Page titles */
+  --display-2:    clamp(24px, 4.5vw, 32px); /* Section heads */
+  --display-3:    clamp(20px, 3.5vw, 28px); /* Card / block titles */
+
+  --leading-display: 1.1;
+  --leading-display-relaxed: 1.15;
+  --leading-display-loose: 1.25;
+
+  /* Body Scale */
+  --text-xl:   20px;  /* Lead paragraphs */
+  --text-lg:   18px;  /* Comfortable body */
+  --text-base: 16px;  /* Standard body */
+  --text-sm:   14px;  /* Secondary, dense UI */
+  --text-xs:   12px;  /* Captions, legal */
+  --text-xxs:  11px;  /* Footnotes, labels */
+
+  --leading-text: 1.6;
+  --leading-text-tight: 1.5;
+
+  /* UI / Label Scale */
+  --ui-lg:   14px;  /* Button labels, form labels */
+  --ui-base: 13px;  /* Nav, tracked small-caps labels */
+  --ui-sm:   12px;  /* Helper text */
+  --ui-xs:   11px;  /* Metadata, timestamps */
+
+  --leading-ui: 1.5;
+  --leading-ui-tight: 1.4;
+
+  /* Signature */
+  --signature: clamp(24px, 4vw, 32px); /* "by Riya" / founder sign-off ONLY */
+
+  /* Tracking */
+  --tracking-display: 0.01em;   /* Playfair, slight */
+  --tracking-text: 0;           /* Cormorant body */
+  --tracking-label: 0.12em;     /* tracked small-caps labels/nav/buttons */
+  --tracking-caption: 0.03em;
 
   --space-2: 8px;
   --space-3: 12px;
@@ -3042,6 +3082,95 @@ body.menu-open #mobileMenu {
 .foot-lockup .lk-tag {
   color: var(--gold-tint);
 }
+
+/* ============================================================================
+   BRAND TYPOGRAPHY UTILITY CLASSES (from Website_Typography.md)
+   ============================================================================ */
+.font-display   { font-family: var(--font-display); font-weight: 500; }
+.font-body      { font-family: var(--font-body); font-weight: 400; }
+.font-signature { font-family: var(--font-signature); font-weight: 400; }
+
+/* Display Heading Scales */
+.text-display-hero {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-hero);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+.text-display-1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-1);
+  line-height: var(--leading-display-relaxed);
+}
+.text-display-2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-2);
+  line-height: var(--leading-display-relaxed);
+}
+.text-display-3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--display-3);
+  line-height: var(--leading-display-loose);
+}
+
+/* Body Copy Scales */
+.text-xl {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  line-height: 1.55;
+}
+.text-lg {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: var(--leading-text);
+}
+.text-base {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-text);
+}
+.text-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-text-tight);
+}
+.text-xs {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-caption);
+}
+
+/* Interface Labels (nav links, buttons) — tracked small-caps */
+.label, .nav-link, .btn {
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  font-size: var(--ui-base);
+}
+
+/* Founder Signature */
+.signature {
+  font-family: var(--font-signature);
+  font-size: var(--signature);
+  font-weight: 400;
+}
+
+/* Figures formatting */
+.tabular-nums {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Globally disable synthetic font weighting */
+* {
+  font-synthesis: none;
+}
+
 
 
 
