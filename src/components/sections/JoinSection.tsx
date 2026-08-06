@@ -29,7 +29,7 @@ export default function JoinSection() {
             <p
               style={{
                 marginTop: 22,
-                maxWidth: 50,
+                maxWidth: 500,
                 color: "rgba(245,234,225,.8)",
                 fontSize: "1.1rem",
               }}

@@ -876,6 +876,7 @@ body.menu-open #mobileMenu {
 .stack-card h3 {
   font-size: clamp(1.7rem, 3.2vw, 2.7rem);
   margin: 14px 0 18px;
+  color: inherit;
 }
 .stack-card p.copy {
   max-width: 52ch;
@@ -3014,6 +3015,21 @@ body.menu-open #mobileMenu {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--taupe);
+}
+
+/* Footer brand enhancements */
+.lk-wordmark-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+.lk-wordmark {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+.foot-lockup .lk-tag {
+  color: var(--gold-tint);
 }
 
 

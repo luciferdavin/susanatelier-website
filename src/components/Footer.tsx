@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { DividerIcon, Signature } from "@/components/icons/BrandIcons";
+import { DividerIcon } from "@/components/icons/BrandIcons";
 
 export default function Footer() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME";
@@ -15,16 +15,20 @@ export default function Footer() {
           <div className="foot-brand">
             <div className="foot-lockup">
               <Image
-                src="/logos/Susan_Atelier_Logo_Monogram.png"
+                src="/logos/trans/Susan_Atelier_Logo_Monogram-trans.png"
                 alt="Susan Atelier monogram"
                 width={96}
                 height={96}
                 className="lk-mono"
               />
-              <div className="lk-word">Susan Atelier</div>
-              <div className="lk-script-container">
-                <span className="lk-by">by</span>
-                <Signature size="sm" color="red" className="lk-sig" />
+              <div className="lk-wordmark-container">
+                <Image
+                  src="/logos/trans/Susan_Atelier_Logo_WordmarkLockup-trans.png"
+                  alt="Susan Atelier by Riya"
+                  width={200}
+                  height={51}
+                  className="lk-wordmark"
+                />
               </div>
               <DividerIcon className="lk-div" />
               <div className="lk-tag">Timeless. Feminine. Refined.</div>
