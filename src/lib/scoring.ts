@@ -167,7 +167,7 @@ function scorePreparationBonus(app: any): number {
   const fitPrefs = app.q17_fit_preferences?.length || 0;
   bonus += Math.min(5, fitPrefs * 0.5);
 
-  if (app.q20_referralCode && /^CST-\d{4}-\d{4}$/.test(app.q20_referralCode)) {
+  if (app.q20_referralCode && /^CST-\d{4}-[A-Z0-9]{4}$/.test(app.q20_referralCode)) {
     bonus += 5;
   }
 

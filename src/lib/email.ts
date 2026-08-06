@@ -28,7 +28,15 @@ async function sendWithRetry(
   maxRetries = 2,
 ): Promise<void> {
   let lastError: Error | null = null;
-  const client = new Resend(process.env.RESEND_API_KEY || "re_mock_key_for_static_build");
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    // Fail fast in production instead of silently failing at send time.
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("RESEND_API_KEY is required in production");
+    }
+    console.warn("[email] RESEND_API_KEY not set — using mock key (dev/static build only).");
+  }
+  const client = new Resend(apiKey || "re_mock_key_for_static_build");
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       await client.emails.send(payload);
@@ -75,7 +83,7 @@ export async function sendReferralNotification(
     <body style="font-family: 'Cormorant Garamond', Georgia, serif; background: #F5EAE1; margin: 0; padding: 40px 20px; color: #3B2412;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto;">
         <tr>
-          <td style="padding: 40px 30px; background: #FFFFFF; border: 1px solid #E4D3B8; border-radius: 8px;">
+          <td style="padding: 40px 30px; background: #FBF6F0; border: 1px solid #E4D3B8; border-radius: 8px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="text-align: center; padding-bottom: 30px; border-bottom: 1px solid #E4D3B8;">
@@ -93,14 +101,14 @@ export async function sendReferralNotification(
                   </p>
 
                   ${data.inherited ? `
-                    <div style="background: #FBF6F0; border: 1px solid #E4D3B8; border-radius: 6px; padding: 20px; margin: 24px 0; text-align: center;">
+                    <div style="background: #FBF6F0; border: 1px solid #E4D3B8; border-radius: 4px; padding: 20px; margin: 24px 0; text-align: center;">
                       <p style="margin: 0; color: #8A6324; font-style: italic;">
                         They inherited your Founding tier through your referral — trust transferred.
                       </p>
                     </div>
                   ` : ""}
 
-                  <div style="background: #3B2412; color: #F5EAE1; border-radius: 6px; padding: 24px; text-align: center; margin: 30px 0;">
+                  <div style="background: #3B2412; color: #F5EAE1; border-radius: 4px; padding: 24px; text-align: center; margin: 30px 0;">
                     <p style="margin: 0 0 8px; font-size: 14px; color: #E4D3B8;">YOU'VE EARNED</p>
                     <p style="font-family: 'Playfair Display', Georgia, serif; font-size: 48px; font-weight: 700; color: #8A6324; margin: 0 0 8px; letter-spacing: 2px;">+${escapeHtml(data.pointsEarned)}</p>
                     <p style="margin: 8px 0 0; font-size: 14px; color: #E4D3B8;">Loyalty Points</p>
@@ -170,7 +178,7 @@ export async function sendApplicationAccepted(
     <body style="font-family: 'Cormorant Garamond', Georgia, serif; background: #F5EAE1; margin: 0; padding: 40px 20px; color: #3B2412;">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto;">
         <tr>
-          <td style="padding: 40px 30px; background: #FFFFFF; border: 1px solid #E4D3B8; border-radius: 8px;">
+          <td style="padding: 40px 30px; background: #FBF6F0; border: 1px solid #E4D3B8; border-radius: 8px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="text-align: center; padding-bottom: 30px; border-bottom: 1px solid #E4D3B8;">
@@ -191,7 +199,7 @@ export async function sendApplicationAccepted(
                     You've been accepted as a <strong style="color: #8A6324;">${safeTierLabel} Custodian</strong> (Score: ${escapeHtml(data.score)}/100).
                   </p>
 
-                  <div style="background: #3B2412; color: #F5EAE1; border-radius: 6px; padding: 24px; text-align: center; margin: 30px 0;">
+                  <div style="background: #3B2412; color: #F5EAE1; border-radius: 4px; padding: 24px; text-align: center; margin: 30px 0;">
                     <p style="margin: 0 0 8px; font-size: 14px; color: #E4D3B8;">YOUR REFERRAL CODE</p>
                     <p style="font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 700; color: #8A6324; margin: 0; letter-spacing: 4px;">${safeReferralCode}</p>
                     <p style="margin: 12px 0 0; font-size: 13px; color: #E4D3B8;">Share this to invite others to the circle</p>

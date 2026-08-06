@@ -1,8 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import { z } from "zod";
 import { calculateQualityScore, assignTier } from "@/lib/scoring";
 import { sendApplicationAccepted } from "@/lib/email";
 import { env } from "@/lib/env";
+
+// ponytail: in-memory per-IP rate limit — fine for single-instance prelaunch; swap to KV/Redis if scaled horizontally.
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 10;
+const hitCounts = new Map<string, number[]>();
+
+// Body-size guard: cap at 256KB (forms are ~2KB, this leaves generous headroom).
+const MAX_BODY_BYTES = 256_000;
+
+// Trust-boundary fields: email must be valid, fullName non-empty, referral code format enforced.
+const applicationSchema = z.object({
+  q18_contact: z.object({
+    email: z.string().email().max(320),
+    fullName: z.string().min(1).max(120),
+  }),
+  q20_referralCode: z
+    .string()
+    .regex(/^CST-\d{4}-[A-Z0-9]{4}$/)
+    .optional(),
+}).passthrough();
 
 /**
  * Validates that all string values in the application object are safe for
@@ -33,7 +54,22 @@ function validateNoHtmlInput(obj: Record<string, unknown>, path = ""): string | 
 
 export async function POST(request: NextRequest) {
   try {
-    const application = await request.json();
+    // Body-size guard (prevents memory abuse).
+    const raw = await request.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return NextResponse.json({ success: false, error: "Request too large" }, { status: 413 });
+    }
+    const application = JSON.parse(raw);
+
+    // Per-IP rate limiting (10 requests per minute).
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const now = Date.now();
+    const hits = (hitCounts.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+    if (hits.length >= RATE_LIMIT_MAX) {
+      return NextResponse.json({ success: false, error: "Too many requests. Please try again later." }, { status: 429 });
+    }
+    hits.push(now);
+    hitCounts.set(ip, hits);
 
     // Security: validate no HTML/script injection in all string fields
     const htmlError = validateNoHtmlInput(application);
@@ -41,15 +77,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: htmlError }, { status: 400 });
     }
 
-    // Ensure we have contact details
-    const email = application.q18_contact?.email;
-    const fullName = application.q18_contact?.fullName;
-    if (!email || !fullName) {
-      return NextResponse.json(
-        { success: false, error: "Contact email and full name are required." },
-        { status: 400 }
-      );
+    // Security: schema-validate trust-boundary fields (contact + referral format).
+    const parsed = applicationSchema.safeParse(application);
+    if (!parsed.success) {
+      return NextResponse.json({ success: false, error: "Invalid application data." }, { status: 400 });
     }
+    const email = parsed.data.q18_contact.email;
+    const fullName = parsed.data.q18_contact.fullName;
 
     // Calculate quality score using the deterministic scoring engine
     const score = calculateQualityScore(application);
@@ -58,9 +92,9 @@ export async function POST(request: NextRequest) {
     let { tier, inherited } = assignTier(score);
 
     // Handle referral inheritance (simplified for MVP)
-    if (application.q20_referralCode && /^CST-\d{4}-\d{4}$/.test(application.q20_referralCode)) {
-      // In a real database scenario, we'd fetch the referrer's actual tier.
-      // For MVP, if they have a valid formatted referral code, they can inherit up to Founding.
+    // Referral code format must match issued codes (CST-<year>-<4 hex/digits>).
+    // TODO: gate on a real referrer DB record in production — format match alone is weak.
+    if (parsed.data.q20_referralCode) {
       tier = "founding";
       inherited = true;
     }
