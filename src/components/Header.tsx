@@ -57,8 +57,8 @@ export default function Header() {
           <Image
             src="/logos/Susan_Atelier_Logo_WordmarkLockup.png"
             alt="Susan Atelier by Riya"
-            width={180}
-            height={46}
+            width={270}
+            height={69}
             className="brand-wordmark"
             priority
           />

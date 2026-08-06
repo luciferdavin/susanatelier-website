@@ -486,13 +486,13 @@ body.cur-big #curRing {
   width: 38px;
 }
 .brand-wordmark {
-  height: 28px;
+  height: 42px;
   width: auto;
   object-fit: contain;
   transition: height 0.4s;
 }
 .site-header.scrolled .brand-wordmark {
-  height: 24px;
+  height: 36px;
 }
 @media (max-width: 480px) {
   .brand-wordmark {
