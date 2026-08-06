@@ -485,6 +485,20 @@ body.cur-big #curRing {
 .site-header.scrolled .brand-mono {
   width: 38px;
 }
+.brand-wordmark {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  transition: height 0.4s;
+}
+.site-header.scrolled .brand-wordmark {
+  height: 24px;
+}
+@media (max-width: 480px) {
+  .brand-wordmark {
+    display: none;
+  }
+}
 .brand-text {
   display: flex;
   flex-direction: column;

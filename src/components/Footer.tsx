@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Monogram, DividerIcon, Signature } from "@/components/icons/BrandIcons";
+import Image from "next/image";
+import { DividerIcon, Signature } from "@/components/icons/BrandIcons";
 
 export default function Footer() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "PLACEHOLDER_REPLACE_ME";
@@ -13,7 +14,13 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="foot-brand">
             <div className="foot-lockup">
-              <Monogram size={96} color="white" className="lk-mono" />
+              <Image
+                src="/logos/Susan_Atelier_Logo_Monogram.png"
+                alt="Susan Atelier monogram"
+                width={96}
+                height={96}
+                className="lk-mono"
+              />
               <div className="lk-word">Susan Atelier</div>
               <div className="lk-script-container">
                 <span className="lk-by">by</span>

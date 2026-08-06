@@ -2,12 +2,12 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Monogram } from "@/components/icons/BrandIcons";
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 
 /**
  * Header — sticky, transparent → frosted on scroll. Full-screen clip-path
- * mobile menu. Brand uses the monogram SVG + word/script text lockup.
+ * mobile menu. Brand uses the monogram PNG + wordmark PNG lockup.
  */
 
 const NAV_LINKS = [
@@ -46,11 +46,22 @@ export default function Header() {
         role="banner"
       >
         <Link className="brand" href="/" aria-label="Susan Atelier by Riya — home">
-          <Monogram size={46} color="auto" className="brand-mono" />
-          <span className="brand-text">
-            <span className="brand-word">Susan Atelier</span>
-            <span className="brand-script">by Riya</span>
-          </span>
+          <Image
+            src="/logos/Susan_Atelier_Logo_Monogram.png"
+            alt="Susan Atelier Monogram"
+            width={46}
+            height={46}
+            className="brand-mono"
+            priority
+          />
+          <Image
+            src="/logos/Susan_Atelier_Logo_WordmarkLockup.png"
+            alt="Susan Atelier by Riya"
+            width={180}
+            height={46}
+            className="brand-wordmark"
+            priority
+          />
         </Link>
 
         <nav className="main-nav" aria-label="Primary">
