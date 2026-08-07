@@ -7,6 +7,7 @@ import Ticker from "@/components/sections/Ticker";
 import Preloader from "@/components/sections/Preloader";
 import CustomCursor from "@/components/sections/CustomCursor";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import PostHogInit from "@/components/PostHogInit";
 import { getSiteUrl, OG_IMAGE, siteConfig } from "@/lib/site";
 
 const playfair = Playfair_Display({
@@ -111,6 +112,7 @@ export default function RootLayout({
       </head>
       <body>
         <GoogleAnalytics />
+        <PostHogInit />
         <Preloader />
         <CustomCursor />
         <Ticker />

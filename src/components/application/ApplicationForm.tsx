@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import posthog from "posthog-js";
 import { CustodianApplication, Tier } from "@/lib/types";
 
 const PRIORITY_OPTIONS = [
@@ -221,6 +222,10 @@ export default function ApplicationForm() {
       q13_philosophy: q13,
       q14_gaps: q14
     }));
+    posthog.capture("application_step_completed", {
+      completed_step: step,
+      next_step: next,
+    });
     setStep(next);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -263,6 +268,11 @@ export default function ApplicationForm() {
       });
       const data = await response.json();
       if (data.success) {
+        posthog.capture("custodian_application_submitted", {
+          tier: data.tier,
+          inherited_tier: data.inherited,
+          referral_applied: Boolean(q20_referral),
+        });
         setResult(data);
         setStep("result");
         window.scrollTo({ top: 0, behavior: "smooth" });
