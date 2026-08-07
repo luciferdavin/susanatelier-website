@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PRODUCTS, CATEGORIES } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
 
 /**
  * Collection grid - client component for interactive category filtering.
@@ -30,13 +31,12 @@ export default function CollectionGrid() {
         <Reveal>
           <p className="eyebrow">Collection Nº 01 — The Seventeen</p>
         </Reveal>
-        <Reveal>
-          <h1 className="sec-title" id="collection-title">
-            Seventeen pieces,
-            <br />
-            <em>already made.</em>
-          </h1>
-        </Reveal>
+        <AnimatedTitle
+          as="h1"
+          className="sec-title"
+          id="collection-title"
+          lines={[<>Seventeen pieces,</>, <em>already made.</em>]}
+        />
         <Reveal>
           <p className="lede">
             One-of-a-kind and finished — when a piece sells, it is gone. Each

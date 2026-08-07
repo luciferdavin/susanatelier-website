@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { generateOrganizationSchema, generateWebSiteSchema, generateFAQSchema, generateHowToSchema } from "@/lib/schemas";
 import JsonLd from "@/components/JsonLd";
 import { Reveal } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
 import Hero from "@/components/sections/Hero";
 import Marquee from "@/components/sections/Marquee";
+import ValuesBand from "@/components/sections/ValuesBand";
 import Manifesto from "@/components/sections/Manifesto";
 import WhySection from "@/components/sections/WhySection";
 import CollectionShowcase from "@/components/sections/CollectionShowcase";
@@ -38,6 +40,7 @@ export default function HomePage() {
 
       <Hero />
       <Marquee />
+      <ValuesBand />
       <Manifesto />
       <WhySection />
 
@@ -51,13 +54,11 @@ export default function HomePage() {
             <Reveal>
               <p className="eyebrow">( 02 ) — Collection Nº 01</p>
             </Reveal>
-            <Reveal>
-              <h2 className="sec-title" id="collection-title">
-                Seventeen pieces,
-                <br />
-                <em>already made.</em>
-              </h2>
-            </Reveal>
+            <AnimatedTitle
+              className="sec-title"
+              id="collection-title"
+              lines={[<>Seventeen pieces,</>, <em>already made.</em>]}
+            />
           </div>
           <Reveal>
             <p className="col-sub">

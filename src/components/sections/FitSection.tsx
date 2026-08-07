@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
 
 const sizes = [
   ["XXS", "76–79", "60–63", "84–87"],
@@ -20,13 +21,10 @@ export default function FitSection() {
           <Reveal>
             <p className="eyebrow">( 05 ) — Size &amp; Fit</p>
           </Reveal>
-          <Reveal>
-            <h2 className="sec-title">
-              One chart.
-              <br />
-              <em>Real bodies.</em>
-            </h2>
-          </Reveal>
+          <AnimatedTitle
+            className="sec-title"
+            lines={["One chart.", <em>Real bodies.</em>]}
+          />
           <Reveal>
             <p className="lede">
               We shoot every piece on real bodies — front, back, and in motion —

@@ -3598,3 +3598,100 @@ body.menu-open #mobileMenu {
     animation: none;
   }
 }
+
+/* ============================================================================
+   MOTION LAYER — signature animations (restored + expanded)
+   ============================================================================ */
+
+/* --- floating sprig accents (gold line-art, gentle sway) --- */
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-6deg) translateY(0);
+  }
+  50% {
+    transform: rotate(7deg) translateY(-10px);
+  }
+}
+.float-sprig {
+  position: absolute;
+  color: var(--gold);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.float-sprig svg {
+  width: 100%;
+  height: auto;
+  animation: sway 6s ease-in-out infinite;
+  animation-delay: -2.4s;
+}
+.float-sprig.sprig-a {
+  width: 72px;
+  right: clamp(24px, 9vw, 140px);
+  top: 16%;
+  z-index: 2;
+}
+
+/* --- vertical side label over the cinematic hero --- */
+.hero-side {
+  position: absolute;
+  right: min(3vw, 34px);
+  bottom: 24%;
+  z-index: 2;
+  writing-mode: vertical-rl;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.64rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(245, 234, 225, 0.55);
+  pointer-events: none;
+}
+
+/* --- proof hairline: draws left → right on scroll --- */
+.pi-line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+  margin-bottom: clamp(30px, 4vh, 44px);
+}
+.proof-item {
+  border-top: none;
+  padding: 0 0 clamp(40px, 5vh, 58px);
+}
+.proof-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+/* --- join section watermark: slow, almost-breathing sway --- */
+.join .sprig-bg {
+  animation: sway 14s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* --- values band: icon hover sway (rule lives in .value:hover svg) --- */
+.values {
+  border-bottom: none;
+}
+
+/* mobile refinements for the motion layer */
+@media (max-width: 900px) {
+  .hero-side {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .float-sprig.sprig-a {
+    width: 52px;
+    top: 13%;
+    right: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-sprig svg,
+  .join .sprig-bg {
+    animation: none;
+  }
+}

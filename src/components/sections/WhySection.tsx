@@ -1,4 +1,6 @@
 import { Reveal } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
+import Hairline from "@/components/motion/Hairline";
 
 export default function WhySection() {
   return (
@@ -8,14 +10,11 @@ export default function WhySection() {
           <Reveal>
             <p className="eyebrow">( 01 ) — The Standard</p>
           </Reveal>
-          <Reveal>
-            <h2 className="sec-title">
-              Proof,
-              <br />
-              <em>not promise.</em>
-            </h2>
-          </Reveal>
-          <Reveal>
+          <AnimatedTitle
+            className="sec-title"
+            lines={[<>Proof,</>, <em>not promise.</em>]}
+          />
+          <Reveal delay={0.15}>
             <p className="lede proof-lede">
               &quot;Artisan-made&quot; means nothing if it stays a slogan. So we
               publish the maker, the cloth, and the math — on every one of the
@@ -26,6 +25,7 @@ export default function WhySection() {
 
         <div className="proof-list">
           <Reveal className="proof-item">
+            <Hairline />
             <div className="pi-top">
               <span className="pi-num">Nº 01</span>
               <h3>The Maker</h3>
@@ -44,6 +44,7 @@ export default function WhySection() {
           </Reveal>
 
           <Reveal className="proof-item">
+            <Hairline delay={0.05} />
             <div className="pi-top">
               <span className="pi-num">Nº 02</span>
               <h3>The Cloth</h3>
@@ -62,6 +63,7 @@ export default function WhySection() {
           </Reveal>
 
           <Reveal className="proof-item">
+            <Hairline delay={0.1} />
             <div className="pi-top">
               <span className="pi-num">Nº 03</span>
               <h3>The Math</h3>

@@ -5,6 +5,7 @@ import type { Product } from "@/lib/products";
 import { PRODUCTS, CATEGORIES } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import ProductModal from "./ProductModal";
+import { StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
 /**
  * Home #collection — filter bar (with counts) + product grid (onSelect mode)
@@ -46,11 +47,18 @@ export default function CollectionShowcase() {
         ))}
       </div>
 
-      <div className="grid">
+      <StaggerGroup
+        key={active}
+        className="grid"
+        role="list"
+        aria-label={`${filtered.length} pieces`}
+      >
         {filtered.map((product) => (
-          <ProductCard key={product.id} product={product} onSelect={setSelected} />
+          <StaggerItem key={product.id}>
+            <ProductCard product={product} onSelect={setSelected} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
 
       {filtered.length === 0 && (
         <div className="no-results">

@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
 import { SprigIcon } from "@/components/icons/BrandIcons";
 import WaitlistCard from "./WaitlistCard";
 
@@ -18,13 +19,10 @@ export default function JoinSection() {
           <Reveal>
             <p className="eyebrow eyebrow--light">( 07 ) — Early Access</p>
           </Reveal>
-          <Reveal>
-            <h2 className="sec-title">
-              Join the waitlist.
-              <br />
-              <em>Be first through the door.</em>
-            </h2>
-          </Reveal>
+          <AnimatedTitle
+            className="sec-title"
+            lines={[<>Join the waitlist.</>, <em>Be first through the door.</em>]}
+          />
           <Reveal>
             <p
               style={{

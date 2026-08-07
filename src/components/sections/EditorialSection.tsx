@@ -5,15 +5,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Reveal } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
 
 export default function EditorialSection() {
   const bandRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: bandRef,
     offset: ["start end", "end start"],
   });
   const bandY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const { scrollYProgress: gridProgress } = useScroll({
+    target: gridRef,
+    offset: ["start end", "end start"],
+  });
+  /* Lookbook drift — figures float at different velocities */
+  const driftA = useTransform(gridProgress, [0, 1], [70, -40]);
+  const driftB = useTransform(gridProgress, [0, 1], [110, -70]);
+  const driftC = useTransform(gridProgress, [0, 1], [40, -40]);
 
   return (
     <section className="editorial" aria-labelledby="campaign-title">
@@ -22,13 +32,11 @@ export default function EditorialSection() {
           <Reveal>
             <p className="eyebrow">( 03 ) — The Campaign</p>
           </Reveal>
-          <Reveal>
-            <h2 className="sec-title" id="campaign-title">
-              The Seventeen,
-              <br />
-              <em>worn.</em>
-            </h2>
-          </Reveal>
+          <AnimatedTitle
+            className="sec-title"
+            id="campaign-title"
+            lines={[<>The Seventeen,</>, <em>worn.</em>]}
+          />
         </div>
         <Reveal>
           <p className="col-sub">
@@ -38,10 +46,10 @@ export default function EditorialSection() {
         </Reveal>
       </div>
 
-      <div className="container ed-grid">
+      <div className="container ed-grid" ref={gridRef}>
         <Reveal className="ed-fig ed-a" direction="up">
           <Link href="/collection" aria-label="Explore the Collection — ivory cording co-ord campaign look">
-            <figure>
+            <motion.figure style={reduced ? undefined : { y: driftA }}>
               <div className="ed-fig-inner">
                 <Image
                   src="/images/editorial/look-01.jpg"
@@ -55,12 +63,12 @@ export default function EditorialSection() {
                 Look Nº 01 — ivory cording co-ord
                 <span>hand-embroidered linen ✦ one of one</span>
               </figcaption>
-            </figure>
+            </motion.figure>
           </Link>
         </Reveal>
         <Reveal className="ed-fig ed-b" direction="up" delay={0.12}>
           <Link href="/collection" aria-label="Explore the Collection — midnight garden velvet campaign look">
-            <figure>
+            <motion.figure style={reduced ? undefined : { y: driftB }}>
               <div className="ed-fig-inner">
                 <Image
                   src="/images/editorial/look-02.jpg"
@@ -74,12 +82,12 @@ export default function EditorialSection() {
                 Look Nº 02 — midnight garden velvet
                 <span>multi-floral zardozi ✦ made by Farida</span>
               </figcaption>
-            </figure>
+            </motion.figure>
           </Link>
         </Reveal>
         <Reveal className="ed-fig ed-c" direction="up" delay={0.08}>
           <Link href="/collection" aria-label="Explore the Collection — ivory organza campaign look">
-            <figure>
+            <motion.figure style={reduced ? undefined : { y: driftC }}>
               <div className="ed-fig-inner">
                 <Image
                   src="/images/editorial/look-03.jpg"
@@ -93,7 +101,7 @@ export default function EditorialSection() {
                 Look Nº 03 — ivory scrollwork organza
                 <span>antique-gold thread ✦ sixteen hours at the frame</span>
               </figcaption>
-            </figure>
+            </motion.figure>
           </Link>
         </Reveal>
       </div>

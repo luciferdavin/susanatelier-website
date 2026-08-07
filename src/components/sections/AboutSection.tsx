@@ -1,18 +1,21 @@
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
+import ParallaxY from "@/components/motion/ParallaxY";
 
 export default function AboutSection() {
   return (
     <section id="about" className="about">
       <div className="container about-grid">
         <Reveal className="about-fig">
-          <Image
-            src="/images/editorial/editorial-portrait.jpg"
-            alt="Riya, founder of Susan Atelier, standing beside an embroidery frame in the atelier"
-            width={1024}
-            height={1536}
-          />
-          <p className="fig-cap">Riya, in the atelier</p>
+          <ParallaxY strength={40}>
+            <Image
+              src="/images/editorial/editorial-portrait.jpg"
+              alt="Riya, founder of Susan Atelier, standing beside an embroidery frame in the atelier"
+              width={1024}
+              height={1536}
+            />
+            <p className="fig-cap">Riya, in the atelier</p>
+          </ParallaxY>
         </Reveal>
         <div className="about-copy">
           <Reveal>

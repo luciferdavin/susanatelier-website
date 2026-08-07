@@ -10,6 +10,7 @@ import {
   useTransform,
 } from "framer-motion";
 import HeroTitle from "./HeroTitle";
+import { SprigIcon } from "@/components/icons/BrandIcons";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -18,6 +19,10 @@ export default function Hero() {
   const reduced = useReducedMotion();
   const booted =
     typeof window !== "undefined" && Boolean((window as any).__SA_LOADED);
+  /* First visit: the preloader lifts ~2.5s in — the image starts its clip
+     reveal as the panel slides away, then the type rises through it.
+     Returning via client nav: everything plays immediately. */
+  const imgDelay = booted ? 0 : 2.25;
   const baseDelay = booted ? 0.15 : 2.9;
 
   const { scrollYProgress } = useScroll({
@@ -37,9 +42,16 @@ export default function Hero() {
       >
         <motion.div
           className="hero-bg-inner"
-          initial={reduced ? false : { scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 3.2, ease: [0.22, 0.61, 0.36, 1] }}
+          initial={
+            reduced
+              ? false
+              : { clipPath: "inset(100% 0% 0% 0%)", scale: 1.14 }
+          }
+          animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+          transition={{
+            clipPath: { duration: 1.5, delay: imgDelay, ease: EASE },
+            scale: { duration: 3.4, delay: imgDelay, ease: [0.22, 0.61, 0.36, 1] },
+          }}
         >
           <Image
             src="/images/editorial/hero-campaign.jpg"
@@ -53,10 +65,30 @@ export default function Hero() {
       </motion.div>
       <div className="hero-scrim" aria-hidden="true" />
 
+      <motion.span
+        className="hero-side"
+        aria-hidden="true"
+        initial={reduced ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: baseDelay + 1.1, ease: EASE }}
+      >
+        Est. India — Hand Finished — Fair Pay
+      </motion.span>
+
       <motion.div
         className="hero-inner"
         style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
       >
+        <motion.span
+          className="float-sprig sprig-a"
+          aria-hidden="true"
+          initial={reduced ? false : { opacity: 0, scale: 0.6, rotate: -12 }}
+          animate={{ opacity: 0.55, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.2, delay: baseDelay + 1.25, ease: EASE }}
+        >
+          <SprigIcon />
+        </motion.span>
+
         <motion.p
           className="hero-eyebrow"
           initial={reduced ? false : { opacity: 0, y: 18 }}
