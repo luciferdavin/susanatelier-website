@@ -38,7 +38,7 @@ export default function ProductDetail({ product }: { product: Product }) {
   };
 
   return (
-    <div className="wrap">
+    <div className="wrap page-top">
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">›</span>
@@ -102,6 +102,9 @@ export default function ProductDetail({ product }: { product: Product }) {
               </span>
             )}
 
+            <p className="pd-eyebrow">
+              Nº {String(product.id).padStart(2, "0")} — of Seventeen · one of one
+            </p>
             <h1 className="pd-name" id="product-title">
               {product.name}
             </h1>

@@ -18,7 +18,7 @@ export default function FitSection() {
       <div className="container fit-grid">
         <div>
           <Reveal>
-            <p className="eyebrow">( 04 ) — Size &amp; Fit</p>
+            <p className="eyebrow">( 05 ) — Size &amp; Fit</p>
           </Reveal>
           <Reveal>
             <h2 className="sec-title">

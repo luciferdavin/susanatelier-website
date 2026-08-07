@@ -7,16 +7,16 @@ export default function AboutSection() {
       <div className="container about-grid">
         <Reveal className="about-fig">
           <Image
-            src="/logos/Susan_Atelier_Logo_FullBlock.png"
-            alt="Susan Atelier — made by named hands"
-            width={640}
-            height={800}
+            src="/images/editorial/editorial-portrait.jpg"
+            alt="Riya, founder of Susan Atelier, standing beside an embroidery frame in the atelier"
+            width={1024}
+            height={1536}
           />
           <p className="fig-cap">Riya, in the atelier</p>
         </Reveal>
         <div className="about-copy">
           <Reveal>
-            <p className="eyebrow">( 05 ) — About the founder</p>
+            <p className="eyebrow">( 06 ) — The Founder</p>
           </Reveal>
           <Reveal>
             <div className="about-name">Riya</div>

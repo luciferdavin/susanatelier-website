@@ -3,19 +3,20 @@ import { generateOrganizationSchema, generateWebSiteSchema, generateFAQSchema, g
 import JsonLd from "@/components/JsonLd";
 import { Reveal } from "@/components/motion/Reveal";
 import Hero from "@/components/sections/Hero";
-import ValuesBand from "@/components/sections/ValuesBand";
 import Marquee from "@/components/sections/Marquee";
+import Manifesto from "@/components/sections/Manifesto";
 import WhySection from "@/components/sections/WhySection";
 import CollectionShowcase from "@/components/sections/CollectionShowcase";
+import EditorialSection from "@/components/sections/EditorialSection";
 import CraftSection from "@/components/sections/CraftSection";
 import FitSection from "@/components/sections/FitSection";
 import AboutSection from "@/components/sections/AboutSection";
 import JoinSection from "@/components/sections/JoinSection";
 
 export const metadata: Metadata = {
-  title: "Contemporary Indian Occasion Wear — 17-Piece Collection",
+  title: "Hand-Embroidered Indian Occasion Wear — Collection Nº 01",
   description:
-    "Susan Atelier — contemporary Indian occasion wear made by named hands. 17-piece launch collection featuring co-ords, occasionwear, and separates. Join the waitlist for early access.",
+    "Susan Atelier — a quiet-luxury Indian occasion wear maison. Seventeen one-of-one hand-embroidered pieces, made by named hands in India. Join the waitlist for early access.",
   alternates: { canonical: "/" },
 };
 
@@ -36,8 +37,8 @@ export default function HomePage() {
       </a>
 
       <Hero />
-      <ValuesBand />
       <Marquee />
+      <Manifesto />
       <WhySection />
 
       <section
@@ -48,7 +49,7 @@ export default function HomePage() {
         <div className="container col-head">
           <div>
             <Reveal>
-              <p className="eyebrow">( 02 ) — The Launch Collection</p>
+              <p className="eyebrow">( 02 ) — Collection Nº 01</p>
             </Reveal>
             <Reveal>
               <h2 className="sec-title" id="collection-title">
@@ -60,7 +61,7 @@ export default function HomePage() {
           </div>
           <Reveal>
             <p className="col-sub">
-              One-of-a-kind and finished. Tap any piece for its fabric, the
+              One-of-a-kind and finished. Open any piece for its cloth, its
               maker, and an honest price breakdown.
             </p>
           </Reveal>
@@ -70,6 +71,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <EditorialSection />
       <CraftSection />
       <FitSection />
       <AboutSection />

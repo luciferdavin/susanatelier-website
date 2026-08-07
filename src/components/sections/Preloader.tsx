@@ -62,9 +62,10 @@ export default function Preloader() {
     };
   }, [count, reduced]);
 
-  /* After exit animation: remove is-loading, scroll to hash */
+  /* After exit animation: remove is-loading, flag site as booted, scroll to hash */
   function handleExit() {
     document.body.classList.remove("is-loading");
+    (window as any).__SA_LOADED = true;
     const hash = window.location.hash;
     if (hash) {
       const el = document.querySelector<HTMLElement>(hash);

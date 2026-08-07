@@ -16,7 +16,7 @@ export default function JoinSection() {
       <div className="container join-grid">
         <div>
           <Reveal>
-            <p className="eyebrow">( 06 ) — Early access</p>
+            <p className="eyebrow eyebrow--light">( 07 ) — Early Access</p>
           </Reveal>
           <Reveal>
             <h2 className="sec-title">

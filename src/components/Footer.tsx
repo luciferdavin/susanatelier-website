@@ -34,7 +34,8 @@ export default function Footer() {
               <div className="lk-tag">Timeless. Feminine. Refined.</div>
             </div>
             <p className="foot-line">
-              Made by hand in India. Every garment tells you who made it.
+              A quiet-luxury maison for Indian occasion wear. Made by hand in
+              India — every garment tells you who made it.
             </p>
           </div>
 
@@ -94,7 +95,7 @@ export default function Footer() {
               <label htmlFor="fn-email" className="foot-news-lbl">
                 Letters from the Atelier
               </label>
-              <p className="foot-news-desc">Quarterly updates on our craft and collections. No marketing spam.</p>
+              <p className="foot-news-desc">Occasional notes on the craft and the next collection. Nothing more.</p>
               <div className="foot-news-field">
                 <input
                   id="fn-email"
@@ -115,7 +116,7 @@ export default function Footer() {
         {/* Legal Bottom Bar */}
         <div className="foot-bottom">
           <p className="foot-legal-text">
-            © 2026 Susan Atelier · <Link href="/privacy">privacy</Link> · <Link href="/terms">terms</Link>
+            © MMXXVI Susan Atelier · All rights reserved
           </p>
           <p className="foot-transparency-text">
             Made by hand in India · Artisan wages transparent · Genuine MRP, no fake discounts

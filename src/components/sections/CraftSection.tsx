@@ -53,30 +53,30 @@ export default function CraftSection() {
     <section id="craft" className="craft">
       <div className="container">
         <Reveal>
-          <p className="eyebrow">( 03 ) — Our Craft</p>
+          <p className="eyebrow eyebrow--light">( 04 ) — The Craft</p>
         </Reveal>
         <Reveal>
           <h2 className="sec-title">
-            Made by named hands,
+            Hours at the frame,
             <br />
-            <em>not machines.</em>
+            <em>printed on the price tag.</em>
           </h2>
         </Reveal>
         <Reveal>
           <p className="craft-quote">
-            Nearly every label claims &quot;premium, artisan, fair-pay.&quot;
-            What&apos;s rare is proof: a face, a wage, a fabric you can name.
-            That&apos;s the whole brand.
+            Nearly every maison claims handwork. What&apos;s rare is proof: a
+            face, a wage, a cloth you can name. Meet the four hands behind the
+            seventeen.
           </p>
         </Reveal>
         <div className="craft-grid">
           <Reveal className="craft-sticky">
             <figure>
               <Image
-                src="/logos/Susan_Atelier_Logo_FullBlock.png"
-                alt="Susan Atelier brand mark"
-                width={640}
-                height={800}
+                src="/images/editorial/editorial-atelier.jpg"
+                alt="Hands working antique-gold zardozi embroidery on ivory silk stretched across a wooden frame"
+                width={1536}
+                height={1024}
               />
             </figure>
             <figcaption>the frame, the thread, the name.</figcaption>

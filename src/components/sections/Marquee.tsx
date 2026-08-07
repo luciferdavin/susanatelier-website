@@ -4,7 +4,10 @@ export default function Marquee() {
       <div className="mq-track">
         {[0, 1].map((i) => (
           <div className="mq-group" key={i}>
-            <span><em>Timeless.</em></span><span><i>✦</i></span><span><em>Feminine.</em></span><span><i>✦</i></span><span><em>Refined.</em></span><span><i>✦</i></span><span><em>Made by named hands.</em></span><span><i>✦</i></span>
+            <span><em>Hand-embroidered in India.</em></span><span><i>✦</i></span>
+            <span><em>One-of-one, never restocked.</em></span><span><i>✦</i></span>
+            <span><em>The maker named on every label.</em></span><span><i>✦</i></span>
+            <span><em>Worn for years, not seasons.</em></span><span><i>✦</i></span>
           </div>
         ))}
       </div>

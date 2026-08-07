@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { PRODUCTS, CATEGORIES, formatPrice } from "@/lib/products";
+import { PRODUCTS, CATEGORIES } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/Reveal";
 
@@ -20,27 +19,33 @@ export default function CollectionGrid() {
       : PRODUCTS.filter((p) => p.cat === activeCategory);
 
   return (
-    <div className="wrap">
+    <div className="wrap page-top">
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">›</span>
         <span aria-current="page">Collection</span>
       </nav>
 
-      <section
-        className="wrap"
-        style={{ paddingTop: "var(--space-6)" }}
-        aria-labelledby="collection-title"
-      >
+      <header className="page-hero" aria-labelledby="collection-title">
         <Reveal>
-          <p className="eyebrow">The Collection</p>
-          <h1 id="collection-title">Seventeen pieces, already made</h1>
+          <p className="eyebrow">Collection Nº 01 — The Seventeen</p>
+        </Reveal>
+        <Reveal>
+          <h1 className="sec-title" id="collection-title">
+            Seventeen pieces,
+            <br />
+            <em>already made.</em>
+          </h1>
+        </Reveal>
+        <Reveal>
           <p className="lede">
-            One-of-a-kind and finished. Tap any piece for its fabric, the maker,
-            and an honest price breakdown.
+            One-of-a-kind and finished — when a piece sells, it is gone. Each
+            carries its cloth, its maker, and an honest price breakdown.
           </p>
         </Reveal>
+      </header>
 
+      <section aria-label="Collection pieces">
         <div className="filterbar" role="group" aria-label="Filter by category">
           {CATEGORIES.map((cat) => {
             const count =
