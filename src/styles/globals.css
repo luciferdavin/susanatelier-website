@@ -1973,23 +1973,30 @@ body.menu-open #mobileMenu {
   gap: 8px;
   margin-top: auto;
 }
-.product-card__price .gst {
+/* GST chip — a quiet receipt note, not an alarm. Same calm treatment for
+   5% and 18%: gold-tint ground, espresso serif-caps, hairline border. */
+.gst {
   font-family: var(--fb);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 3px 10px;
+  line-height: 1;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(138, 99, 36, 0.35);
+  background: var(--gold-tint);
+  color: var(--espresso-deep);
+  white-space: nowrap;
 }
-.gst--5 {
-  background: var(--sage);
-  color: var(--ivory);
+.product-card__price .gst {
+  padding: 4px 10px;
+  font-size: 0.66rem;
 }
+.gst--5,
 .gst--18 {
-  background: var(--error-rust);
-  color: var(--ivory);
+  background: var(--gold-tint);
+  color: var(--espresso-deep);
 }
 .product-card__swatch {
   display: none;
