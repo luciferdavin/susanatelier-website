@@ -911,7 +911,7 @@ body.menu-open #mobileMenu {
    WHY / STACKED CARDS
 ---------------------------------------------------------------------------- */
 .why {
-  padding: clamp(80px, 12vh, 140px) 0 40px;
+  padding: clamp(24px, 4vh, 56px) 0 clamp(80px, 11vh, 130px);
 }
 .sec-title {
   font-size: clamp(2.2rem, 4.6vw, 3.9rem);
