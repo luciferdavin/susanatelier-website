@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import posthog from "posthog-js";
 import { motion, useReducedMotion } from "framer-motion";
 import { Product, formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
 
@@ -27,6 +28,12 @@ export default function ProductDetail({ product }: { product: Product }) {
   const currentSrc = activeImg === "ghost" ? ghostSrc : realSrc;
 
   const handleNotify = () => {
+    posthog.capture("product_preorder_initiated", {
+      product_id: product.id,
+      category: product.cat,
+      price: product.price,
+      channel: "whatsapp",
+    });
     const message = `Hi Susan Atelier! I'd like to pre-order: ${product.name} (₹${product.price.toLocaleString(
       "en-IN"
     )}). My email: [your email]`;

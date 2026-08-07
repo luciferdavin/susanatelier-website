@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import posthog from "posthog-js";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -25,6 +26,7 @@ export default function WaitlistCard() {
     if (!name.trim()) return;
     if (phone.replace(/\D/g, "").length < 10) return;
     setPosition(22 + Math.floor(Math.random() * 18)); // 22–39
+    posthog.capture("waitlist_joined", { source: "waitlist_form" });
     setSubmitted(true);
   }
 
@@ -50,6 +52,11 @@ export default function WaitlistCard() {
             target="_blank"
             rel="noopener"
             className="w-full justify-center mt-4"
+            onClick={() =>
+              posthog.capture("waitlist_whatsapp_opened", {
+                source: "waitlist_confirmation",
+              })
+            }
           >
             Confirm on WhatsApp →
           </Button>
@@ -83,7 +90,16 @@ export default function WaitlistCard() {
           </form>
           <p className="jc-alt">
             Prefer WhatsApp?{" "}
-            <a href={WHATSAPP_LINK} target="_blank" rel="noopener">
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener"
+              onClick={() =>
+                posthog.capture("waitlist_whatsapp_opened", {
+                  source: "waitlist_alternative_link",
+                })
+              }
+            >
               Join via WhatsApp
             </a>
           </p>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import posthog from "posthog-js";
 import type { Product } from "@/lib/products";
 import { formatPrice } from "@/lib/products";
 
@@ -24,6 +25,14 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
       : product.cat.charAt(0).toUpperCase() + product.cat.slice(1);
   const imgSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.webp`;
 
+  const captureSelection = (surface: "home_showcase" | "collection_page") => {
+    posthog.capture("product_detail_selected", {
+      product_id: product.id,
+      category: product.cat,
+      surface,
+    });
+  };
+
   if (onSelect) {
     return (
       <article
@@ -31,10 +40,14 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
         role="button"
         tabIndex={0}
         aria-label={`${product.name} — ${formatPrice(product.price)}`}
-        onClick={() => onSelect(product)}
+        onClick={() => {
+          captureSelection("home_showcase");
+          onSelect(product);
+        }}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
+            captureSelection("home_showcase");
             onSelect(product);
           }
         }}
@@ -80,6 +93,7 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
       href={`/collection/${product.id}`}
       className="product-card"
       aria-label={`${product.name} - ${formatPrice(product.price)}`}
+      onClick={() => captureSelection("collection_page")}
     >
       {product.hero && (
         <span className="product-card__badge badge--hero">Our Hero</span>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import posthog from "posthog-js";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import type { Product } from "@/lib/products";
@@ -184,6 +185,14 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                posthog.capture("product_reservation_initiated", {
+                  product_id: product.id,
+                  category: product.cat,
+                  price: product.price,
+                  channel: "whatsapp",
+                })
+              }
             >
               Reserve on WhatsApp
             </Button>

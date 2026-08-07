@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import posthog from "posthog-js";
 import type { Product } from "@/lib/products";
 import { PRODUCTS, CATEGORIES } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
@@ -29,7 +30,13 @@ export default function CollectionShowcase() {
       <div className="filters" role="group" aria-label="Filter by category">
         <button
           className={`fbtn ${active === "all" ? "active" : ""}`}
-          onClick={() => setActive("all")}
+          onClick={() => {
+            posthog.capture("collection_category_filtered", {
+              category: "all",
+              surface: "home_showcase",
+            });
+            setActive("all");
+          }}
           aria-pressed={active === "all"}
         >
           All <sup>{PRODUCTS.length}</sup>
@@ -38,7 +45,13 @@ export default function CollectionShowcase() {
           <button
             key={cat.id}
             className={`fbtn ${active === cat.id ? "active" : ""}`}
-            onClick={() => setActive(cat.id)}
+            onClick={() => {
+              posthog.capture("collection_category_filtered", {
+                category: cat.id,
+                surface: "home_showcase",
+              });
+              setActive(cat.id);
+            }}
             aria-pressed={active === cat.id}
           >
             {cat.label} <sup>{counts[cat.id] || 0}</sup>

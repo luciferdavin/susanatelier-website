@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import posthog from "posthog-js";
 import Link from "next/link";
 import Image from "next/image";
 import { PRODUCTS, CATEGORIES, formatPrice } from "@/lib/products";
@@ -51,7 +52,13 @@ export default function CollectionGrid() {
               <button
                 key={cat.id}
                 className={`fbtn ${activeCategory === cat.id ? "active" : ""}`}
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() => {
+                  posthog.capture("collection_category_filtered", {
+                    category: cat.id,
+                    surface: "collection_page",
+                  });
+                  setActiveCategory(cat.id);
+                }}
                 aria-pressed={activeCategory === cat.id}
                 aria-controls="product-grid"
               >
