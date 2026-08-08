@@ -7,6 +7,8 @@ import Ticker from "@/components/sections/Ticker";
 import Preloader from "@/components/sections/Preloader";
 import CustomCursor from "@/components/sections/CustomCursor";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import PostHogProvider from "@/components/PostHogProvider";
+import Clarity from "@/components/Clarity";
 import { getSiteUrl, OG_IMAGE, siteConfig } from "@/lib/site";
 
 const playfair = Playfair_Display({
@@ -104,13 +106,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${alexBrush.variable}`}>
+    <html lang="en" className={`${playfair.className} ${cormorant.className} ${alexBrush.className}`}>
       <head>
         <link rel="icon" href="/logos/trans/Susan_Atelier_Favicon_512-trans.png" />
         <link rel="alternate" type="application/rss+xml" title="Susan Atelier Collection" href="/feed.xml" />
       </head>
       <body>
         <GoogleAnalytics />
+        <PostHogProvider />
+        <Clarity />
         <Preloader />
         <CustomCursor />
         <Ticker />
