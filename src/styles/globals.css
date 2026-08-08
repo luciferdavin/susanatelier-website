@@ -1416,6 +1416,10 @@ body.menu-open #mobileMenu {
   top: 120px;
   align-self: start;
 }
+.craft-tilt {
+  display: block;
+  border-radius: 4px; /* sheen corner inheritance */
+}
 .craft-sticky figure {
   overflow: hidden;
   border-radius: 4px;
@@ -1629,6 +1633,10 @@ body.menu-open #mobileMenu {
 .about-fig {
   position: relative;
 }
+.about-tilt {
+  display: block;
+  position: relative;
+}
 .about-fig img {
   border-radius: 4px;
   width: 100%;
@@ -1636,13 +1644,15 @@ body.menu-open #mobileMenu {
   object-fit: cover;
   box-shadow: 0 30px 70px rgba(59, 36, 18, 0.2);
 }
-.about-fig::before {
+/* the offset gold frame lives on the tilt element so the portrait and
+   its frame turn as one physical object */
+.about-tilt::before {
   content: "";
   position: absolute;
   inset: 0;
   border: 1px solid var(--gold);
   border-radius: 4px;
-  transform: translate(16px, 16px);
+  transform: translate(16px, 16px) translateZ(-30px);
   pointer-events: none;
 }
 .about-fig .fig-cap {
@@ -1687,6 +1697,30 @@ body.menu-open #mobileMenu {
   padding: clamp(80px, 12vh, 150px) 0;
   position: relative;
   overflow: hidden;
+}
+/* live silk beneath the waitlist — the page ends on the cloth it opened
+   with; fades in after the first painted frame (see JoinSilk.tsx) */
+.join-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 50% 30%, #2c1a0a 0%, #1e1106 58%, #120a03 100%);
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+.join-3d--on {
+  opacity: 1;
+}
+.join-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(rgba(30, 17, 6, 0.6), rgba(30, 17, 6, 0.5));
+}
+.join > .container {
+  position: relative;
+  z-index: 2;
 }
 .join .sec-title {
   color: var(--ivory);

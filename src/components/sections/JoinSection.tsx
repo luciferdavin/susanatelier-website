@@ -2,6 +2,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import AnimatedTitle from "@/components/motion/AnimatedTitle";
 import { SprigIcon } from "@/components/icons/BrandIcons";
 import WaitlistCard from "./WaitlistCard";
+import JoinSilk from "./JoinSilk";
 
 const PERKS = [
   "24-hour early access before the public drop",
@@ -13,6 +14,8 @@ const PERKS = [
 export default function JoinSection() {
   return (
     <section id="join" className="join">
+      <JoinSilk />
+      <div className="join-scrim" aria-hidden="true" />
       <SprigIcon className="sprig-bg" />
       <div className="container join-grid">
         <div>

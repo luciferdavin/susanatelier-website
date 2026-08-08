@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import AnimatedTitle from "@/components/motion/AnimatedTitle";
 import ParallaxY from "@/components/motion/ParallaxY";
+import Tilt from "@/components/motion/Tilt";
 import Counters from "./Counters";
 
 const artisans = [
@@ -71,14 +72,16 @@ export default function CraftSection() {
         <div className="craft-grid">
           <Reveal className="craft-sticky">
             <ParallaxY strength={36}>
-              <figure>
-                <Image
-                  src="/images/editorial/editorial-atelier.jpg"
-                  alt="Hands working antique-gold zardozi embroidery on ivory silk stretched across a wooden frame"
-                  width={1536}
-                  height={1024}
-                />
-              </figure>
+              <Tilt className="craft-tilt" max={4} perspective={1200}>
+                <figure>
+                  <Image
+                    src="/images/editorial/editorial-atelier.jpg"
+                    alt="Hands working antique-gold zardozi embroidery on ivory silk stretched across a wooden frame"
+                    width={1536}
+                    height={1024}
+                  />
+                </figure>
+              </Tilt>
               <figcaption>the frame, the thread, the name.</figcaption>
             </ParallaxY>
           </Reveal>

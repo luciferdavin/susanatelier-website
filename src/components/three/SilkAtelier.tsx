@@ -298,23 +298,37 @@ function GoldDust({ reduced, lite }: { reduced: boolean; lite: boolean }) {
 function Rig({
   mouse,
   scroll,
+  intro,
   reduced,
 }: {
   mouse: MouseRef;
   scroll: ScrollRef;
+  intro: ScrollRef;
   reduced: boolean;
 }) {
+  const snapped = useRef(false);
+  const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
   useFrame(({ camera }) => {
     if (reduced) {
       camera.lookAt(0, 0.15, 0);
       return;
     }
+    /* The entrance: begin close and low, almost inside the cloth, and
+       breathe out to the room-wide framing over ~3s. Scroll recede and
+       pointer parallax layer on top, faded in by the same ease. */
+    if (!snapped.current) {
+      snapped.current = true;
+      camera.position.set(0, -0.55, 5.5);
+    }
     const [mx, my] = mouse.current;
     const p = scroll.current; // 0 → hero pinned, 1 → hero scrolled away
-    camera.position.x += (mx * 0.42 - camera.position.x) * 0.045;
-    camera.position.y += (0.15 - my * 0.3 + p * 0.62 - camera.position.y) * 0.045;
-    camera.position.z += (7.4 + p * 1.25 - camera.position.z) * 0.08;
-    camera.lookAt(0, 0.15 + p * 0.55, 0);
+    const i = easeOut(intro.current); // 0 → sealed, 1 → open
+    const lerp = (a: number, b: number) => a + (b - a) * i;
+    camera.position.x += (mx * 0.42 * i - camera.position.x) * 0.045;
+    camera.position.y +=
+      (lerp(-0.55, 0.15 - my * 0.3 + p * 0.62) - camera.position.y) * 0.045;
+    camera.position.z += (lerp(5.5, 7.4 + p * 1.25) - camera.position.z) * 0.08;
+    camera.lookAt(0, lerp(0.5, 0.15 + p * 0.55), 0);
   });
   return null;
 }
@@ -343,6 +357,7 @@ export default function SilkAtelier({ lite = false }: { lite?: boolean }) {
   const reduced = useReducedMotion() ?? false;
   const mouse = useRef<[number, number]>([0, 0]);
   const scroll = useRef(0);
+  const intro = useRef(reduced ? 1 : 0);
   /* Pause rendering when the hero scrolls out of view — the scene is
      fullscreen WebGL; there is no reason to pay for it offscreen. */
   const [onScreen, setOnScreen] = useState(true);
@@ -357,6 +372,24 @@ export default function SilkAtelier({ lite = false }: { lite?: boolean }) {
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
   }, []);
+
+  /* Intro dolly — starts as the preloader lifts on first visit
+     (~2.6s), almost immediately when arriving via client nav. */
+  useEffect(() => {
+    if (reduced) {
+      intro.current = 1;
+      return;
+    }
+    let raf = 0;
+    const booted = Boolean((window as any).__SA_LOADED);
+    const t0 = performance.now() + (booted ? 350 : 2600);
+    const tick = (now: number) => {
+      intro.current = Math.min(1, Math.max(0, (now - t0) / 3000));
+      if (intro.current < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [reduced]);
 
   useEffect(() => {
     const hero = document.querySelector(".hero");
@@ -420,7 +453,7 @@ export default function SilkAtelier({ lite = false }: { lite?: boolean }) {
       <LookFrame mouse={mouse} reduced={reduced} lite={lite} />
       <Threads mouse={mouse} reduced={reduced} lite={lite} />
       <GoldDust reduced={reduced} lite={lite} />
-      <Rig mouse={mouse} scroll={scroll} reduced={reduced} />
+      <Rig mouse={mouse} scroll={scroll} intro={intro} reduced={reduced} />
     </Canvas>
   );
 }

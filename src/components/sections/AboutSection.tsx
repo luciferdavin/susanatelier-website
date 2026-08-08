@@ -1,21 +1,24 @@
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
 import ParallaxY from "@/components/motion/ParallaxY";
+import Tilt from "@/components/motion/Tilt";
 
 export default function AboutSection() {
   return (
     <section id="about" className="about">
       <div className="container about-grid">
         <Reveal className="about-fig">
-          <ParallaxY strength={40}>
-            <Image
-              src="/images/editorial/editorial-portrait.jpg"
-              alt="Riya, founder of Susan Atelier, standing beside an embroidery frame in the atelier"
-              width={1024}
-              height={1536}
-            />
-            <p className="fig-cap">Riya, in the atelier</p>
-          </ParallaxY>
+          <Tilt className="about-tilt" max={4.5} perspective={1200}>
+            <ParallaxY strength={40}>
+              <Image
+                src="/images/editorial/editorial-portrait.jpg"
+                alt="Riya, founder of Susan Atelier, standing beside an embroidery frame in the atelier"
+                width={1024}
+                height={1536}
+              />
+              <p className="fig-cap">Riya, in the atelier</p>
+            </ParallaxY>
+          </Tilt>
         </Reveal>
         <div className="about-copy">
           <Reveal>
