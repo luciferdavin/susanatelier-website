@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion,  type Variants } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import { createElement, type ReactNode } from "react";
 
 /**
@@ -53,7 +54,7 @@ export default function AnimatedTitle({
   id,
   delay = 0,
 }: AnimatedTitleProps) {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
 
   if (reduced) {
     return createElement(

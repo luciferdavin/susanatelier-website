@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { DividerIcon } from "@/components/icons/BrandIcons";
 
 export default function Preloader() {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const [hidden, setHidden] = useState(false);
   const [count, setCount] = useState(0);
   const [fading, setFading] = useState(false);

@@ -1,14 +1,13 @@
 "use client";
 
 import { useRef } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import Image from "next/image";
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
-  type MotionValue,
-} from "framer-motion";
+  type MotionValue } from "framer-motion";
 
 /**
  * StackCards — the maison ledger stacking effect. Three cards (The Maker,
@@ -25,7 +24,7 @@ interface StackCardProps {
 }
 
 function StackCard({ index, total, progress, children }: StackCardProps) {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const targetScale = 1 - (total - 1 - index) * 0.04;
   const range: [number, number] = [index / total, 1];
   const scale = useTransform(progress, range, [1, targetScale]);

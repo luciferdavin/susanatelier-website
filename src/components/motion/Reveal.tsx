@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion,  type Variants } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import type { ReactNode } from "react";
 import type React from "react";
 
@@ -32,7 +33,7 @@ export function Reveal({
   distance,
   ...rest
 }: RevealProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useSafeReducedMotion();
   const offset = OFFSETS[direction];
   const x = offset.x ? (distance ?? Math.abs(offset.x)) * Math.sign(offset.x) : 0;
   const y = offset.y ? distance ?? offset.y : 0;
@@ -75,7 +76,7 @@ interface StaggerGroupProps extends DivProps {
 }
 
 export function StaggerGroup({ children, ...rest }: StaggerGroupProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useSafeReducedMotion();
 
   if (prefersReducedMotion) {
     return <div {...rest}>{children}</div>;
@@ -95,7 +96,7 @@ export function StaggerGroup({ children, ...rest }: StaggerGroupProps) {
 }
 
 export function StaggerItem({ children, ...rest }: StaggerGroupProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useSafeReducedMotion();
 
   if (prefersReducedMotion) {
     return <div {...rest}>{children}</div>;

@@ -1,13 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 
 /**
  * Hairline — a 1px rule that draws itself left-to-right as it scrolls into
  * view. Used to separate the proof ledger rows. Honors reduced motion.
  */
 export default function Hairline({ delay = 0 }: { delay?: number }) {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   if (reduced) {
     return <span className="pi-line" style={{ transform: "none" }} />;
   }

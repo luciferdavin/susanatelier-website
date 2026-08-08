@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import Image from "next/image";
 import {
   motion,
   useMotionValue,
-  useReducedMotion,
   useTransform,
-  type MotionValue,
-} from "framer-motion";
+  type MotionValue } from "framer-motion";
 
 /**
  * LookbookTunnel — a 3D fly-through interlude. As you scroll, the campaign
@@ -92,7 +91,7 @@ function TunnelCard({ look, index, progress }: TunnelCardProps) {
 
 export default function LookbookTunnel() {
   const ref = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   /* Own scroll driver: progress measured live from the rect on every scroll
      event — immune to any cached-measurement or timeline quirks. */
   const progress = useMotionValue(0);

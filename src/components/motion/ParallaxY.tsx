@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
+import { motion,  useScroll, useTransform } from "framer-motion";
 
 /**
  * ParallaxY — gently drifts its children vertically against scroll. Used for
@@ -22,7 +23,7 @@ export default function ParallaxY({
   strength = 48,
 }: ParallaxYProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],

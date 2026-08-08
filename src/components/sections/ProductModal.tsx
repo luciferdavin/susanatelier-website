@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import Tilt from "@/components/motion/Tilt";
 import type { Product } from "@/lib/products";
 import { formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
 
@@ -18,7 +20,7 @@ interface ProductModalProps {
  * Rendered by CollectionShowcase; only mounts content when open.
  */
 export default function ProductModal({ product, onClose }: ProductModalProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useSafeReducedMotion();
   const closeRef = useRef<HTMLButtonElement>(null);
   const prevFocus = useRef<HTMLElement | null>(null);
 
@@ -85,15 +87,17 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
           ✕
         </button>
         <div className="modal-gallery">
-          <div className="modal-media">
-            <Image
-              src={currentSrc}
-              alt={product.name}
-              fill
-              sizes="(max-width: 1000px) 100vw, 50vw"
-              className={activeImg === "ghost" ? "image--contain" : "image--cover"}
-            />
-          </div>
+          <Tilt className="pd-tilt" max={5} perspective={1300}>
+            <div className="modal-media">
+              <Image
+                src={currentSrc}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1000px) 100vw, 50vw"
+                className={activeImg === "ghost" ? "image--contain" : "image--cover"}
+              />
+            </div>
+          </Tilt>
           <div className="pd-thumbnails">
             <button
               className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}

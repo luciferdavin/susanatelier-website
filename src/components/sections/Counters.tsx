@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, animate } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
+import { motion, useInView,  animate } from "framer-motion";
 
 const items = [
   { end: 17, suffix: "", label: "one-of-one pieces" },
@@ -16,7 +17,7 @@ function formatVal(n: number): string {
 
 export default function Counters() {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useSafeReducedMotion();
   const inView = useInView(ref, { once: true, margin: "-20% 0px" });
 
   const [values, setValues] = useState<number[]>(items.map((it) => it.end));

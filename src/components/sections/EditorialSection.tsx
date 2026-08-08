@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion,  useScroll, useTransform } from "framer-motion";
 import { Reveal } from "@/components/motion/Reveal";
 import AnimatedTitle from "@/components/motion/AnimatedTitle";
 import Tilt from "@/components/motion/Tilt";
@@ -16,7 +17,7 @@ const SilkBackdrop = dynamic(() => import("@/components/three/SilkBackdrop"), {
 export default function EditorialSection() {
   const bandRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   /* The photograph stays as the SSR/fallback layer; once the live silk
      has drawn its first frame we crossfade to it. */
   const [silkReady, setSilkReady] = useState(false);

@@ -1,13 +1,12 @@
 "use client";
 
 import { useRef } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
-  type MotionValue,
-} from "framer-motion";
+  type MotionValue } from "framer-motion";
 
 interface Segment {
   t: string;
@@ -71,7 +70,7 @@ function Word({
 
 export default function Manifesto() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 0.82", "end 0.42"],

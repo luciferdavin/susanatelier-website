@@ -4,9 +4,8 @@ import {
   motion,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "framer-motion";
+  useSpring } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import { useEffect, useState, type ReactNode } from "react";
 
 /**
@@ -31,7 +30,7 @@ export default function Tilt({
   perspective = 980,
   shine = true,
 }: TiltProps) {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const [enabled, setEnabled] = useState(false);
   useEffect(() => {
     setEnabled(

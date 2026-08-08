@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   motion,
-  useReducedMotion,
   useScroll,
-  useTransform,
-} from "framer-motion";
+  useTransform } from "framer-motion";
 import HeroTitle from "./HeroTitle";
 import { SprigIcon } from "@/components/icons/BrandIcons";
 
@@ -20,7 +19,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const booted =
     typeof window !== "undefined" && Boolean((window as any).__SA_LOADED);
   /* First visit: the preloader lifts ~2.5s in — the type rises as the

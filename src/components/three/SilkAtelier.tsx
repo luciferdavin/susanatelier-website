@@ -7,6 +7,7 @@ import {
   useState,
   type MutableRefObject,
 } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import Image from "next/image";
 import {
   Canvas,
@@ -15,7 +16,7 @@ import {
   useThree,
 } from "@react-three/fiber";
 import * as THREE from "three";
-import { useReducedMotion } from "framer-motion";
+
 import { displaceSilk, SILK_T } from "./silk";
 
 /**
@@ -49,17 +50,30 @@ function SilkField({
   lite: boolean;
 }) {
   const mesh = useRef<THREE.Mesh>(null);
+  const stillPainted = useRef(false);
+  const invalidate = useThree((s) => s.invalidate);
   const geo = useMemo(() => {
     const g = new THREE.PlaneGeometry(20, 11, lite ? 52 : 84, lite ? 30 : 52);
     displaceSilk(g, SILK_T);
     return g;
   }, [lite]);
 
-  useFrame(({ clock, invalidate }) => {
+  /* Reduced motion: paint exactly one still frame (a second invalidate on
+     the first frame survives R3F's mount-time frame suppression, and the
+     texture's Suspense resolve auto-invalidates for the framed look). */
+  useEffect(() => {
+    if (!reduced) return;
+    const t = setTimeout(() => invalidate(), 150);
+    return () => clearTimeout(t);
+  }, [reduced, invalidate]);
+
+  useFrame(({ clock, invalidate: inv }) => {
     if (!mesh.current) return;
     if (reduced) {
-      /* one still frame after a suppress pass — cheap, calm, correct */
-      invalidate();
+      if (!stillPainted.current) {
+        stillPainted.current = true;
+        inv();
+      }
       return;
     }
     displaceSilk(mesh.current.geometry as THREE.PlaneGeometry, clock.elapsedTime * 0.32);
@@ -354,7 +368,7 @@ function HeroFallback() {
 }
 
 export default function SilkAtelier({ lite = false }: { lite?: boolean }) {
-  const reduced = useReducedMotion() ?? false;
+  const reduced = useSafeReducedMotion() ?? false;
   const mouse = useRef<[number, number]>([0, 0]);
   const scroll = useRef(0);
   const intro = useRef(reduced ? 1 : 0);

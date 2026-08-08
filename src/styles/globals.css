@@ -473,6 +473,10 @@ body.cur-big #curRing {
   padding: 20px 0;
   border-top: 1px solid var(--gold);
 }
+.mq-tilt {
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
 .band .mq-track {
   animation-duration: 38s;
 }
@@ -2264,6 +2268,10 @@ body.menu-open #mobileMenu {
 }
 
 /* --- product detail gallery --- */
+.pd-tilt {
+  display: block;
+  border-radius: 4px; /* sheen corner inheritance */
+}
 .pd-gallery {
   display: flex;
   flex-direction: column;
@@ -2334,6 +2342,16 @@ body.menu-open #mobileMenu {
   flex: 1;
   min-height: 420px;
   position: relative;
+}
+/* tilt wrapper inherits the media's flex role inside the modal gallery */
+.modal-gallery > .pd-tilt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+.modal-gallery > .pd-tilt .modal-media {
+  flex: 1;
 }
 .modal-gallery .pd-thumbnails {
   padding: 16px 24px;
@@ -3759,6 +3777,14 @@ body.menu-open #mobileMenu {
 }
 @keyframes hero3dIn {
   to { opacity: 1; }
+}
+/* the global reduced-motion rule strips this animation — make sure the
+   scene is simply *shown* (still silk frame) instead of fading in */
+@media (prefers-reduced-motion: reduce) {
+  .hero-3d {
+    opacity: 1;
+    animation: none;
+  }
 }
 /* static fallback when WebGL is unavailable */
 .hero-3d-fallback { position: absolute; inset: 0; }

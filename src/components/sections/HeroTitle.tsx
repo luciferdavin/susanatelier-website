@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 
 const LINES: Array<{ text: React.ReactNode }> = [
   { text: <>Made by <em>named hands,</em></> },
@@ -13,7 +14,7 @@ interface HeroTitleProps {
 }
 
 export default function HeroTitle({ baseDelay = 0 }: HeroTitleProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useSafeReducedMotion();
 
   if (prefersReducedMotion) {
     return (

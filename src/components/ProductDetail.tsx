@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Product, formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
+import Tilt from "@/components/motion/Tilt";
 
 /**
  * Product detail view (client) — interactive pre-order via WhatsApp.
@@ -13,7 +15,7 @@ import { Product, formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
  */
 export default function ProductDetail({ product }: { product: Product }) {
   const [activeImg, setActiveImg] = useState<"ghost" | "real">("ghost");
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   
   const gstLabel = product.gst === 5 ? "5% GST" : "18% GST";
   const gstClass = product.gst === 5 ? "gst--5" : "gst--18";
@@ -50,16 +52,18 @@ export default function ProductDetail({ product }: { product: Product }) {
       <section className="product-detail" aria-labelledby="product-title">
         <div className="pd">
           <div className="pd-gallery">
-            <div className="pd-media">
-              <Image
-                src={currentSrc}
-                alt={product.name}
-                fill
-                priority
-                sizes="(max-width: 900px) 100vw, 50vw"
-                className={`pd-image ${activeImg === "ghost" ? "image--contain" : "image--cover"}`}
-              />
-            </div>
+            <Tilt className="pd-tilt" max={5} perspective={1300}>
+              <div className="pd-media">
+                <Image
+                  src={currentSrc}
+                  alt={product.name}
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  className={`pd-image ${activeImg === "ghost" ? "image--contain" : "image--cover"}`}
+                />
+              </div>
+            </Tilt>
             <div className="pd-thumbnails">
               <button
                 className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
