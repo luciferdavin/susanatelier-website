@@ -77,19 +77,6 @@ export default function Hero() {
           <SprigIcon />
         </motion.span>
 
-        <motion.p
-          className="hero-eyebrow"
-          initial={reduced ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: baseDelay, ease: EASE }}
-        >
-          Collection Nº 01 — The Seventeen
-          <span className="hero-eyebrow-dot" aria-hidden="true">
-            ✦
-          </span>
-          Pre-launch MMXXVI
-        </motion.p>
-
         <HeroTitle baseDelay={baseDelay} />
 
         <motion.p

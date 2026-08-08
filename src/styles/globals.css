@@ -723,29 +723,6 @@ body.menu-open #mobileMenu {
   margin: 0 auto;
   padding: 0 0 clamp(132px, 17vh, 180px);
 }
-.hero-eyebrow {
-  font-family: var(--fb);
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--gold-tint);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  row-gap: 10px;
-  column-gap: 16px;
-}
-.hero-eyebrow::before {
-  content: "";
-  width: 54px;
-  height: 1px;
-  background: var(--gold-tint);
-}
-.hero-eyebrow-dot {
-  color: var(--gold);
-  font-size: 0.8em;
-}
 .hero-title {
   font-size: clamp(2.9rem, 6.6vw, 6.2rem);
   line-height: 1.04;
