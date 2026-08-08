@@ -14,7 +14,7 @@ import Tilt from "@/components/motion/Tilt";
  * page metadata, and renders the Product + Breadcrumb structured data.
  */
 export default function ProductDetail({ product }: { product: Product }) {
-  const [activeImg, setActiveImg] = useState<"ghost" | "real">("ghost");
+  const [activeImg, setActiveImg] = useState<"ghost" | "real">("real");
   const reduced = useSafeReducedMotion();
   
   const gstLabel = product.gst === 5 ? "5% GST" : "18% GST";
@@ -66,16 +66,6 @@ export default function ProductDetail({ product }: { product: Product }) {
             </Tilt>
             <div className="pd-thumbnails">
               <button
-                className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
-                onClick={() => setActiveImg("ghost")}
-                aria-label="View Studio drape"
-              >
-                <div className="pd-thumbnail__frame">
-                  <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
-                </div>
-                <span>Studio</span>
-              </button>
-              <button
                 className={`pd-thumbnail ${activeImg === "real" ? "active" : ""}`}
                 onClick={() => setActiveImg("real")}
                 aria-label="View Model drape"
@@ -84,6 +74,16 @@ export default function ProductDetail({ product }: { product: Product }) {
                   <Image src={realSrc} alt="Model drape" fill sizes="44px" />
                 </div>
                 <span>Model</span>
+              </button>
+              <button
+                className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
+                onClick={() => setActiveImg("ghost")}
+                aria-label="View Studio drape"
+              >
+                <div className="pd-thumbnail__frame">
+                  <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
+                </div>
+                <span>Studio</span>
               </button>
             </div>
           </div>

@@ -3877,7 +3877,7 @@ body.menu-open #mobileMenu {
   inset: 0;
   transform-style: preserve-3d;
 }
-.t-card {
+.tunnel .t-card {
   position: absolute;
   top: 50%;
   width: min(330px, 66vw);
@@ -3886,9 +3886,9 @@ body.menu-open #mobileMenu {
   will-change: transform, opacity;
 }
 @media (max-width: 700px) {
-  .t-card { margin-top: -204px; }
+  .tunnel .t-card { margin-top: -204px; }
 }
-.t-media {
+.tunnel .t-media {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
@@ -3897,8 +3897,8 @@ body.menu-open #mobileMenu {
   background: #1e1106;
   box-shadow: 0 50px 90px rgba(0, 0, 0, 0.55);
 }
-.t-img { object-fit: cover; }
-.t-caption {
+.tunnel .t-img { object-fit: cover; }
+.tunnel .t-caption {
   margin-top: 18px;
   text-align: center;
   font-style: italic;

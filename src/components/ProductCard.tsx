@@ -23,7 +23,8 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
     product.cat === "coord"
       ? "Co-ord"
       : product.cat.charAt(0).toUpperCase() + product.cat.slice(1);
-  const imgSrc = `/images/ghost-${String(product.id).padStart(2, "0")}.webp`;
+  /* real model photograph first — the ghost/studio drape is the secondary view */
+  const imgSrc = `/images/real/real-${String(product.id).padStart(2, "0")}.png`;
 
   if (onSelect) {
     return (
@@ -47,7 +48,7 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
               alt={product.name}
               fill
               sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
-              className="image--contain"
+              className="image--cover"
               loading="lazy"
             />
             {product.hero && (
@@ -99,7 +100,7 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
             alt={product.name}
             fill
             sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
-            className="product-card__image image--contain"
+            className="product-card__image image--cover"
             loading="lazy"
           />
         </div>

@@ -24,11 +24,11 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const prevFocus = useRef<HTMLElement | null>(null);
 
-  const [activeImg, setActiveImg] = useState<"ghost" | "real">("ghost");
+  const [activeImg, setActiveImg] = useState<"ghost" | "real">("real");
 
   useEffect(() => {
     if (!product) return;
-    setActiveImg("ghost"); // reset image view when product changes
+    setActiveImg("real"); // real model photograph first when product changes
     prevFocus.current = document.activeElement as HTMLElement;
     closeRef.current?.focus();
     document.body.style.overflow = "hidden";
@@ -100,16 +100,6 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
           </Tilt>
           <div className="pd-thumbnails">
             <button
-              className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
-              onClick={() => setActiveImg("ghost")}
-              aria-label="View Studio drape"
-            >
-              <div className="pd-thumbnail__frame">
-                <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
-              </div>
-              <span>Studio</span>
-            </button>
-            <button
               className={`pd-thumbnail ${activeImg === "real" ? "active" : ""}`}
               onClick={() => setActiveImg("real")}
               aria-label="View Model drape"
@@ -118,6 +108,16 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 <Image src={realSrc} alt="Model drape" fill sizes="44px" />
               </div>
               <span>Model</span>
+            </button>
+            <button
+              className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
+              onClick={() => setActiveImg("ghost")}
+              aria-label="View Studio drape"
+            >
+              <div className="pd-thumbnail__frame">
+                <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
+              </div>
+              <span>Studio</span>
             </button>
           </div>
         </div>
