@@ -134,7 +134,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             <em>incl. {product.gst}% GST</em>
           </div>
 
-          <div className="t-card">
+          <div className="tc-panel">
             <h4>Transparency Card</h4>
             <dl>
               <div>

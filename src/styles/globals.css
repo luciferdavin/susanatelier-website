@@ -1301,13 +1301,16 @@ body.menu-open #mobileMenu {
   color: var(--taupe);
   font-style: normal;
 }
-.t-card {
+/* transparency card — `.tc-panel`, deliberately NOT `.t-card` (the
+   lookbook tunnel owns that one; an unscoped collision once pinned this
+   card across the modal) */
+.tc-panel {
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 22px 24px;
   background: var(--ivory-deep);
 }
-.t-card h4 {
+.tc-panel h4 {
   font-family: var(--fb);
   font-weight: 600;
   font-size: 0.76rem;
@@ -1316,7 +1319,7 @@ body.menu-open #mobileMenu {
   color: var(--gold);
   margin-bottom: 14px;
 }
-.t-card dl div {
+.tc-panel dl div {
   display: flex;
   justify-content: space-between;
   gap: 18px;
@@ -1324,10 +1327,10 @@ body.menu-open #mobileMenu {
   border-bottom: 1px dashed var(--line);
   font-size: 1rem;
 }
-.t-card dl div:last-child {
+.tc-panel dl div:last-child {
   border-bottom: none;
 }
-.t-card dt {
+.tc-panel dt {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-family: var(--fb);
@@ -1336,7 +1339,7 @@ body.menu-open #mobileMenu {
   color: var(--taupe);
   padding-top: 3px;
 }
-.t-card dd {
+.tc-panel dd {
   text-align: right;
   font-style: italic;
   margin: 0;
