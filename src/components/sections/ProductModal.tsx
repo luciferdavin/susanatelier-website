@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import Tilt from "@/components/motion/Tilt";
 import type { Product } from "@/lib/products";
 import { formatPrice, LIVING_WAGE, parseWage } from "@/lib/products";
 
@@ -18,15 +20,15 @@ interface ProductModalProps {
  * Rendered by CollectionShowcase; only mounts content when open.
  */
 export default function ProductModal({ product, onClose }: ProductModalProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useSafeReducedMotion();
   const closeRef = useRef<HTMLButtonElement>(null);
   const prevFocus = useRef<HTMLElement | null>(null);
 
-  const [activeImg, setActiveImg] = useState<"ghost" | "real">("ghost");
+  const [activeImg, setActiveImg] = useState<"ghost" | "real">("real");
 
   useEffect(() => {
     if (!product) return;
-    setActiveImg("ghost"); // reset image view when product changes
+    setActiveImg("real"); // real model photograph first when product changes
     prevFocus.current = document.activeElement as HTMLElement;
     closeRef.current?.focus();
     document.body.style.overflow = "hidden";
@@ -85,26 +87,18 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
           ✕
         </button>
         <div className="modal-gallery">
-          <div className="modal-media">
-            <Image
-              src={currentSrc}
-              alt={product.name}
-              fill
-              sizes="(max-width: 1000px) 100vw, 50vw"
-              className={activeImg === "ghost" ? "image--contain" : "image--cover"}
-            />
-          </div>
+          <Tilt className="pd-tilt" max={5} perspective={1300}>
+            <div className="modal-media">
+              <Image
+                src={currentSrc}
+                alt={product.name}
+                fill
+                sizes="(max-width: 1000px) 100vw, 50vw"
+                className={activeImg === "ghost" ? "image--contain" : "image--cover"}
+              />
+            </div>
+          </Tilt>
           <div className="pd-thumbnails">
-            <button
-              className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
-              onClick={() => setActiveImg("ghost")}
-              aria-label="View Studio drape"
-            >
-              <div className="pd-thumbnail__frame">
-                <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
-              </div>
-              <span>Studio</span>
-            </button>
             <button
               className={`pd-thumbnail ${activeImg === "real" ? "active" : ""}`}
               onClick={() => setActiveImg("real")}
@@ -114,6 +108,16 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 <Image src={realSrc} alt="Model drape" fill sizes="44px" />
               </div>
               <span>Model</span>
+            </button>
+            <button
+              className={`pd-thumbnail ${activeImg === "ghost" ? "active" : ""}`}
+              onClick={() => setActiveImg("ghost")}
+              aria-label="View Studio drape"
+            >
+              <div className="pd-thumbnail__frame">
+                <Image src={ghostSrc} alt="Ghost mannequin" fill sizes="44px" />
+              </div>
+              <span>Studio</span>
             </button>
           </div>
         </div>
@@ -130,7 +134,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
             <em>incl. {product.gst}% GST</em>
           </div>
 
-          <div className="t-card">
+          <div className="tc-panel">
             <h4>Transparency Card</h4>
             <dl>
               <div>

@@ -1,47 +1,39 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Cormorant_Garamond, Alex_Brush } from "next/font/google";
+/* Self-hosted brand fonts (Fontsource) — hermetic builds, real italics.
+   Family names match the --font-* tokens defined in globals.css :root. */
+import "@fontsource/playfair-display/400.css";
+import "@fontsource/playfair-display/400-italic.css";
+import "@fontsource/playfair-display/500.css";
+import "@fontsource/playfair-display/500-italic.css";
+import "@fontsource/playfair-display/600.css";
+import "@fontsource/playfair-display/600-italic.css";
+import "@fontsource/playfair-display/700.css";
+import "@fontsource/cormorant-garamond/400.css";
+import "@fontsource/cormorant-garamond/400-italic.css";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/500-italic.css";
+import "@fontsource/cormorant-garamond/600.css";
+import "@fontsource/cormorant-garamond/600-italic.css";
+import "@fontsource/alex-brush/400.css";
 import "../styles/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Ticker from "@/components/sections/Ticker";
 import Preloader from "@/components/sections/Preloader";
 import CustomCursor from "@/components/sections/CustomCursor";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
-import PostHogProvider from "@/components/PostHogProvider";
-import Clarity from "@/components/Clarity";
 import { getSiteUrl, OG_IMAGE, siteConfig } from "@/lib/site";
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-const alexBrush = Alex_Brush({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-script",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: {
-    default: "Susan Atelier — Made by named hands, worn for years",
+    default: "Susan Atelier — Hand-Embroidered Indian Occasion Wear",
     template: "%s | Susan Atelier",
   },
   description:
-    "Susan Atelier — contemporary Indian occasion wear made by named hands. 17-piece launch collection featuring co-ords, occasionwear, and separates.",
+    "Susan Atelier — a quiet-luxury Indian occasion wear maison. Seventeen one-of-one hand-embroidered pieces, made by named hands, worn for years.",
   keywords: [
     "Indian occasion wear",
-    "handmade clothing",
+    "hand-embroidered clothing",
+    "quiet luxury fashion",
     "artisan fashion",
     "linen co-ords",
     "contemporary ethnic wear",
@@ -60,7 +52,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: "Susan Atelier — Made by named hands",
     description:
-      "Contemporary Indian occasion wear, made by named hands. 17-piece launch collection. Join the waitlist for early access.",
+      "Hand-embroidered Indian occasion wear, made by named hands. Seventeen one-of-one pieces. Join the waitlist for early access.",
     images: [
       {
         url: OG_IMAGE.path,
@@ -74,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Susan Atelier — Made by named hands",
     description:
-      "Contemporary Indian occasion wear, made by named hands. 17-piece launch collection.",
+      "Hand-embroidered Indian occasion wear, made by named hands. Seventeen one-of-one pieces.",
     images: [OG_IMAGE.path],
   },
   robots: {
@@ -92,8 +84,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F5EAE1" },
-    { media: "(prefers-color-scheme: dark)", color: "#3B2412" },
+    { media: "(prefers-color-scheme: light)", color: "#1E1106" },
+    { media: "(prefers-color-scheme: dark)", color: "#1E1106" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -106,18 +98,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.className} ${cormorant.className} ${alexBrush.className}`}>
+    <html lang="en">
       <head>
         <link rel="icon" href="/logos/trans/Susan_Atelier_Favicon_512-trans.png" />
         <link rel="alternate" type="application/rss+xml" title="Susan Atelier Collection" href="/feed.xml" />
       </head>
       <body>
         <GoogleAnalytics />
-        <PostHogProvider />
-        <Clarity />
         <Preloader />
         <CustomCursor />
-        <Ticker />
         <Header />
         <main id="main-content" role="main">
           {children}

@@ -13,7 +13,7 @@ export default function NotFound() {
         placeContent: "center",
         justifyItems: "center",
         textAlign: "center",
-        padding: "96px 24px",
+        padding: "180px 24px 96px",
       }}
     >
       <div>

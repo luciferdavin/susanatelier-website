@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { DividerIcon } from "@/components/icons/BrandIcons";
 
 export default function Preloader() {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const [hidden, setHidden] = useState(false);
   const [count, setCount] = useState(0);
   const [fading, setFading] = useState(false);
@@ -62,9 +63,10 @@ export default function Preloader() {
     };
   }, [count, reduced]);
 
-  /* After exit animation: remove is-loading, scroll to hash */
+  /* After exit animation: remove is-loading, flag site as booted, scroll to hash */
   function handleExit() {
     document.body.classList.remove("is-loading");
+    (window as any).__SA_LOADED = true;
     const hash = window.location.hash;
     if (hash) {
       const el = document.querySelector<HTMLElement>(hash);

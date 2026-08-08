@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
@@ -14,7 +15,7 @@ const WHATSAPP_LINK =
   encodeURIComponent("Hi Susan Atelier — please add me to the waitlist.");
 
 export default function WaitlistCard() {
-  const reduced = useReducedMotion();
+  const reduced = useSafeReducedMotion();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);

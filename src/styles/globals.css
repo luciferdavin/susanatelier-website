@@ -473,6 +473,10 @@ body.cur-big #curRing {
   padding: 20px 0;
   border-top: 1px solid var(--gold);
 }
+.mq-tilt {
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
 .band .mq-track {
   animation-duration: 38s;
 }
@@ -495,8 +499,10 @@ body.cur-big #curRing {
    HEADER
 ---------------------------------------------------------------------------- */
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 900;
   display: flex;
   align-items: center;
@@ -504,6 +510,40 @@ body.cur-big #curRing {
   padding: 16px min(4vw, 44px);
   transition: background 0.45s, box-shadow 0.45s, padding 0.45s;
   background: transparent;
+}
+/* Transparent over the dark cinematic hero: recolor the brand line-art to
+   warm ivory (brightness(0) → silhouette, invert → ivory, sepia tint → warm)
+   and lighten nav until the frosted state engages. */
+.site-header:not(.scrolled) .brand-mono,
+.site-header:not(.scrolled) .brand-wordmark {
+  filter: brightness(0) invert(0.92) sepia(0.3) saturate(1.35) hue-rotate(-8deg) brightness(0.99);
+}
+.site-header:not(.scrolled) .main-nav a {
+  color: rgba(245, 234, 225, 0.85);
+}
+.site-header:not(.scrolled) .main-nav a:hover {
+  color: var(--gold-tint);
+}
+.site-header:not(.scrolled) .burger span {
+  background: var(--ivory);
+}
+/* Header CTA reads as a line button over the dark hero */
+.site-header:not(.scrolled):not(.menu-active) .header-cta-btn {
+  background: transparent;
+  border-color: rgba(245, 234, 225, 0.72);
+  color: var(--ivory);
+}
+.site-header:not(.scrolled):not(.menu-active) .header-cta-btn:hover {
+  background: var(--ivory);
+  border-color: var(--ivory);
+  color: var(--espresso);
+}
+body.menu-open .site-header .brand-mono,
+body.menu-open .site-header .brand-wordmark {
+  filter: brightness(0) invert(0.92) sepia(0.3) saturate(1.35) hue-rotate(-8deg) brightness(0.99);
+}
+body.menu-open .site-header .burger span {
+  background: var(--ivory);
 }
 .site-header.scrolled {
   background: rgba(245, 234, 225, 0.93);
@@ -654,65 +694,115 @@ body.menu-open #mobileMenu {
 }
 
 /* ----------------------------------------------------------------------------
-   HERO
+   HERO — full-viewport cinematic campaign
 ---------------------------------------------------------------------------- */
 .hero {
   position: relative;
-  padding: clamp(36px, 6vh, 72px) 0 clamp(56px, 8vh, 96px);
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
   overflow: hidden;
+  color: var(--ivory);
+  padding: 0;
+  background: var(--espresso-deep);
 }
-.hero-mark {
+.hero-scrim {
   position: absolute;
-  right: -6%;
-  top: -6%;
-  font-family: var(--fs);
-  font-size: clamp(18rem, 38vw, 34rem);
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(138, 99, 36, 0.15);
-  pointer-events: none;
-  user-select: none;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(74deg, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0.42) 40%, rgba(30, 17, 6, 0.05) 68%),
+    linear-gradient(to top, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0) 34%),
+    linear-gradient(to bottom, rgba(30, 17, 6, 0.5) 0%, rgba(30, 17, 6, 0) 18%);
 }
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(30px, 5vw, 80px);
-  align-items: center;
+.hero-inner {
   position: relative;
+  z-index: 2;
+  width: min(1240px, 92vw);
+  margin: 0 auto;
+  padding: 0 0 clamp(132px, 17vh, 180px);
 }
 .hero-title {
-  font-size: clamp(2.7rem, 6vw, 5.1rem);
-  margin: 26px 0 24px;
-  font-weight: 700;
+  font-size: clamp(2.9rem, 6.6vw, 6.2rem);
+  line-height: 1.04;
+  letter-spacing: 0.005em;
+  font-weight: 600;
+  color: var(--ivory);
+  margin: 30px 0 26px;
+  max-width: 14ch;
 }
 .h-line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  padding-bottom: 0.09em;
+  margin-bottom: -0.09em;
 }
 .h-in {
   display: inline-block;
   transform: translateY(115%);
 }
-.script-line .h-in {
-  font-family: var(--fs);
-  font-weight: 400;
-  color: var(--gold);
-  font-size: 1.12em;
+.hero-title em {
+  color: var(--gold-tint);
 }
 .hero-sub {
-  max-width: 52ch;
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-  color: rgba(59, 36, 18, 0.82);
+  max-width: 56ch;
+  font-size: clamp(1.02rem, 1.35vw, 1.18rem);
+  line-height: 1.7;
+  color: rgba(245, 234, 225, 0.82);
 }
 .hero-cta {
   display: flex;
   align-items: center;
-  gap: 30px;
-  margin: 34px 0 38px;
+  gap: 18px;
+  margin-top: 38px;
   flex-wrap: wrap;
 }
+.hero-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 20px min(4vw, 44px);
+  border-top: 1px solid rgba(232, 211, 184, 0.22);
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245, 234, 225, 0.66);
+}
+.hero-scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-scroll i {
+  display: inline-block;
+  width: 56px;
+  height: 1px;
+  background: rgba(245, 234, 225, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.hero-scroll i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gold-tint);
+  animation: scrollcue 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes scrollcue {
+  0% { transform: translateX(-100%); }
+  55% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+/* underline link (kept for editorial cross-links) */
 .link-underline {
   font-family: var(--fb);
   font-weight: 600;
@@ -729,7 +819,7 @@ body.menu-open #mobileMenu {
   bottom: 0;
   height: 1px;
   width: 100%;
-  background: var(--espresso);
+  background: currentColor;
   transition: transform 0.4s;
   transform-origin: left;
 }
@@ -739,77 +829,7 @@ body.menu-open #mobileMenu {
 .link-underline:hover {
   color: var(--gold);
 }
-.hero-meta {
-  display: flex;
-  gap: 26px;
-  flex-wrap: wrap;
-  font-family: var(--fb);
-  font-weight: 600;
-  font-size: 0.78rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--taupe);
-}
-.hero-meta span i {
-  font-style: normal;
-  color: var(--gold);
-  margin-right: 8px;
-}
-.hero-visual {
-  position: relative;
-}
-.hero-frame {
-  overflow: hidden;
-  border-radius: 4px;
-  box-shadow: 0 30px 70px rgba(59, 36, 18, 0.22);
-}
-.hero-frame img {
-  width: 100%;
-  aspect-ratio: 4/5;
-  object-fit: cover;
-}
-.hero-cap {
-  margin-top: 16px;
-  font-size: 0.85rem;
-  letter-spacing: 0.12em;
-  color: rgba(59, 36, 18, 0.7);
-}
-.hero-cap em {
-  display: block;
-  font-family: var(--fs);
-  font-size: 1.3rem;
-  letter-spacing: 0.02em;
-  text-transform: none;
-}
-.hero-side {
-  position: absolute;
-  top: 8px;
-  right: -38px;
-  writing-mode: vertical-rl;
-  font-family: var(--fb);
-  font-weight: 600;
-  font-size: 0.66rem;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--taupe);
-}
-.float-sprig {
-  position: absolute;
-  width: 44px;
-  height: auto;
-  color: var(--gold);
-  opacity: 0.7;
-  animation: sway 6s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes sway {
-  0%, 100% {
-    transform: rotate(-6deg) translateY(0);
-  }
-  50% {
-    transform: rotate(7deg) translateY(-10px);
-  }
-}
+
 
 /* ----------------------------------------------------------------------------
    VALUES BAND
@@ -858,7 +878,7 @@ body.menu-open #mobileMenu {
    WHY / STACKED CARDS
 ---------------------------------------------------------------------------- */
 .why {
-  padding: clamp(80px, 12vh, 140px) 0 40px;
+  padding: clamp(24px, 4vh, 56px) 0 clamp(80px, 11vh, 130px);
 }
 .sec-title {
   font-size: clamp(2.2rem, 4.6vw, 3.9rem);
@@ -1006,7 +1026,7 @@ body.menu-open #mobileMenu {
    COLLECTION
 ---------------------------------------------------------------------------- */
 .collection {
-  padding: clamp(70px, 10vh, 120px) 0;
+  padding: clamp(30px, 5vh, 60px) 0 clamp(80px, 11vh, 130px);
 }
 .col-head {
   display: flex;
@@ -1258,13 +1278,16 @@ body.menu-open #mobileMenu {
   color: var(--taupe);
   font-style: normal;
 }
-.t-card {
+/* transparency card — `.tc-panel`, deliberately NOT `.t-card` (the
+   lookbook tunnel owns that one; an unscoped collision once pinned this
+   card across the modal) */
+.tc-panel {
   border: 1px solid var(--line);
   border-radius: 4px;
   padding: 22px 24px;
   background: var(--ivory-deep);
 }
-.t-card h4 {
+.tc-panel h4 {
   font-family: var(--fb);
   font-weight: 600;
   font-size: 0.76rem;
@@ -1273,7 +1296,7 @@ body.menu-open #mobileMenu {
   color: var(--gold);
   margin-bottom: 14px;
 }
-.t-card dl div {
+.tc-panel dl div {
   display: flex;
   justify-content: space-between;
   gap: 18px;
@@ -1281,10 +1304,10 @@ body.menu-open #mobileMenu {
   border-bottom: 1px dashed var(--line);
   font-size: 1rem;
 }
-.t-card dl div:last-child {
+.tc-panel dl div:last-child {
   border-bottom: none;
 }
-.t-card dt {
+.tc-panel dt {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-family: var(--fb);
@@ -1293,7 +1316,7 @@ body.menu-open #mobileMenu {
   color: var(--taupe);
   padding-top: 3px;
 }
-.t-card dd {
+.tc-panel dd {
   text-align: right;
   font-style: italic;
   margin: 0;
@@ -1376,6 +1399,10 @@ body.menu-open #mobileMenu {
   position: sticky;
   top: 120px;
   align-self: start;
+}
+.craft-tilt {
+  display: block;
+  border-radius: 4px; /* sheen corner inheritance */
 }
 .craft-sticky figure {
   overflow: hidden;
@@ -1590,6 +1617,10 @@ body.menu-open #mobileMenu {
 .about-fig {
   position: relative;
 }
+.about-tilt {
+  display: block;
+  position: relative;
+}
 .about-fig img {
   border-radius: 4px;
   width: 100%;
@@ -1597,13 +1628,15 @@ body.menu-open #mobileMenu {
   object-fit: cover;
   box-shadow: 0 30px 70px rgba(59, 36, 18, 0.2);
 }
-.about-fig::before {
+/* the offset gold frame lives on the tilt element so the portrait and
+   its frame turn as one physical object */
+.about-tilt::before {
   content: "";
   position: absolute;
   inset: 0;
   border: 1px solid var(--gold);
   border-radius: 4px;
-  transform: translate(16px, 16px);
+  transform: translate(16px, 16px) translateZ(-30px);
   pointer-events: none;
 }
 .about-fig .fig-cap {
@@ -1648,6 +1681,30 @@ body.menu-open #mobileMenu {
   padding: clamp(80px, 12vh, 150px) 0;
   position: relative;
   overflow: hidden;
+}
+/* live silk beneath the waitlist — the page ends on the cloth it opened
+   with; fades in after the first painted frame (see JoinSilk.tsx) */
+.join-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 50% 30%, #2c1a0a 0%, #1e1106 58%, #120a03 100%);
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+.join-3d--on {
+  opacity: 1;
+}
+.join-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(rgba(30, 17, 6, 0.6), rgba(30, 17, 6, 0.5));
+}
+.join > .container {
+  position: relative;
+  z-index: 2;
 }
 .join .sec-title {
   color: var(--ivory);
@@ -1920,23 +1977,30 @@ body.menu-open #mobileMenu {
   gap: 8px;
   margin-top: auto;
 }
-.product-card__price .gst {
+/* GST chip — a quiet receipt note, not an alarm. Same calm treatment for
+   5% and 18%: gold-tint ground, espresso serif-caps, hairline border. */
+.gst {
   font-family: var(--fb);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 3px 10px;
+  line-height: 1;
+  padding: 5px 12px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(138, 99, 36, 0.35);
+  background: var(--gold-tint);
+  color: var(--espresso-deep);
+  white-space: nowrap;
 }
-.gst--5 {
-  background: var(--sage);
-  color: var(--ivory);
+.product-card__price .gst {
+  padding: 4px 10px;
+  font-size: 0.66rem;
 }
+.gst--5,
 .gst--18 {
-  background: var(--error-rust);
-  color: var(--ivory);
+  background: var(--gold-tint);
+  color: var(--espresso-deep);
 }
 .product-card__swatch {
   display: none;
@@ -2184,6 +2248,10 @@ body.menu-open #mobileMenu {
 }
 
 /* --- product detail gallery --- */
+.pd-tilt {
+  display: block;
+  border-radius: 4px; /* sheen corner inheritance */
+}
 .pd-gallery {
   display: flex;
   flex-direction: column;
@@ -2254,6 +2322,16 @@ body.menu-open #mobileMenu {
   flex: 1;
   min-height: 420px;
   position: relative;
+}
+/* tilt wrapper inherits the media's flex role inside the modal gallery */
+.modal-gallery > .pd-tilt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+}
+.modal-gallery > .pd-tilt .modal-media {
+  flex: 1;
 }
 .modal-gallery .pd-thumbnails {
   padding: 16px 24px;
@@ -3174,3 +3252,697 @@ body.menu-open #mobileMenu {
 
 
 
+
+/* ============================================================================
+   PREMIUM LUXURY EDITION — sections & refinements (2026-08)
+   ============================================================================ */
+
+/* --- buttons on dark imagery --- */
+.btn--light {
+  border-color: rgba(245, 234, 225, 0.72);
+  color: var(--ivory);
+  background: transparent;
+}
+.btn--light:hover {
+  background: var(--ivory);
+  border-color: var(--ivory);
+  color: var(--espresso);
+}
+
+/* --- eyebrow on dark sections --- */
+.eyebrow--light {
+  color: var(--gold-tint);
+}
+.eyebrow--light::before {
+  background: var(--gold-tint);
+}
+
+/* ----------------------------------------------------------------------------
+   MANIFESTO — scroll-linked word reveal
+---------------------------------------------------------------------------- */
+.manifesto {
+  background: var(--ivory);
+  padding: clamp(96px, 15vh, 170px) 0 clamp(80px, 11vh, 130px);
+}
+.mf-inner {
+  width: min(1060px, 90vw);
+  margin: 0 auto;
+  text-align: center;
+}
+.mf-eyebrow {
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+.mf-eyebrow span {
+  width: 58px;
+  height: 1px;
+  background: var(--gold);
+  display: inline-block;
+}
+.mf {
+  margin-top: 40px;
+  font-family: var(--fd);
+  font-weight: 500;
+  font-size: clamp(1.85rem, 3.7vw, 3.2rem);
+  line-height: 1.32;
+  letter-spacing: 0.004em;
+  color: var(--espresso);
+}
+.mf .mf-w {
+  display: inline-block;
+  margin-right: 0.27em;
+}
+.mf em {
+  color: var(--gold);
+}
+
+/* ----------------------------------------------------------------------------
+   PROOF — editorial numbered ledger rows (replaces stacked cards)
+---------------------------------------------------------------------------- */
+.proof {
+  background: var(--ivory);
+  padding: 0 0 clamp(70px, 9vh, 110px);
+}
+.proof-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(44px, 6vw, 100px);
+  align-items: start;
+}
+.proof-sticky {
+  position: sticky;
+  top: 132px;
+}
+.proof-lede {
+  margin-top: 26px;
+}
+.proof-item {
+  border-top: 1px solid var(--line);
+  padding: clamp(34px, 4.5vh, 52px) 0 clamp(40px, 5vh, 58px);
+}
+.proof-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.pi-top {
+  display: flex;
+  align-items: baseline;
+  gap: 26px;
+}
+.pi-num {
+  font-family: var(--fd);
+  font-size: 0.8rem;
+  letter-spacing: 0.34em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.proof-item h3 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+}
+.pi-copy {
+  max-width: 58ch;
+  font-size: 1.1rem;
+  color: rgba(59, 36, 18, 0.8);
+  margin-top: 16px;
+}
+.math-table--light td {
+  border-bottom: 1px dashed var(--line);
+}
+.math-table--light tr.total td {
+  border-bottom: none;
+  color: var(--espresso);
+}
+.math-table--light td:last-child {
+  color: var(--gold-deep);
+}
+
+/* ----------------------------------------------------------------------------
+   EDITORIAL — the campaign lookbook
+---------------------------------------------------------------------------- */
+.editorial {
+  background: var(--ivory);
+  padding-top: clamp(70px, 10vh, 120px);
+  overflow: hidden;
+}
+.ed-head {
+  margin-bottom: clamp(46px, 7vh, 78px);
+}
+.ed-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(18px, 2.4vw, 32px);
+  align-items: start;
+  perspective: 1400px; /* shared vanishing point for the scroll rotateY drift */
+}
+.ed-fig a {
+  display: block;
+  color: inherit;
+}
+.ed-tilt {
+  display: block;
+  border-radius: 2px; /* lets the sheen inherit the corner */
+}
+.ed-fig-inner {
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--ivory-deep);
+  position: relative;
+}
+.ed-fig img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ed-fig:hover img {
+  transform: scale(1.05);
+}
+.ed-fig figcaption {
+  margin-top: 18px;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--espresso);
+}
+.ed-fig figcaption span {
+  display: block;
+  margin-top: 7px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  font-style: italic;
+  color: var(--taupe);
+}
+.ed-a {
+  grid-column: 1 / span 6;
+}
+.ed-a .ed-fig-inner {
+  aspect-ratio: 3 / 4;
+}
+.ed-b {
+  grid-column: 7 / span 6;
+  margin-top: clamp(64px, 13vh, 150px);
+}
+.ed-b .ed-fig-inner {
+  aspect-ratio: 3 / 4;
+}
+.ed-c {
+  grid-column: 1 / -1;
+  margin-top: clamp(20px, 4vh, 48px);
+}
+.ed-c .ed-fig-inner {
+  aspect-ratio: 21 / 9;
+}
+.ed-c .ed-fig-inner img {
+  object-position: 50% 22%;
+}
+
+/* ----------------------------------------------------------------------------
+   QUOTE BAND — full-bleed parallax cloth macro
+---------------------------------------------------------------------------- */
+.quote-band {
+  position: relative;
+  margin-top: clamp(72px, 10vh, 124px);
+  padding: clamp(100px, 17vh, 200px) 0;
+  overflow: hidden;
+  text-align: center;
+}
+.qb-bg {
+  position: absolute;
+  inset: -14% 0;
+  z-index: 0;
+  transition: opacity 1.8s ease; /* crossfades out once the silk is live */
+}
+.qb-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* live silk backdrop — fades in over the photograph after its first
+   painted frame; see SilkBackdrop.tsx */
+.qb-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 50% 30%, #2c1a0a 0%, #1e1106 58%, #120a03 100%);
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+.quote-band--silk .qb-3d {
+  opacity: 1;
+}
+.quote-band--silk .qb-bg {
+  opacity: 0;
+}
+.qb-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    rgba(30, 17, 6, 0.68),
+    rgba(30, 17, 6, 0.62)
+  );
+}
+.qb-inner {
+  position: relative;
+  z-index: 2;
+  width: min(980px, 88vw);
+  margin: 0 auto;
+  color: var(--ivory);
+}
+.qb-quote {
+  font-family: var(--fd);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3.5vw, 3.1rem);
+  line-height: 1.35;
+  color: var(--ivory);
+}
+.qb-cite {
+  margin-top: 26px;
+  font-family: var(--fs);
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  color: var(--taupe);
+}
+
+/* ----------------------------------------------------------------------------
+   INNER PAGE HERO (collection / product detail)
+---------------------------------------------------------------------------- */
+.page-top {
+  padding-top: calc(var(--header-h) + 56px);
+}
+.page-hero {
+  padding: clamp(24px, 4vh, 48px) 0 clamp(10px, 2vh, 20px);
+  max-width: 780px;
+}
+.page-hero .sec-title {
+  margin-top: 18px;
+}
+.page-hero .lede {
+  margin-top: 24px;
+}
+.pd-eyebrow {
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+
+/* breadcrumb offset handled by .page-top */
+.breadcrumb {
+  padding: 0 0 var(--space-4);
+}
+
+/* apply page offset under the fixed header */
+.apply-container {
+  padding: calc(var(--header-h) + 60px) 0 90px;
+}
+
+/* --- craft / about imagery refinements --- */
+.craft-sticky figure img {
+  filter: saturate(0.96);
+}
+
+/* ----------------------------------------------------------------------------
+   RESPONSIVE — luxury additions
+---------------------------------------------------------------------------- */
+@media (max-width: 1000px) {
+  .proof-grid {
+    grid-template-columns: 1fr;
+  }
+  .proof-sticky {
+    position: static;
+  }
+  .ed-grid {
+    grid-template-columns: 1fr;
+  }
+  .ed-a,
+  .ed-b,
+  .ed-c {
+    grid-column: 1 / -1;
+  }
+  .ed-b {
+    margin-top: clamp(36px, 6vh, 64px);
+  }
+  .ed-c .ed-fig-inner {
+    aspect-ratio: 4 / 3;
+  }
+  .ed-c .ed-fig-inner img {
+    object-position: 50% 30%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: clamp(2.6rem, 11vw, 3.6rem);
+  }
+  .hero-inner {
+    padding-bottom: 128px;
+  }
+  .hero-scrim {
+    background:
+      linear-gradient(rgba(30, 17, 6, 0.42), rgba(30, 17, 6, 0.14) 42%),
+      linear-gradient(to top, rgba(30, 17, 6, 0.94) 4%, rgba(30, 17, 6, 0.55) 38%, rgba(30, 17, 6, 0.08) 62%);
+  }
+  .hero-foot .hf-meta {
+    display: none;
+  }
+  .hero-foot {
+    justify-content: center;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .mf {
+    font-size: clamp(1.6rem, 6.4vw, 2.2rem);
+  }
+  .pi-top {
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll i::after {
+    animation: none;
+  }
+}
+
+/* ============================================================================
+   MOTION LAYER — signature animations (restored + expanded)
+   ============================================================================ */
+
+/* --- floating sprig accents (gold line-art, gentle sway) --- */
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-6deg) translateY(0);
+  }
+  50% {
+    transform: rotate(7deg) translateY(-10px);
+  }
+}
+.float-sprig {
+  position: absolute;
+  color: var(--gold);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.float-sprig svg {
+  width: 100%;
+  height: auto;
+  animation: sway 6s ease-in-out infinite;
+  animation-delay: -2.4s;
+}
+.float-sprig.sprig-a {
+  width: 72px;
+  right: clamp(24px, 9vw, 140px);
+  top: 16%;
+  z-index: 2;
+}
+
+/* --- vertical side label over the cinematic hero --- */
+.hero-side {
+  position: absolute;
+  right: min(3vw, 34px);
+  bottom: 24%;
+  z-index: 2;
+  writing-mode: vertical-rl;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.64rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgba(245, 234, 225, 0.55);
+  pointer-events: none;
+}
+
+/* --- proof hairline: draws left → right on scroll --- */
+.pi-line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+  margin-bottom: clamp(30px, 4vh, 44px);
+}
+.proof-item {
+  border-top: none;
+  padding: 0 0 clamp(40px, 5vh, 58px);
+}
+.proof-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+/* --- join section watermark: slow, almost-breathing sway --- */
+.join .sprig-bg {
+  animation: sway 14s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* --- values band: icon hover sway (rule lives in .value:hover svg) --- */
+.values {
+  border-bottom: none;
+}
+
+/* mobile refinements for the motion layer */
+@media (max-width: 900px) {
+  .hero-side {
+    display: none;
+  }
+}
+@media (max-width: 640px) {
+  .float-sprig.sprig-a {
+    width: 52px;
+    top: 13%;
+    right: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-sprig svg,
+  .join .sprig-bg {
+    animation: none;
+  }
+}
+
+/* ============================================================================
+   3D ATELIER LAYER — WebGL hero scene, lookbook tunnel, tilt cards, 3D deck
+============================================================================ */
+
+/* ------------------------------ WebGL hero ------------------------------ */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 70% 20%, #2c1a0a 0%, #1e1106 55%, #120a03 100%);
+  opacity: 0;
+  animation: hero3dIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+@keyframes hero3dIn {
+  to { opacity: 1; }
+}
+/* the global reduced-motion rule strips this animation — make sure the
+   scene is simply *shown* (still silk frame) instead of fading in */
+@media (prefers-reduced-motion: reduce) {
+  .hero-3d {
+    opacity: 1;
+    animation: none;
+  }
+}
+/* static fallback when WebGL is unavailable */
+.hero-3d-fallback { position: absolute; inset: 0; }
+.hero-3d-fallback-frame {
+  position: absolute;
+  right: 11%;
+  top: 15%;
+  width: min(24vw, 340px);
+  height: min(58vh, 480px);
+  border: 10px solid #8a6324;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+}
+.hero-3d-fallback-frame img { object-fit: cover; }
+@media (max-width: 899px) {
+  .hero-3d-fallback-frame {
+    right: 7%;
+    top: 11%;
+    width: 38vw;
+    height: 36vh;
+    border-width: 7px;
+  }
+}
+
+/* ------------------------------ Tilt cards ------------------------------ */
+.tilt {
+  position: relative;
+  will-change: transform;
+}
+.tilt-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.p-card-3d {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+.p-card-3d .p-media,
+.p-card-3d .product-card__media {
+  transform: translateZ(26px);
+  border-radius: 4px;
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.p-card-3d .p-info,
+.p-card-3d .product-card__body {
+  transform: translateZ(10px);
+}
+.p-card-3d:hover .p-media,
+.p-card-3d:hover .product-card__media {
+  box-shadow: 0 30px 54px rgba(59, 36, 18, 0.24);
+}
+
+/* --------------------------- 3D stacking deck --------------------------- */
+.stack { perspective: 1500px; }
+.stack-card { display: block; }
+.stack-card-3d {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(20px, 4vw, 60px);
+  align-items: center;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+@media (max-width: 1000px) {
+  .stack-card-3d { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------- Lookbook tunnel --------------------------- */
+.tunnel {
+  position: relative;
+  height: 360vh;
+  background: radial-gradient(120% 80% at 50% 28%, #241505 0%, #160c03 72%);
+  color: var(--ivory);
+}
+.tunnel-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  perspective: 1150px;
+}
+.tunnel-world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.tunnel .t-card {
+  position: absolute;
+  top: 50%;
+  width: min(330px, 66vw);
+  margin-left: calc(min(330px, 66vw) / -2);
+  margin-top: -244px;
+  will-change: transform, opacity;
+}
+@media (max-width: 700px) {
+  .tunnel .t-card { margin-top: -204px; }
+}
+.tunnel .t-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 8px solid rgba(228, 211, 184, 0.92);
+  background: #1e1106;
+  box-shadow: 0 50px 90px rgba(0, 0, 0, 0.55);
+}
+.tunnel .t-img { object-fit: cover; }
+.tunnel .t-caption {
+  margin-top: 18px;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.96rem;
+  letter-spacing: 0.02em;
+  color: var(--gold-tint);
+}
+.tunnel-eyebrow {
+  position: absolute;
+  top: 11vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold-tint);
+  opacity: 0.8;
+}
+.tunnel-end {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+.tunnel-end p {
+  font-family: var(--fd);
+  font-size: clamp(2.1rem, 4.8vw, 4.2rem);
+  line-height: 1.1;
+  color: var(--ivory);
+}
+.tunnel-end em {
+  color: var(--gold-tint);
+}
+
+/* reduced-motion / static variant */
+.tunnel--static {
+  height: auto;
+  padding: clamp(80px, 11vh, 130px) 0;
+}
+.tunnel-static-head {
+  text-align: center;
+  width: min(1240px, 92vw);
+  margin: 0 auto clamp(36px, 5vh, 56px);
+}
+.tunnel-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin-top: 18px;
+  color: var(--ivory);
+}
+.tunnel-title em { color: var(--gold-tint); }
+.tunnel-static-grid {
+  width: min(1240px, 92vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.tunnel-static-grid .t-media { position: relative; }
+@media (max-width: 760px) {
+  .tunnel-static-grid { grid-template-columns: 1fr; }
+}

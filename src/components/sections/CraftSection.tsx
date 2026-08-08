@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
+import AnimatedTitle from "@/components/motion/AnimatedTitle";
+import ParallaxY from "@/components/motion/ParallaxY";
+import Tilt from "@/components/motion/Tilt";
 import Counters from "./Counters";
 
 const artisans = [
@@ -53,33 +56,34 @@ export default function CraftSection() {
     <section id="craft" className="craft">
       <div className="container">
         <Reveal>
-          <p className="eyebrow">( 03 ) — Our Craft</p>
+          <p className="eyebrow eyebrow--light">( 04 ) — The Craft</p>
         </Reveal>
-        <Reveal>
-          <h2 className="sec-title">
-            Made by named hands,
-            <br />
-            <em>not machines.</em>
-          </h2>
-        </Reveal>
+        <AnimatedTitle
+          className="sec-title"
+          lines={[<>Hours at the frame,</>, <em>printed on the price tag.</em>]}
+        />
         <Reveal>
           <p className="craft-quote">
-            Nearly every label claims &quot;premium, artisan, fair-pay.&quot;
-            What&apos;s rare is proof: a face, a wage, a fabric you can name.
-            That&apos;s the whole brand.
+            Nearly every maison claims handwork. What&apos;s rare is proof: a
+            face, a wage, a cloth you can name. Meet the four hands behind the
+            seventeen.
           </p>
         </Reveal>
         <div className="craft-grid">
           <Reveal className="craft-sticky">
-            <figure>
-              <Image
-                src="/logos/Susan_Atelier_Logo_FullBlock.png"
-                alt="Susan Atelier brand mark"
-                width={640}
-                height={800}
-              />
-            </figure>
-            <figcaption>the frame, the thread, the name.</figcaption>
+            <ParallaxY strength={36}>
+              <Tilt className="craft-tilt" max={4} perspective={1200}>
+                <figure>
+                  <Image
+                    src="/images/editorial/editorial-atelier.jpg"
+                    alt="Hands working antique-gold zardozi embroidery on ivory silk stretched across a wooden frame"
+                    width={1536}
+                    height={1024}
+                  />
+                </figure>
+              </Tilt>
+              <figcaption>the frame, the thread, the name.</figcaption>
+            </ParallaxY>
           </Reveal>
           <div>
             {artisans.map((a) => (

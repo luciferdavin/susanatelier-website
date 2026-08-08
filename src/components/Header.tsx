@@ -3,11 +3,14 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 /**
- * Header — sticky, transparent → frosted on scroll. Full-screen clip-path
- * mobile menu. Brand uses the monogram PNG + wordmark PNG lockup.
+ * Header — fixed, transparent over the cinematic hero (home only), frosted
+ * ivory everywhere else. Full-screen clip-path mobile menu. Brand uses the
+ * transparent monogram + wordmark lockup; a gold warm-up filter is applied
+ * while sitting over the dark hero, removed once frosted.
  */
 
 const NAV_LINKS = [
@@ -21,12 +24,19 @@ const NAV_LINKS = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 24);
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -37,17 +47,26 @@ export default function Header() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
   const closeMenu = useCallback(() => setIsOpen(false), []);
+  const solid = !isHome || isScrolled;
 
   return (
     <>
       <header
-        className={`site-header ${isScrolled ? "scrolled" : ""} ${isOpen ? "menu-active" : ""}`}
+        className={`site-header ${solid ? "scrolled" : ""} ${isOpen ? "menu-active" : ""}`}
         role="banner"
       >
         <Link className="brand" href="/" aria-label="Susan Atelier by Riya — home">
           <Image
-            src="/logos/Susan_Atelier_Logo_Monogram.png"
+            src="/logos/trans/Susan_Atelier_Logo_Monogram-trans.png"
             alt="Susan Atelier Monogram"
             width={46}
             height={46}
@@ -55,7 +74,7 @@ export default function Header() {
             priority
           />
           <Image
-            src="/logos/Susan_Atelier_Logo_WordmarkLockup.png"
+            src="/logos/trans/Susan_Atelier_Logo_WordmarkLockup-trans.png"
             alt="Susan Atelier by Riya"
             width={378}
             height={96}
@@ -101,9 +120,8 @@ export default function Header() {
             {link.label} <small>{link.tag}</small>
           </Link>
         ))}
-        <p className="mm-foot">timeless · feminine · refined ✦</p>
+        <p className="mm-foot">made by named hands ✦</p>
       </div>
     </>
   );
 }
-

@@ -13,8 +13,13 @@ export default function ValuesBand() {
   return (
     <section className="values" aria-label="What Susan Atelier stands for">
       <div className="container values-row">
-        {values.map(({ Icon, label }) => (
-          <Reveal className="value" key={label} direction="none">
+        {values.map(({ Icon, label }, i) => (
+          <Reveal
+            className="value"
+            key={label}
+            direction="none"
+            delay={i * 0.08}
+          >
             <Icon />
             <span>{label}</span>
           </Reveal>

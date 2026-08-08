@@ -1,43 +1,132 @@
-import HeroTitle from "@/components/sections/HeroTitle";
-import HeroVisual from "@/components/sections/HeroVisual";
-import { Button } from "@/components/ui/Button";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { useSafeReducedMotion } from "@/components/motion/useSafeReducedMotion";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import {
+  motion,
+  useScroll,
+  useTransform } from "framer-motion";
+import HeroTitle from "./HeroTitle";
+import { SprigIcon } from "@/components/icons/BrandIcons";
+
+const SilkAtelier = dynamic(() => import("@/components/three/SilkAtelier"), {
+  ssr: false,
+});
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useSafeReducedMotion();
+  const booted =
+    typeof window !== "undefined" && Boolean((window as any).__SA_LOADED);
+  /* First visit: the preloader lifts ~2.5s in — the type rises as the
+     panel slides away. Returning via client nav: everything plays at once. */
+  const baseDelay = booted ? 0.15 : 2.9;
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "38%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
+
+  /* Small screens run the scene in `lite` mode — lighter geometry,
+     a higher floating frame, capped pixel ratio. */
+  const [lite, setLite] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 899px)");
+    const apply = () => setLite(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   return (
-    <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-mark" aria-hidden="true">S</div>
-      <div className="container hero-grid">
-        <div className="hero-copy">
-          <p className="eyebrow">Contemporary Indian occasion wear — pre-launch</p>
-          <HeroTitle />
-          <p className="hero-sub">
-            One-of-a-kind pieces, already made and finished — for the woman
-            who'd rather wear one real thing than ten forgettable ones. Every
-            label carries the name of the artisan who embroidered it.
-          </p>
-          <div className="hero-cta">
-            <Button href="/#join" variant="primary">
-              Join the Waitlist <span>→</span>
-            </Button>
-            <Button href="/apply" variant="outline">
-              Become a Custodian
-            </Button>
-            <a href="#collection" className="link-underline" style={{ marginLeft: "10px" }}>
-              Browse the Collection
-            </a>
-          </div>
-          <div className="hero-meta">
-            <span><i>✦</i>Timeless</span>
-            <span><i>✦</i>Feminine</span>
-            <span><i>✦</i>Refined</span>
-            <span><i>✦</i>Hand-finished</span>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <HeroVisual />
-          <div className="hero-side">EST. INDIA — HAND FINISHED — FAIR PAY</div>
-        </div>
+    <section ref={ref} className="hero" aria-labelledby="hero-title">
+      {/* 3D silk scene — every viewport */}
+      <div className="hero-3d" aria-hidden="true">
+        <SilkAtelier lite={lite} />
       </div>
+
+      <div className="hero-scrim" aria-hidden="true" />
+
+      <motion.span
+        className="hero-side"
+        aria-hidden="true"
+        initial={reduced ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: baseDelay + 1.1, ease: EASE }}
+      >
+        Est. India — Hand Finished — Fair Pay
+      </motion.span>
+
+      <motion.div
+        className="hero-inner"
+        style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
+      >
+        <motion.span
+          className="float-sprig sprig-a"
+          aria-hidden="true"
+          initial={reduced ? false : { opacity: 0, scale: 0.6, rotate: -12 }}
+          animate={{ opacity: 0.55, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.2, delay: baseDelay + 1.25, ease: EASE }}
+        >
+          <SprigIcon />
+        </motion.span>
+
+        <HeroTitle baseDelay={baseDelay} />
+
+        <motion.p
+          className="hero-sub"
+          initial={reduced ? false : { opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 1,
+            delay: baseDelay + 0.55,
+            ease: EASE,
+          }}
+        >
+          Seventeen one-of-a-kind pieces of hand-embroidered Indian occasion
+          wear — already made, never restocked. The maker&apos;s name, the
+          cloth, and the honest math are sewn into every label.
+        </motion.p>
+
+        <motion.div
+          className="hero-cta"
+          initial={reduced ? false : { opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 1,
+            delay: baseDelay + 0.7,
+            ease: EASE,
+          }}
+        >
+          <Link href="#collection" className="btn btn--gold btn--lg">
+            Discover the Collection
+          </Link>
+          <Link href="#join" className="btn btn--light btn--lg">
+            Join the Waitlist
+          </Link>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="hero-foot"
+        initial={reduced ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, delay: baseDelay + 1, ease: EASE }}
+        aria-hidden="true"
+      >
+        <span className="hf-meta">Est. MMXXVI · Made in India</span>
+        <span className="hero-scroll">
+          <i />
+          Scroll
+        </span>
+        <span className="hf-meta">17 pieces · 4 ateliers · 100% named makers</span>
+      </motion.div>
     </section>
   );
 }

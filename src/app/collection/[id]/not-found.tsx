@@ -5,7 +5,7 @@ import Link from "next/link";
  */
 export default function ProductNotFound() {
   return (
-    <div className="wrap">
+    <div className="wrap page-top">
       <nav className="breadcrumb" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">›</span>
