@@ -6,6 +6,7 @@ import AnimatedTitle from "@/components/motion/AnimatedTitle";
 import Hero from "@/components/sections/Hero";
 import Marquee from "@/components/sections/Marquee";
 import ValuesBand from "@/components/sections/ValuesBand";
+import LookbookTunnel from "@/components/sections/LookbookTunnel";
 import Manifesto from "@/components/sections/Manifesto";
 import WhySection from "@/components/sections/WhySection";
 import CollectionShowcase from "@/components/sections/CollectionShowcase";
@@ -41,6 +42,7 @@ export default function HomePage() {
       <Hero />
       <Marquee />
       <ValuesBand />
+      <LookbookTunnel />
       <Manifesto />
       <WhySection />
 

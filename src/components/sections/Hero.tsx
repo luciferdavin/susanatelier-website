@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,6 +12,10 @@ import {
 } from "framer-motion";
 import HeroTitle from "./HeroTitle";
 import { SprigIcon } from "@/components/icons/BrandIcons";
+
+const SilkAtelier = dynamic(() => import("@/components/three/SilkAtelier"), {
+  ssr: false,
+});
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -63,6 +68,12 @@ export default function Hero() {
           />
         </motion.div>
       </motion.div>
+
+      {/* 3D silk scene — desktop; the photo hero above stays for small screens */}
+      <div className="hero-3d" aria-hidden="true">
+        <SilkAtelier />
+      </div>
+
       <div className="hero-scrim" aria-hidden="true" />
 
       <motion.span

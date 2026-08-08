@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/lib/products";
 import { formatPrice } from "@/lib/products";
+import Tilt from "@/components/motion/Tilt";
 
 interface ProductCardProps {
   product: Product;
@@ -39,38 +40,40 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
           }
         }}
       >
-        <div className="p-media">
-          <Image
-            src={imgSrc}
-            alt={product.name}
-            fill
-            sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
-            className="image--contain"
-            loading="lazy"
-          />
-          {product.hero && (
-            <span className="product-card__badge badge--hero">Our Hero</span>
-          )}
-          {product.entry && (
-            <span className="product-card__badge badge--entry">
-              Entry · 5% GST
+        <Tilt className="p-card-3d" max={6}>
+          <div className="p-media">
+            <Image
+              src={imgSrc}
+              alt={product.name}
+              fill
+              sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
+              className="image--contain"
+              loading="lazy"
+            />
+            {product.hero && (
+              <span className="product-card__badge badge--hero">Our Hero</span>
+            )}
+            {product.entry && (
+              <span className="product-card__badge badge--entry">
+                Entry · 5% GST
+              </span>
+            )}
+            <span className={`p-tag ${(product.hero || product.entry) ? "p-tag--offset" : ""}`}>
+              {catLabel}
             </span>
-          )}
-          <span className={`p-tag ${(product.hero || product.entry) ? "p-tag--offset" : ""}`}>
-            {catLabel}
-          </span>
-          <span className="p-quick">View piece +</span>
-        </div>
-        <div className="p-info">
-          <div className="p-row">
-            <h3>{product.name}</h3>
-            <span className="p-price">{formatPrice(product.price)}</span>
+            <span className="p-quick">View piece +</span>
           </div>
-          <p className="p-fab">{product.fab}</p>
-          <p className="p-maker">
-            <i>✦</i> Embroidered by {product.maker}
-          </p>
-        </div>
+          <div className="p-info">
+            <div className="p-row">
+              <h3>{product.name}</h3>
+              <span className="p-price">{formatPrice(product.price)}</span>
+            </div>
+            <p className="p-fab">{product.fab}</p>
+            <p className="p-maker">
+              <i>✦</i> Embroidered by {product.maker}
+            </p>
+          </div>
+        </Tilt>
       </article>
     );
   }
@@ -89,24 +92,26 @@ export default function ProductCard({ product, onSelect }: ProductCardProps) {
           Entry · 5% GST
         </span>
       )}
-      <div className="product-card__media">
-        <Image
-          src={imgSrc}
-          alt={product.name}
-          fill
-          sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
-          className="product-card__image image--contain"
-          loading="lazy"
-        />
-      </div>
-      <div className="product-card__body">
-        <div className="product-card__name">{product.name}</div>
-        <div className="product-card__fab">{product.fab}</div>
-        <div className="product-card__price">
-          {formatPrice(product.price)}
-          <span className={`gst ${gstClass}`}>{gstLabel}</span>
+      <Tilt className="p-card-3d" max={6}>
+        <div className="product-card__media">
+          <Image
+            src={imgSrc}
+            alt={product.name}
+            fill
+            sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 25vw"
+            className="product-card__image image--contain"
+            loading="lazy"
+          />
         </div>
-      </div>
+        <div className="product-card__body">
+          <div className="product-card__name">{product.name}</div>
+          <div className="product-card__fab">{product.fab}</div>
+          <div className="product-card__price">
+            {formatPrice(product.price)}
+            <span className={`gst ${gstClass}`}>{gstLabel}</span>
+          </div>
+        </div>
+      </Tilt>
     </Link>
   );
 }

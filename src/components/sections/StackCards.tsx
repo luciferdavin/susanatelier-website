@@ -36,6 +36,17 @@ function StackCard({ index, total, progress, children }: StackCardProps) {
   );
   const filter = useTransform(shade, (v) => `brightness(${v})`);
 
+  /* 3D deck feel: the arriving card tilts flat as it lands; a covered card
+     tips gently back under the next one. */
+  const seg = 1 / total;
+  const rotateX = useTransform(
+    progress,
+    [index * seg, index * seg + seg * 0.55, (index + 1) * seg, 1],
+    index === total - 1
+      ? [index === 0 ? 0 : 13, 0, 0, 0]
+      : [index === 0 ? 0 : 13, 0, 0, -7]
+  );
+
   if (reduced) {
     return <div className="stack-card">{children}</div>;
   }
@@ -45,7 +56,12 @@ function StackCard({ index, total, progress, children }: StackCardProps) {
       className="stack-card"
       style={{ scale, filter, transformOrigin: "top center" }}
     >
-      {children}
+      <motion.div
+        className="stack-card-3d"
+        style={{ rotateX, transformOrigin: "top center" }}
+      >
+        {children}
+      </motion.div>
     </motion.div>
   );
 }

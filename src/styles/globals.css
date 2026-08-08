@@ -3702,3 +3702,204 @@ body.menu-open #mobileMenu {
     animation: none;
   }
 }
+
+/* ============================================================================
+   3D ATELIER LAYER — WebGL hero scene, lookbook tunnel, tilt cards, 3D deck
+============================================================================ */
+
+/* ------------------------------ WebGL hero ------------------------------ */
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  background:
+    radial-gradient(120% 90% at 70% 20%, #2c1a0a 0%, #1e1106 55%, #120a03 100%);
+  opacity: 0;
+  animation: hero3dIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+@keyframes hero3dIn {
+  to { opacity: 1; }
+}
+@media (min-width: 900px) {
+  .hero-3d { display: block; }
+  .hero-bg { display: none; }
+  /* the silk scene is already dark — soften the photo scrim */
+  .hero-scrim {
+    background:
+      linear-gradient(74deg, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0.42) 40%, rgba(30, 17, 6, 0.05) 68%),
+      linear-gradient(to top, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0) 34%),
+      linear-gradient(to bottom, rgba(30, 17, 6, 0.5) 0%, rgba(30, 17, 6, 0) 18%);
+  }
+}
+/* static fallback when WebGL is unavailable */
+.hero-3d-fallback { position: absolute; inset: 0; }
+.hero-3d-fallback-frame {
+  position: absolute;
+  right: 11%;
+  top: 15%;
+  width: min(24vw, 340px);
+  height: min(58vh, 480px);
+  border: 10px solid #8a6324;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
+}
+.hero-3d-fallback-frame img { object-fit: cover; }
+
+/* ------------------------------ Tilt cards ------------------------------ */
+.tilt {
+  position: relative;
+  will-change: transform;
+}
+.tilt-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.p-card-3d {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+.p-card-3d .p-media,
+.p-card-3d .product-card__media {
+  transform: translateZ(26px);
+  border-radius: 4px;
+  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.p-card-3d .p-info,
+.p-card-3d .product-card__body {
+  transform: translateZ(10px);
+}
+.p-card-3d:hover .p-media,
+.p-card-3d:hover .product-card__media {
+  box-shadow: 0 30px 54px rgba(59, 36, 18, 0.24);
+}
+
+/* --------------------------- 3D stacking deck --------------------------- */
+.stack { perspective: 1500px; }
+.stack-card { display: block; }
+.stack-card-3d {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(20px, 4vw, 60px);
+  align-items: center;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+@media (max-width: 1000px) {
+  .stack-card-3d { grid-template-columns: 1fr; }
+}
+
+/* ---------------------------- Lookbook tunnel --------------------------- */
+.tunnel {
+  position: relative;
+  height: 360vh;
+  background: radial-gradient(120% 80% at 50% 28%, #241505 0%, #160c03 72%);
+  color: var(--ivory);
+}
+.tunnel-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  perspective: 1150px;
+}
+.tunnel-world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.t-card {
+  position: absolute;
+  top: 50%;
+  width: min(330px, 66vw);
+  margin-left: calc(min(330px, 66vw) / -2);
+  margin-top: -244px;
+  will-change: transform, opacity;
+}
+@media (max-width: 700px) {
+  .t-card { margin-top: -204px; }
+}
+.t-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 8px solid rgba(228, 211, 184, 0.92);
+  background: #1e1106;
+  box-shadow: 0 50px 90px rgba(0, 0, 0, 0.55);
+}
+.t-img { object-fit: cover; }
+.t-caption {
+  margin-top: 18px;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.96rem;
+  letter-spacing: 0.02em;
+  color: var(--gold-tint);
+}
+.tunnel-eyebrow {
+  position: absolute;
+  top: 11vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: var(--fb);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold-tint);
+  opacity: 0.8;
+}
+.tunnel-end {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+.tunnel-end p {
+  font-family: var(--fd);
+  font-size: clamp(2.1rem, 4.8vw, 4.2rem);
+  line-height: 1.1;
+  color: var(--ivory);
+}
+.tunnel-end em {
+  color: var(--gold-tint);
+}
+
+/* reduced-motion / static variant */
+.tunnel--static {
+  height: auto;
+  padding: clamp(80px, 11vh, 130px) 0;
+}
+.tunnel-static-head {
+  text-align: center;
+  width: min(1240px, 92vw);
+  margin: 0 auto clamp(36px, 5vh, 56px);
+}
+.tunnel-title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  margin-top: 18px;
+  color: var(--ivory);
+}
+.tunnel-title em { color: var(--gold-tint); }
+.tunnel-static-grid {
+  width: min(1240px, 92vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+.tunnel-static-grid .t-media { position: relative; }
+@media (max-width: 760px) {
+  .tunnel-static-grid { grid-template-columns: 1fr; }
+}
