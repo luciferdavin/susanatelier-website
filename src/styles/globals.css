@@ -703,28 +703,14 @@ body.menu-open #mobileMenu {
   padding: 0;
   background: var(--espresso-deep);
 }
-.hero-bg {
-  position: absolute;
-  inset: -8% 0;
-  z-index: 0;
-  will-change: transform;
-}
-.hero-bg-inner {
-  position: absolute;
-  inset: 0;
-}
-.hero-img {
-  object-fit: cover;
-  object-position: 58% 26%;
-}
 .hero-scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(74deg, rgba(30, 17, 6, 0.94) 0%, rgba(30, 17, 6, 0.5) 42%, rgba(30, 17, 6, 0.08) 68%),
-    linear-gradient(to top, rgba(30, 17, 6, 0.9) 0%, rgba(30, 17, 6, 0) 36%),
-    linear-gradient(to bottom, rgba(30, 17, 6, 0.55) 0%, rgba(30, 17, 6, 0) 20%);
+    linear-gradient(74deg, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0.42) 40%, rgba(30, 17, 6, 0.05) 68%),
+    linear-gradient(to top, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0) 34%),
+    linear-gradient(to bottom, rgba(30, 17, 6, 0.5) 0%, rgba(30, 17, 6, 0) 18%);
 }
 .hero-inner {
   position: relative;
@@ -3382,10 +3368,15 @@ body.menu-open #mobileMenu {
   grid-template-columns: repeat(12, 1fr);
   gap: clamp(18px, 2.4vw, 32px);
   align-items: start;
+  perspective: 1400px; /* shared vanishing point for the scroll rotateY drift */
 }
 .ed-fig a {
   display: block;
   color: inherit;
+}
+.ed-tilt {
+  display: block;
+  border-radius: 2px; /* lets the sheen inherit the corner */
 }
 .ed-fig-inner {
   overflow: hidden;
@@ -3460,11 +3451,29 @@ body.menu-open #mobileMenu {
   position: absolute;
   inset: -14% 0;
   z-index: 0;
+  transition: opacity 1.8s ease; /* crossfades out once the silk is live */
 }
 .qb-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* live silk backdrop — fades in over the photograph after its first
+   painted frame; see SilkBackdrop.tsx */
+.qb-3d {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 90% at 50% 30%, #2c1a0a 0%, #1e1106 58%, #120a03 100%);
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+.quote-band--silk .qb-3d {
+  opacity: 1;
+}
+.quote-band--silk .qb-bg {
+  opacity: 0;
 }
 .qb-scrim {
   position: absolute;
@@ -3574,12 +3583,9 @@ body.menu-open #mobileMenu {
   .hero-inner {
     padding-bottom: 128px;
   }
-  .hero-img {
-    object-position: 62% 26%;
-  }
   .hero-scrim {
     background:
-      linear-gradient(rgba(30, 17, 6, 0.34), rgba(30, 17, 6, 0.1) 40%),
+      linear-gradient(rgba(30, 17, 6, 0.42), rgba(30, 17, 6, 0.14) 42%),
       linear-gradient(to top, rgba(30, 17, 6, 0.94) 4%, rgba(30, 17, 6, 0.55) 38%, rgba(30, 17, 6, 0.08) 62%);
   }
   .hero-foot .hf-meta {
@@ -3712,7 +3718,6 @@ body.menu-open #mobileMenu {
   position: absolute;
   inset: 0;
   z-index: 0;
-  display: none;
   background:
     radial-gradient(120% 90% at 70% 20%, #2c1a0a 0%, #1e1106 55%, #120a03 100%);
   opacity: 0;
@@ -3720,17 +3725,6 @@ body.menu-open #mobileMenu {
 }
 @keyframes hero3dIn {
   to { opacity: 1; }
-}
-@media (min-width: 900px) {
-  .hero-3d { display: block; }
-  .hero-bg { display: none; }
-  /* the silk scene is already dark — soften the photo scrim */
-  .hero-scrim {
-    background:
-      linear-gradient(74deg, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0.42) 40%, rgba(30, 17, 6, 0.05) 68%),
-      linear-gradient(to top, rgba(30, 17, 6, 0.86) 0%, rgba(30, 17, 6, 0) 34%),
-      linear-gradient(to bottom, rgba(30, 17, 6, 0.5) 0%, rgba(30, 17, 6, 0) 18%);
-  }
 }
 /* static fallback when WebGL is unavailable */
 .hero-3d-fallback { position: absolute; inset: 0; }
@@ -3744,6 +3738,15 @@ body.menu-open #mobileMenu {
   box-shadow: 0 40px 90px rgba(0, 0, 0, 0.5);
 }
 .hero-3d-fallback-frame img { object-fit: cover; }
+@media (max-width: 899px) {
+  .hero-3d-fallback-frame {
+    right: 7%;
+    top: 11%;
+    width: 38vw;
+    height: 36vh;
+    border-width: 7px;
+  }
+}
 
 /* ------------------------------ Tilt cards ------------------------------ */
 .tilt {

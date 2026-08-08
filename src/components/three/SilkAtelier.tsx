@@ -16,6 +16,7 @@ import {
 } from "@react-three/fiber";
 import * as THREE from "three";
 import { useReducedMotion } from "framer-motion";
+import { displaceSilk, SILK_T } from "./silk";
 
 /**
  * SilkAtelier — the maison's 3D hero scene.
@@ -23,41 +24,36 @@ import { useReducedMotion } from "framer-motion";
  * A field of undulating deep-espresso silk, antique-gold zardozi thread
  * curves drifting through the air, floating gold dust, and the campaign
  * look standing in a brushed-metal frame — all gently parallaxed by the
- * pointer. Falls back to a static composition when WebGL is unavailable,
- * and renders a single still frame under prefers-reduced-motion.
+ * pointer, with a slow camera recede as the page scrolls away.
+ *
+ * `lite` (small screens) trims geometry, dust and threadwork, lifts the
+ * framed look above the headline, and caps pixel ratio.
+ * Falls back to a static composition when WebGL is unavailable, and
+ * renders a single still frame under prefers-reduced-motion.
  */
 
 type MouseRef = MutableRefObject<[number, number]>;
-
-const SILK_T = 2.2; // the "beautiful moment" frozen for reduced motion
+type ScrollRef = MutableRefObject<number>;
 
 /* ------------------------------------------------------------------ */
 /*  Silk field                                                         */
 /* ------------------------------------------------------------------ */
 
-function displaceSilk(geo: THREE.PlaneGeometry, t: number) {
-  const pos = geo.attributes.position as THREE.BufferAttribute;
-  for (let i = 0; i < pos.count; i++) {
-    const x = pos.getX(i);
-    const y = pos.getY(i);
-    const z =
-      Math.sin(x * 0.55 + t) * 0.42 +
-      Math.sin(y * 0.85 + t * 1.25) * 0.3 +
-      Math.sin((x + y) * 0.35 + t * 0.7) * 0.52 +
-      Math.sin(x * 1.6 + y * 0.5 + t * 0.45) * 0.14;
-    pos.setZ(i, z);
-  }
-  pos.needsUpdate = true;
-  geo.computeVertexNormals();
-}
-
-function SilkField({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
+function SilkField({
+  mouse,
+  reduced,
+  lite,
+}: {
+  mouse: MouseRef;
+  reduced: boolean;
+  lite: boolean;
+}) {
   const mesh = useRef<THREE.Mesh>(null);
   const geo = useMemo(() => {
-    const g = new THREE.PlaneGeometry(20, 11, 84, 52);
+    const g = new THREE.PlaneGeometry(20, 11, lite ? 52 : 84, lite ? 30 : 52);
     displaceSilk(g, SILK_T);
     return g;
-  }, []);
+  }, [lite]);
 
   useFrame(({ clock, invalidate }) => {
     if (!mesh.current) return;
@@ -91,18 +87,31 @@ function SilkField({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
 /*  The standing look — framed campaign portrait                       */
 /* ------------------------------------------------------------------ */
 
-function LookFrame({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
+function LookFrame({
+  mouse,
+  reduced,
+  lite,
+}: {
+  mouse: MouseRef;
+  reduced: boolean;
+  lite: boolean;
+}) {
   const group = useRef<THREE.Group>(null);
-  const { viewport, invalidate } = useThree();
+  const { viewport } = useThree();
   const tex = useLoader(THREE.TextureLoader, "/images/editorial/look-02.jpg");
   useMemo(() => {
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.anisotropy = 4;
   }, [tex]);
 
-  const s = Math.min(1, Math.max(0.58, viewport.width / 10.5));
-  const fx = Math.min(2.3, Math.max(1.05, viewport.width * 0.255));
-  const fy = 0.32;
+  /* desktop: substantial frame at mid-right. lite (portrait): smaller,
+     floating above the headline so it never fights the type. */
+  const s = lite
+    ? 0.38
+    : Math.min(1, Math.max(0.58, viewport.width / 10.5));
+  const fx = lite ? 0.6 : Math.min(2.3, Math.max(1.05, viewport.width * 0.255));
+  const fy = lite ? 1.5 : 0.32;
+  const fz = lite ? -0.4 : 0.35;
 
   useFrame(({ clock }) => {
     if (!group.current || reduced) return;
@@ -119,7 +128,7 @@ function LookFrame({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
   return (
     <group
       ref={group}
-      position={[fx, fy, 0.35]}
+      position={[fx, fy, fz]}
       rotation={[-0.03, -0.16, 0]}
       scale={s}
     >
@@ -187,20 +196,28 @@ const THREADS: ThreadSpec[] = [
   },
 ];
 
-function Threads({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
+function Threads({
+  mouse,
+  reduced,
+  lite,
+}: {
+  mouse: MouseRef;
+  reduced: boolean;
+  lite: boolean;
+}) {
   const group = useRef<THREE.Group>(null);
   const meshes = useMemo(
     () =>
-      THREADS.map((t) => {
+      THREADS.slice(0, lite ? 2 : THREADS.length).map((t) => {
         const curve = new THREE.CatmullRomCurve3(
           t.points.map(([x, y, z]) => new THREE.Vector3(x, y, z))
         );
         return {
-          geometry: new THREE.TubeGeometry(curve, 140, t.radius, 8, false),
+          geometry: new THREE.TubeGeometry(curve, lite ? 96 : 140, t.radius, 8, false),
           color: t.color,
         };
       }),
-    []
+    [lite]
   );
 
   useFrame(({ clock }) => {
@@ -233,10 +250,10 @@ function Threads({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
 /*  Gold dust                                                          */
 /* ------------------------------------------------------------------ */
 
-function GoldDust({ reduced }: { reduced: boolean }) {
+function GoldDust({ reduced, lite }: { reduced: boolean; lite: boolean }) {
   const points = useRef<THREE.Points>(null);
   const geometry = useMemo(() => {
-    const N = 110;
+    const N = lite ? 48 : 110;
     const arr = new Float32Array(N * 3);
     let seed = 7;
     const rand = () => {
@@ -251,7 +268,7 @@ function GoldDust({ reduced }: { reduced: boolean }) {
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
     return g;
-  }, []);
+  }, [lite]);
 
   useFrame(({ clock }) => {
     if (!points.current || reduced) return;
@@ -275,19 +292,29 @@ function GoldDust({ reduced }: { reduced: boolean }) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Camera rig                                                         */
+/*  Camera rig — pointer parallax + a slow recede on scroll            */
 /* ------------------------------------------------------------------ */
 
-function Rig({ mouse, reduced }: { mouse: MouseRef; reduced: boolean }) {
+function Rig({
+  mouse,
+  scroll,
+  reduced,
+}: {
+  mouse: MouseRef;
+  scroll: ScrollRef;
+  reduced: boolean;
+}) {
   useFrame(({ camera }) => {
     if (reduced) {
       camera.lookAt(0, 0.15, 0);
       return;
     }
     const [mx, my] = mouse.current;
+    const p = scroll.current; // 0 → hero pinned, 1 → hero scrolled away
     camera.position.x += (mx * 0.42 - camera.position.x) * 0.045;
-    camera.position.y += (0.15 - my * 0.3 - camera.position.y) * 0.045;
-    camera.lookAt(0, 0.15, 0);
+    camera.position.y += (0.15 - my * 0.3 + p * 0.62 - camera.position.y) * 0.045;
+    camera.position.z += (7.4 + p * 1.25 - camera.position.z) * 0.08;
+    camera.lookAt(0, 0.15 + p * 0.55, 0);
   });
   return null;
 }
@@ -304,7 +331,7 @@ function HeroFallback() {
           src="/images/editorial/look-02.jpg"
           alt=""
           fill
-          sizes="(max-width: 900px) 0px, 30vw"
+          sizes="(max-width: 900px) 30vw, 30vw"
           priority
         />
       </div>
@@ -312,9 +339,10 @@ function HeroFallback() {
   );
 }
 
-export default function SilkAtelier() {
+export default function SilkAtelier({ lite = false }: { lite?: boolean }) {
   const reduced = useReducedMotion() ?? false;
   const mouse = useRef<[number, number]>([0, 0]);
+  const scroll = useRef(0);
   /* Pause rendering when the hero scrolls out of view — the scene is
      fullscreen WebGL; there is no reason to pay for it offscreen. */
   const [onScreen, setOnScreen] = useState(true);
@@ -331,6 +359,25 @@ export default function SilkAtelier() {
   }, []);
 
   useEffect(() => {
+    const hero = document.querySelector(".hero");
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const h = hero ? hero.clientHeight : window.innerHeight;
+      scroll.current = Math.min(1, Math.max(0, window.scrollY / Math.max(1, h)));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  useEffect(() => {
     const host = document.querySelector(".hero");
     if (!host || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(
@@ -344,7 +391,7 @@ export default function SilkAtelier() {
   return (
     <Canvas
       camera={{ position: [0, 0.15, 7.4], fov: 42 }}
-      dpr={[1, 1.75]}
+      dpr={lite ? [1, 1.35] : [1, 1.75]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       frameloop={reduced ? "demand" : onScreen ? "always" : "never"}
       onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
@@ -369,11 +416,11 @@ export default function SilkAtelier() {
         distance={30}
         color="#E4D3B8"
       />
-      <SilkField mouse={mouse} reduced={reduced} />
-      <LookFrame mouse={mouse} reduced={reduced} />
-      <Threads mouse={mouse} reduced={reduced} />
-      <GoldDust reduced={reduced} />
-      <Rig mouse={mouse} reduced={reduced} />
+      <SilkField mouse={mouse} reduced={reduced} lite={lite} />
+      <LookFrame mouse={mouse} reduced={reduced} lite={lite} />
+      <Threads mouse={mouse} reduced={reduced} lite={lite} />
+      <GoldDust reduced={reduced} lite={lite} />
+      <Rig mouse={mouse} scroll={scroll} reduced={reduced} />
     </Canvas>
   );
 }

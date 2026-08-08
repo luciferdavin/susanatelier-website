@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import {
   motion,
@@ -24,54 +23,33 @@ export default function Hero() {
   const reduced = useReducedMotion();
   const booted =
     typeof window !== "undefined" && Boolean((window as any).__SA_LOADED);
-  /* First visit: the preloader lifts ~2.5s in — the image starts its clip
-     reveal as the panel slides away, then the type rises through it.
-     Returning via client nav: everything plays immediately. */
-  const imgDelay = booted ? 0 : 2.25;
+  /* First visit: the preloader lifts ~2.5s in — the type rises as the
+     panel slides away. Returning via client nav: everything plays at once. */
   const baseDelay = booted ? 0.15 : 2.9;
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "16%"]);
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "38%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
 
+  /* Small screens run the scene in `lite` mode — lighter geometry,
+     a higher floating frame, capped pixel ratio. */
+  const [lite, setLite] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 899px)");
+    const apply = () => setLite(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   return (
     <section ref={ref} className="hero" aria-labelledby="hero-title">
-      <motion.div
-        className="hero-bg"
-        style={reduced ? undefined : { y: bgY }}
-        aria-hidden="true"
-      >
-        <motion.div
-          className="hero-bg-inner"
-          initial={
-            reduced
-              ? false
-              : { clipPath: "inset(100% 0% 0% 0%)", scale: 1.14 }
-          }
-          animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
-          transition={{
-            clipPath: { duration: 1.5, delay: imgDelay, ease: EASE },
-            scale: { duration: 3.4, delay: imgDelay, ease: [0.22, 0.61, 0.36, 1] },
-          }}
-        >
-          <Image
-            src="/images/editorial/hero-campaign.jpg"
-            alt="Model wearing an ivory hand-embroidered silk co-ord with antique-gold botanical zardozi, standing in a dark, lamplit atelier"
-            fill
-            priority
-            sizes="100vw"
-            className="hero-img"
-          />
-        </motion.div>
-      </motion.div>
-
-      {/* 3D silk scene — desktop; the photo hero above stays for small screens */}
+      {/* 3D silk scene — every viewport */}
       <div className="hero-3d" aria-hidden="true">
-        <SilkAtelier />
+        <SilkAtelier lite={lite} />
       </div>
 
       <div className="hero-scrim" aria-hidden="true" />
